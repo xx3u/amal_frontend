@@ -28,10 +28,10 @@ const Header =()=> {
               AMAL LOGO
             </Typography>
            </Grid> 
-          <Grid item>
-          <Button color="inherit" className={classes.menuButton}>LOGIN</Button>
-          <Button color="inherit" className={classes.menuButton}>REGISTER</Button>
-          </Grid>
+            <Grid item>
+              <Button color="inherit" className={classes.menuButton}>LOGIN</Button>
+              <Button color="inherit" className={classes.menuButton}>REGISTER</Button>
+            </Grid>
           </Grid>
         </Toolbar>
         </AppBar>
