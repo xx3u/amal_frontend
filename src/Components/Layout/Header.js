@@ -9,10 +9,14 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
       marginRight: theme.spacing(2),
+      flexGrow:1
     },
     title: {
-      flexGrow: 1,
+      flexGrow: 2,
     },
+    logo:{
+      flexGrow:1
+    }
   }));
 
 
@@ -21,10 +25,14 @@ const Header =()=> {
     return(
         <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-           ADMIN 
+          <Typography variant="h6" className={classes.logo}>
+           LOGO
           </Typography>
-          <Button color="inherit">Pressable</Button>
+          <Typography variant="h6" className={classes.title}>
+           AMAL 
+          </Typography>
+          <Button color="inherit" className={classes.menuButton}>LOGIN</Button>
+          <Button color="inherit" className={classes.menuButton}>REGISTER</Button>
         </Toolbar>
         </AppBar>
     )
