@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {AppBar, Toolbar, Typography, Button} from '@material-ui/core';
+import {AppBar, Toolbar, Typography, Button, Grid} from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -11,9 +11,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(2),
       flexGrow:1
     },
-    title: {
-      flexGrow: 2,
-    },
     logo:{
       flexGrow:1
     }
@@ -22,17 +19,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Header =()=> {
     const classes = useStyles();
-    return(
+    return (
         <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.logo}>
-           LOGO
-          </Typography>
-          <Typography variant="h6" className={classes.title}>
-           AMAL 
-          </Typography>
+          <Grid container justify="space-between" direction="row" >
+           <Grid item >
+            <Typography variant="h6" className={classes.logo}>
+              AMAL LOGO
+            </Typography>
+           </Grid> 
+          <Grid item>
           <Button color="inherit" className={classes.menuButton}>LOGIN</Button>
           <Button color="inherit" className={classes.menuButton}>REGISTER</Button>
+          </Grid>
+          </Grid>
         </Toolbar>
         </AppBar>
     )
