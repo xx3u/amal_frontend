@@ -1,5 +1,6 @@
-import Layout from './Components/Layout/Layout';
+import React from "react";
 import { Route, Switch } from "react-router";
+import Layout from './components/Layout/Layout';
 import "./App.css";
 import LessonsContainer from "./containers/Lessons/LessonsContainer";
 import MainContainer from "./containers/Main/MainContainer";
