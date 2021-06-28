@@ -23,13 +23,13 @@ const Header =()=> {
     return (
         <AppBar position="static">
         <Toolbar>
-          <Grid container justify="space-between" direction="row" >
+          <Grid container justify="space-between" direction="row">
            <Grid item >
             <Typography variant="h6" className={classes.logo}>
               AMAL LOGO
             </Typography>
            </Grid> 
-           <Grid item>
+           <Grid container item xs={9}>
             <Button component={Link}
                     to="/admin-app/students"
                     color="inherit">
