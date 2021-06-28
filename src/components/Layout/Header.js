@@ -1,6 +1,7 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {AppBar, Toolbar, Typography, Button, Grid} from '@material-ui/core';
+import {Link} from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,13 @@ const Header =()=> {
               AMAL LOGO
             </Typography>
            </Grid> 
+           <Grid item>
+            <Button component={Link}
+                    to="/admin-app/students"
+                    color="inherit">
+                      СТУДЕНТЫ
+                    </Button>
+           </Grid>
             <Grid item>
               <Button color="inherit" className={classes.menuButton}>LOGIN</Button>
               <Button color="inherit" className={classes.menuButton}>REGISTER</Button>
