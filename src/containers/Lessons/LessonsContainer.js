@@ -1,6 +1,6 @@
 import React from "react";
 
-const LessonsContainer = () =>  (
+const LessonsContainer = () => (
   <div className="LessonsContainer">Lessons Container</div>
 );
 
