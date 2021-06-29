@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
+import FormSubmission from './../../components/UI/Form/FormSubmission/FormSubmission';
 
 const StudentForm = () => {
   const [newStudent, setNewStudent] = useState({
@@ -17,7 +18,10 @@ const StudentForm = () => {
   });
 
   return (
-    <>
+    <FormSubmission
+      title="Добавить студента"
+      maxWidth="md"
+    >
       <FormItem 
         name='firstName'
         value={newStudent.firstName}
@@ -30,7 +34,7 @@ const StudentForm = () => {
         label='Last Name'
         type='text'
       />
-    </>
+    </FormSubmission>
   )
 };
 
