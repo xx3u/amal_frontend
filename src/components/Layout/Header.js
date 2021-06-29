@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const Header =()=> {
+const Header = () => {
     const classes = useStyles();
     return (
         <AppBar position="static">
         <Toolbar>
           <Grid container justify="space-between" direction="row">
-           <Grid item >
+           <Grid item>
             <Typography variant="h6" className={classes.logo}>
               AMAL LOGO
             </Typography>

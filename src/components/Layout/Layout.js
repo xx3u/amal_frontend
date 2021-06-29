@@ -1,18 +1,14 @@
 import React from 'react';
-import Header from './Header';
 import {Container} from '@material-ui/core';
+import Header from './Header';
 
-const Layout =(props)=> {
 
-
-    return(
+const Layout =({children})=> (
         <div>
             <Header/>
             <Container maxWidth='1x'>
-                {props.children}
+                {children}
             </Container>
         </div>
     )
-}
-
 export default Layout;
