@@ -1,6 +1,5 @@
 import Layout from './components/Layout/Layout';
 import { Route, Switch } from "react-router";
-import "./App.css";
 import LessonsContainer from "./containers/Lessons/LessonsContainer";
 import MainContainer from "./containers/Main/MainContainer";
 import StudentForm from './containers/Forms/StudentForm';
