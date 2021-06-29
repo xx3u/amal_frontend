@@ -23,10 +23,15 @@ const StudentForm = () => {
     setNewStudent({...newStudent, [name]: value});
   };
 
+  const submitFormHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <FormSubmission
       title="Добавить студента"
       maxWidth="md"
+      onSubmit={submitFormHandler}
     >
       <Grid item xs={4}>
         <FormItem 
