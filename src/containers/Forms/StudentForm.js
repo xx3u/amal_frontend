@@ -18,6 +18,11 @@ const StudentForm = () => {
     email: ''
   });
 
+  const inputChangeHandler = e => {
+    const {name, value} = e.target;
+    setNewStudent({...newStudent, [name]: value});
+  };
+
   return (
     <FormSubmission
       title="Добавить студента"
@@ -27,6 +32,7 @@ const StudentForm = () => {
         <FormItem 
           name='firstName'
           value={newStudent.firstName}
+          onChange={inputChangeHandler}
           label='Имя'
           type='text'
           required
@@ -36,6 +42,7 @@ const StudentForm = () => {
         <FormItem 
           name='lastName'
           value={newStudent.lastName}
+          onChange={inputChangeHandler}
           label='Фамилия'
           type='text'
           required
@@ -45,6 +52,7 @@ const StudentForm = () => {
         <FormItem 
           name='middleName'
           value={newStudent.middleName}
+          onChange={inputChangeHandler}
           label='Отчество'
           type='text'
         />
@@ -53,8 +61,9 @@ const StudentForm = () => {
         <FormItem 
           name='grade'
           value={newStudent.grade}
+          onChange={inputChangeHandler}
           label='Класс'
-          type='text'
+          type='integer'
           required
         />
       </Grid>
@@ -62,6 +71,7 @@ const StudentForm = () => {
         <FormItem 
           name='language'
           value={newStudent.language}
+          onChange={inputChangeHandler}
           label='Язык обучения'
           type='text'
           required
@@ -71,6 +81,7 @@ const StudentForm = () => {
         <FormItem 
           name='school'
           value={newStudent.school}
+          onChange={inputChangeHandler}
           label='Школа'
           type='text'
         />
@@ -79,6 +90,7 @@ const StudentForm = () => {
         <FormItem 
           name='parentsContacts'
           value={newStudent.parentsContacts}
+          onChange={inputChangeHandler}
           label='Контакты родителей'
           type='text'
           required
@@ -88,6 +100,7 @@ const StudentForm = () => {
         <FormItem 
           name='stream'
           value={newStudent.stream}
+          onChange={inputChangeHandler}
           label='Направление'
           type='text'
           required
@@ -97,6 +110,7 @@ const StudentForm = () => {
         <FormItem 
           name='address'
           value={newStudent.address}
+          onChange={inputChangeHandler}
           label='Адрес'
           type='text'
         />
@@ -105,6 +119,7 @@ const StudentForm = () => {
         <FormItem 
           name='telephone'
           value={newStudent.telephone}
+          onChange={inputChangeHandler}
           label='Телефон'
           type='text'
         />
@@ -113,6 +128,7 @@ const StudentForm = () => {
         <FormItem 
           name='email'
           value={newStudent.email}
+          onChange={inputChangeHandler}
           label='Email'
           type='text'
         />
