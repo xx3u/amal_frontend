@@ -1,6 +1,5 @@
 import React from 'react';
-import { DataGrid } from '@material-ui/data-grid';
-import './Students.css';
+import StudentsTable from '../../components/StudentsTable/StudentsTable';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 100, headerAlign: 'center', },
@@ -23,11 +22,13 @@ const rows = [
   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null, grade: 5, school: 159, language: 'казахский', parentContacts: '+77075679145', direction: 'РФМШ', address: 'ул. Абая, 78', studentPhone: '+77077845986'},
 ];
 
-export default function DataTable() {
-  return (
-    <div style={{ height: 620, width: '100%' }}>
-      <h1 className='studentsTitle'>Ученики</h1>
-      <DataGrid rows={rows} columns={columns} pageSize={10} checkboxSelection/>
-    </div>
-  );
-}
+const StudentsContainer = () => (
+  <div className="StudentsContainer">
+    <StudentsTable 
+      rows={rows}
+      columns={columns}
+    />
+  </div>
+);
+
+export default StudentsContainer;
