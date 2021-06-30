@@ -11,7 +11,7 @@ const reducer = (state = initialState, action) => {
     case FETCH_STUDENTS_REQUEST:
         return {...state, loading: true}
     case FETCH_STUDENTS_SUCCESS:
-        return {...state, students: action.students, loading: false}
+        return {...state, students: action.students, error: null, loading: false}
     case FETCH_STUDENTS_FAILURE: 
         return {...state, error: action.error, loading: false}
     default:
