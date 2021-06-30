@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import StudentsTable from '../../components/StudentsTable/StudentsTable';
+import { fetchStudents } from '../../store/actions/studentsAction';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 100, headerAlign: 'center', },
@@ -21,6 +23,12 @@ const rows = [
   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16, grade: 7, school: 35, language: 'русский', parentContacts: '+77075679145', direction: 'КТЛ', address: 'ул. Абая, 78', studentPhone: '+77077845986'},
   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null, grade: 5, school: 159, language: 'казахский', parentContacts: '+77075679145', direction: 'РФМШ', address: 'ул. Абая, 78', studentPhone: '+77077845986'},
 ];
+
+const dispatch = useDispatch()
+
+ useEffect(() => {
+   dispatch(fetchStudents())
+ }, [dispatch])
 
 const StudentsContainer = () => (
   <div className="StudentsContainer">
