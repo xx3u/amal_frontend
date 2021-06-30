@@ -27,6 +27,7 @@
         "no-process-exit": "off",
         "object-shorthand": "off",
         "class-methods-use-this": "off",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "import/prefer-default-export": "off"
     }
 }
