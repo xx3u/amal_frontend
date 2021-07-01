@@ -25,6 +25,7 @@ const StudentsContainer = () => {
     { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null, grade: 5, school: 159, language: 'казахский', parentContacts: '+77075679145', direction: 'РФМШ', address: 'ул. Абая, 78', studentPhone: '+77077845986'},
   ];
 
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -39,5 +40,6 @@ const StudentsContainer = () => {
         />
       </div>
 )}
+
 
 export default StudentsContainer;
