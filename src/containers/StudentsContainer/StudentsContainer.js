@@ -1,8 +1,8 @@
 import React from 'react';
-import StudentsTable from '../../components/StudentsTable/StudentsTable';
+import StudentsTable from '../../components/TableItems/TableItems';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100, headerAlign: 'center', },
+  { field: 'id', headerName: 'ID', width: 100, headerAlign: 'center'},
   { field: 'lastName', headerName: 'Фамилия', width: 200, headerAlign: 'center', },
   { field: 'firstName', headerName: 'Имя', width: 200, headerAlign: 'center', },
   { field: 'grade', headerName: 'Класс', type: 'number',width: 120, align: 'center', headerAlign: 'center',}, 
@@ -23,12 +23,10 @@ const rows = [
 ];
 
 const StudentsContainer = () => (
-  <div className="StudentsContainer">
     <StudentsTable 
       rows={rows}
       columns={columns}
     />
-  </div>
 );
 
 export default StudentsContainer;
