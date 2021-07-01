@@ -1,7 +1,7 @@
 import React from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { Route, Switch } from "react-router";
-import Layout from './components/Layout/Layout';
-import "./App.css";
+import Layout from "./components/Layout/Layout";
 import LessonsContainer from "./containers/Lessons/LessonsContainer";
 import MainContainer from "./containers/Main/MainContainer";
 import StudentsPage from "./pages/StudentsPage/StudentsPage";
@@ -10,6 +10,7 @@ import StudentsPage from "./pages/StudentsPage/StudentsPage";
 function App() {
   return (
     <div className="App">
+      <CssBaseline />
       <Layout>
         <Switch>
           <Route path="/" exact component={MainContainer}/>

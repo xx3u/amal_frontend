@@ -6,7 +6,7 @@ import Header from './Header';
 const Layout =({children})=> (
         <div>
             <Header/>
-            <Container maxWidth='1x'>
+            <Container maxWidth='xl'>
                 {children}
             </Container>
         </div>
