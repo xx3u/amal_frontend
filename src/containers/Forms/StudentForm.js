@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import FormItem from '../../components/UI/Form/FormItem/FormItem';
-import FormSubmission from './../../components/UI/Form/FormSubmission/FormSubmission';
+import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
+import FormItem from '../../components/UI/Form/FormItem/FormItem';
+import FormSubmission from '../../components/UI/Form/FormSubmission/FormSubmission';
 
 const StudentForm = () => {
   const [newStudent, setNewStudent] = useState({
