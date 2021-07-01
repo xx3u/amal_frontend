@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import StudentsTable from '../../components/StudentsTable/StudentsTable';
+import StudentsTable from '../../components/TableItems/TableItems';
 import { fetchStudents } from '../../store/actions/studentsAction';
 
 const StudentsContainer = () => {
