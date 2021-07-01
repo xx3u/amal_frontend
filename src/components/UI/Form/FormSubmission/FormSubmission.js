@@ -24,18 +24,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const FormSubmission = (props) => {
+const FormSubmission = ({maxWidth, title, onSubmit, children}) => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth={props.maxWidth}>
+    <Container component="main" maxWidth={maxWidth}>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {props.title}
+          {title}
         </Typography>
-        <form className={classes.form} onSubmit={props.onSubmit}>
+        <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={2} className={classes.flex}>
-            {props.children}
+            {children}
           </Grid>
           <Button
             type="submit"
@@ -43,7 +43,7 @@ const FormSubmission = (props) => {
             color="primary"
             className={classes.submit}
           >
-            {props.title}
+            {title}
           </Button>
         </form>
       </div>
