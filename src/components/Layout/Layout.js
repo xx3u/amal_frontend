@@ -7,7 +7,7 @@ const Layout =({children})=> (
         <div>
             <Header/>
             <Container maxWidth='xl'>
-                {props.children}
+                {children}
             </Container>
         </div>
     )
