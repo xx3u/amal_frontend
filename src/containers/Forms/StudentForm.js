@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from "react-redux";
 import { Grid } from '@material-ui/core';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../components/UI/Form/FormSubmission/FormSubmission';
+import { addNewStudent } from '../../store/actions/studentsAction';
 
 const StudentForm = () => {
+  const dispatch = useDispatch();
+
   const [newStudent, setNewStudent] = useState({
     firstName: '',
     lastName: '',
@@ -25,6 +29,7 @@ const StudentForm = () => {
 
   const submitFormHandler = (e) => {
     e.preventDefault();
+    dispatch(addNewStudent(newStudent));
   };
 
   return (
