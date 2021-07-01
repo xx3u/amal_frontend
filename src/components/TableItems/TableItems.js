@@ -13,7 +13,7 @@ const TableItems = ({rows, columns}) => {
   const classes = useStyles();
   return (
     <div className={classes.tableItem}>
-      <DataGrid rows={rows} columns={columns} pageSize={10} checkboxSelection/>
+      <DataGrid rows={rows} columns={columns}/>
     </div>
 )}
 
