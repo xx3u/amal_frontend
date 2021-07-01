@@ -11,7 +11,7 @@ export const fetchStudents = () => (
      async dispatch => {
         try {
             dispatch(fetchStudentsRequest())
-            const response = await axios.get('/')
+            const response = await axios.get('/students')
             dispatch(fetchStudentsSuccess(response.data))
         } catch(error) {
             if (error.response && error.response.data) {
