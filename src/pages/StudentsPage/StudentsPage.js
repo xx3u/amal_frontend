@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
- 
 const StudentsPage = () => {
   const classes = useStyles()
   return(
@@ -19,7 +18,7 @@ const StudentsPage = () => {
       <Button       variant="contained"
                     component={Link}
                     to="/admin-app/students/add"
-                    color="primary"
+                    color="default"
                     className={classes.addButton}>
                     Добавить нового ученика
       </Button>
