@@ -15,7 +15,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={MainContainer} />
           <Route path="/lessons" exact component={LessonsContainer} />
-          <Route path="/admin-app/students/create-form" exact component={StudentForm} />
+          <Route path="/admin-app/students/add" exact component={StudentForm} />
           <Route path="/admin-app/students" exact component={StudentsPage}/>
         </Switch>
       </Layout>
