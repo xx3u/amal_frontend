@@ -1,11 +1,11 @@
 import {
-    ADD_NEW_STUDENT_FAILURE,
+  ADD_NEW_STUDENT_FAILURE,
   ADD_NEW_STUDENT_REQUEST,
   ADD_NEW_STUDENT_SUCCESS,
   FETCH_STUDENTS_FAILURE,
   FETCH_STUDENTS_REQUEST,
   FETCH_STUDENTS_SUCCESS,
-} from "../actionTypes";
+} from '../actionTypes';
 
 const initialState = {
   students: [],
@@ -29,12 +29,12 @@ const reducer = (state = initialState, action) => {
     case ADD_NEW_STUDENT_REQUEST:
       return { ...state, loading: true };
     case ADD_NEW_STUDENT_SUCCESS: {
-        const updatedStudents = [...state.students];
-        updatedStudents.push(action.data);
-        return {...state, students: updatedStudents, loading: false}
+      const updatedStudents = [...state.students];
+      updatedStudents.push(action.data);
+      return { ...state, students: updatedStudents, loading: false };
     }
     case ADD_NEW_STUDENT_FAILURE:
-        return {...state, error: action.error, loading: false}
+      return { ...state, error: action.error, loading: false };
     default:
       return state;
   }
