@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../components/UI/Form/FormSubmission/FormSubmission';
@@ -19,12 +19,12 @@ const StudentForm = () => {
     stream: '',
     address: '',
     telephone: '',
-    email: ''
+    email: '',
   });
 
-  const inputChangeHandler = e => {
-    const {name, value} = e.target;
-    setNewStudent({...newStudent, [name]: value});
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setNewStudent({ ...newStudent, [name]: value });
   };
 
   const submitFormHandler = (e) => {
@@ -33,13 +33,9 @@ const StudentForm = () => {
   };
 
   return (
-    <FormSubmission
-      title="Добавить студента"
-      maxWidth="md"
-      onSubmit={submitFormHandler}
-    >
+    <FormSubmission title='Добавить студента' maxWidth='md' onSubmit={submitFormHandler}>
       <Grid item xs={4}>
-        <FormItem 
+        <FormItem
           name='firstName'
           value={newStudent.firstName}
           onChange={inputChangeHandler}
@@ -49,7 +45,7 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={4}>
-        <FormItem 
+        <FormItem
           name='lastName'
           value={newStudent.lastName}
           onChange={inputChangeHandler}
@@ -59,7 +55,7 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={4}>
-        <FormItem 
+        <FormItem
           name='middleName'
           value={newStudent.middleName}
           onChange={inputChangeHandler}
@@ -68,7 +64,7 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={3}>
-        <FormItem 
+        <FormItem
           name='grade'
           value={newStudent.grade}
           onChange={inputChangeHandler}
@@ -78,7 +74,7 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={3}>
-        <FormItem 
+        <FormItem
           name='language'
           value={newStudent.language}
           onChange={inputChangeHandler}
@@ -88,16 +84,10 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem 
-          name='school'
-          value={newStudent.school}
-          onChange={inputChangeHandler}
-          label='Школа'
-          type='text'
-        />
+        <FormItem name='school' value={newStudent.school} onChange={inputChangeHandler} label='Школа' type='text' />
       </Grid>
       <Grid item xs={12}>
-        <FormItem 
+        <FormItem
           name='parentsContacts'
           value={newStudent.parentsContacts}
           onChange={inputChangeHandler}
@@ -107,7 +97,7 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormItem 
+        <FormItem
           name='stream'
           value={newStudent.stream}
           onChange={inputChangeHandler}
@@ -117,16 +107,10 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormItem 
-          name='address'
-          value={newStudent.address}
-          onChange={inputChangeHandler}
-          label='Адрес'
-          type='text'
-        />
+        <FormItem name='address' value={newStudent.address} onChange={inputChangeHandler} label='Адрес' type='text' />
       </Grid>
       <Grid item xs={6}>
-        <FormItem 
+        <FormItem
           name='telephone'
           value={newStudent.telephone}
           onChange={inputChangeHandler}
@@ -135,16 +119,10 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem 
-          name='email'
-          value={newStudent.email}
-          onChange={inputChangeHandler}
-          label='Email'
-          type='text'
-        />
+        <FormItem name='email' value={newStudent.email} onChange={inputChangeHandler} label='Email' type='text' />
       </Grid>
     </FormSubmission>
-  )
+  );
 };
 
 export default StudentForm;
