@@ -5,8 +5,11 @@ import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../components/UI/Form/FormSubmission/FormSubmission';
 import { addNewStudent } from '../../store/actions/studentsAction';
 
-const StudentForm = () => {
+const StudentForm = (props) => {
   const dispatch = useDispatch();
+  const editUrl = props.match.url.includes('edit');
+  const id = props.match.url.split('/')[4];
+  console.log('id', id);
 
   const [newStudent, setNewStudent] = useState({
     firstName: '',
@@ -33,7 +36,11 @@ const StudentForm = () => {
   };
 
   return (
-    <FormSubmission title='Добавить студента' maxWidth='md' onSubmit={submitFormHandler}>
+    <FormSubmission
+      title={editUrl ? 'Редактировать ученика' : 'Добавить ученика'}
+      maxWidth='md'
+      onSubmit={submitFormHandler}
+    >
       <Grid item xs={4}>
         <FormItem
           name='firstName'
@@ -84,7 +91,13 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem name='school' value={newStudent.school} onChange={inputChangeHandler} label='Школа' type='text' />
+        <FormItem
+          name='school'
+          value={newStudent.school}
+          onChange={inputChangeHandler}
+          label='Школа'
+          type='text'
+        />
       </Grid>
       <Grid item xs={12}>
         <FormItem
@@ -107,7 +120,13 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormItem name='address' value={newStudent.address} onChange={inputChangeHandler} label='Адрес' type='text' />
+        <FormItem
+          name='address'
+          value={newStudent.address}
+          onChange={inputChangeHandler}
+          label='Адрес'
+          type='text'
+        />
       </Grid>
       <Grid item xs={6}>
         <FormItem
@@ -119,7 +138,13 @@ const StudentForm = () => {
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem name='email' value={newStudent.email} onChange={inputChangeHandler} label='Email' type='text' />
+        <FormItem
+          name='email'
+          value={newStudent.email}
+          onChange={inputChangeHandler}
+          label='Email'
+          type='text'
+        />
       </Grid>
     </FormSubmission>
   );
