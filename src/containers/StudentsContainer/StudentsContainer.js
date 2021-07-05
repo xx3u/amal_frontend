@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import StudentsTable from '../../components/TableItems/TableItems';
 import { fetchStudents } from '../../store/actions/studentsAction';
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const StudentsContainer = () => {
   const columns = [
@@ -25,6 +26,8 @@ const StudentsContainer = () => {
             variant='contained'
             color='grey'
             size='small'
+            component={Link}
+            to={'/admin-app/students/edit'}
           >
             Edit         
           </Button>
