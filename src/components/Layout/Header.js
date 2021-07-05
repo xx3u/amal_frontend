@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     marginRight: 10,
-  }
+  },
 }));
 
 const Header = () => {
@@ -31,7 +31,13 @@ const Header = () => {
             </Typography>
           </Grid>
           <Grid container item xs={9}>
-            <Button component={Link} to='/admin-app/students' color='inherit' variant='outlined' className={classes.btn}>
+            <Button
+              component={Link}
+              to='/admin-app/students'
+              color='inherit'
+              variant='outlined'
+              className={classes.btn}
+            >
               СТУДЕНТЫ
             </Button>
             <Button component={Link} to='/admin-app/groups' color='inherit' variant='outlined' className={classes.btn}>
