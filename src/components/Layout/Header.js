@@ -28,10 +28,10 @@ const Header = () => {
             </Typography>
           </Grid>
           <Grid container item xs={9}>
-            <Button component={Link} to='/admin-app/students' color='inherit'>
+            <Button component={Link} to='/admin-app/students' color='inherit' variant='outlined'>
               СТУДЕНТЫ
             </Button>
-            <Button component={Link} to='/admin-app/groups' color='inherit'>
+            <Button component={Link} to='/admin-app/groups' color='inherit' variant='outlined'>
               Группы
             </Button>
           </Grid>
