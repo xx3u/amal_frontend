@@ -9,13 +9,9 @@ const StudentForm = (props) => {
   const dispatch = useDispatch();
   const editUrl = props.match.url.includes('edit');
   const id = props.match.url.split('/')[4];
-  const student = useSelector((state) => state.students.student);
+  const selectedStudent = useSelector((state) => state.students.student);
 
-  useEffect(() => {
-    dispatch(getStudentById(id));
-  }, [dispatch, id]);
-
-  const [newStudent, setNewStudent] = useState({
+  const [student, setStudent] = useState({
     firstName: '',
     lastName: '',
     middleName: '',
@@ -29,14 +25,22 @@ const StudentForm = (props) => {
     email: '',
   });
 
+  useEffect(() => {
+    dispatch(getStudentById(id));
+  }, [dispatch]);
+
+  useEffect(() => {
+    editUrl ? setStudent(selectedStudent) : setStudent(student);
+  }, [editUrl, selectedStudent]);
+
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
-    setNewStudent({ ...newStudent, [name]: value });
+    setStudent({ ...student, [name]: value });
   };
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-    dispatch(addNewStudent(newStudent));
+    dispatch(addNewStudent(student));
   };
 
   return (
@@ -48,7 +52,7 @@ const StudentForm = (props) => {
       <Grid item xs={4}>
         <FormItem
           name='firstName'
-          value={editUrl ? student.firstName : newStudent.firstName}
+          value={student.firstName || ''}
           onChange={inputChangeHandler}
           label='Имя'
           type='text'
@@ -58,7 +62,7 @@ const StudentForm = (props) => {
       <Grid item xs={4}>
         <FormItem
           name='lastName'
-          value={editUrl ? student.lastName : newStudent.lastName}
+          value={student.lastName}
           onChange={inputChangeHandler}
           label='Фамилия'
           type='text'
@@ -68,7 +72,7 @@ const StudentForm = (props) => {
       <Grid item xs={4}>
         <FormItem
           name='middleName'
-          value={editUrl ? student.middleName : newStudent.middleName}
+          value={student.middleName}
           onChange={inputChangeHandler}
           label='Отчество'
           type='text'
@@ -77,7 +81,7 @@ const StudentForm = (props) => {
       <Grid item xs={3}>
         <FormItem
           name='grade'
-          value={editUrl ? student.grade : newStudent.grade}
+          value={student.grade}
           onChange={inputChangeHandler}
           label='Класс'
           type='integer'
@@ -87,7 +91,7 @@ const StudentForm = (props) => {
       <Grid item xs={3}>
         <FormItem
           name='language'
-          value={editUrl ? student.language : newStudent.language}
+          value={student.language}
           onChange={inputChangeHandler}
           label='Язык обучения'
           type='text'
@@ -95,18 +99,12 @@ const StudentForm = (props) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem
-          name='school'
-          value={editUrl ? student.school : newStudent.school}
-          onChange={inputChangeHandler}
-          label='Школа'
-          type='text'
-        />
+        <FormItem name='school' value={student.school} onChange={inputChangeHandler} label='Школа' type='text' />
       </Grid>
       <Grid item xs={12}>
         <FormItem
           name='parentsContacts'
-          value={editUrl ? student.parentsContacts : newStudent.parentsContacts}
+          value={student.parentsContacts}
           onChange={inputChangeHandler}
           label='Контакты родителей'
           type='text'
@@ -116,7 +114,7 @@ const StudentForm = (props) => {
       <Grid item xs={12}>
         <FormItem
           name='stream'
-          value={editUrl ? student.stream : newStudent.stream}
+          value={student.stream}
           onChange={inputChangeHandler}
           label='Направление'
           type='text'
@@ -124,31 +122,19 @@ const StudentForm = (props) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <FormItem
-          name='address'
-          value={editUrl ? student.address : newStudent.address}
-          onChange={inputChangeHandler}
-          label='Адрес'
-          type='text'
-        />
+        <FormItem name='address' value={student.address} onChange={inputChangeHandler} label='Адрес' type='text' />
       </Grid>
       <Grid item xs={6}>
         <FormItem
           name='telephone'
-          value={editUrl ? student.telephone : newStudent.telephone}
+          value={student.telephone}
           onChange={inputChangeHandler}
           label='Телефон'
           type='text'
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem
-          name='email'
-          value={editUrl ? student.email : newStudent.email}
-          onChange={inputChangeHandler}
-          label='Email'
-          type='text'
-        />
+        <FormItem name='email' value={student.email} onChange={inputChangeHandler} label='Email' type='text' />
       </Grid>
     </FormSubmission>
   );
