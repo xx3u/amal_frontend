@@ -5,12 +5,16 @@ import {
   FETCH_STUDENTS_FAILURE,
   FETCH_STUDENTS_REQUEST,
   FETCH_STUDENTS_SUCCESS,
+  GET_STUDENT_BY_ID_FAILURE,
+  GET_STUDENT_BY_ID_REQUEST,
+  GET_STUDENT_BY_ID_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
   students: [],
   error: null,
   loading: false,
+  student: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -34,6 +38,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, students: updatedStudents, loading: false };
     }
     case ADD_NEW_STUDENT_FAILURE:
+      return { ...state, error: action.error, loading: false };
+    case GET_STUDENT_BY_ID_REQUEST:
+      return { ...state, loading: true };
+    case GET_STUDENT_BY_ID_SUCCESS:
+      return { ...state, student: action.student, loading: false };
+    case GET_STUDENT_BY_ID_FAILURE:
       return { ...state, error: action.error, loading: false };
     default:
       return state;
