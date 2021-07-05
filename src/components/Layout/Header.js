@@ -40,13 +40,7 @@ const Header = () => {
             >
               СТУДЕНТЫ
             </Button>
-            <Button
-              component={Link}
-              to='/admin-app/groups'
-              color='inherit'
-              variant='outlined'
-              className={classes.btn}
-            >
+            <Button component={Link} to='/admin-app/groups' color='inherit' variant='outlined' className={classes.btn}>
               Группы
             </Button>
           </Grid>
