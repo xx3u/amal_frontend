@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import StudentsTable from '../../components/TableItems/TableItems';
 import { fetchStudents } from '../../store/actions/studentsAction';
+import { Button } from '@material-ui/core';
 
 const StudentsContainer = () => {
   const columns = [
@@ -12,6 +13,24 @@ const StudentsContainer = () => {
     { field: 'stream', headerName: 'Направление', width: 170 },
     { field: 'school', headerName: 'Школа', width: 150 },
     { field: 'grade', headerName: 'Класс', type: 'number', width: 120 },
+    {
+      field: '',
+      sortable: false,
+      width: 120,
+      sortable: false,
+      disableClickEventBubbling: true,
+      renderCell: function cellEdit(params) {
+        return (
+          <Button
+            variant='contained'
+            color='grey'
+            size='small'
+          >
+            Edit         
+          </Button>
+        );
+      },
+    },
   ];
 
   const rows = useSelector((state) => state.students.students);
