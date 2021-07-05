@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../components/UI/Form/FormSubmission/FormSubmission';
-import { addNewStudent } from '../../store/actions/studentsAction';
+import { addNewStudent, getStudentById } from '../../store/actions/studentsAction';
 
 const StudentForm = (props) => {
   const dispatch = useDispatch();
   const editUrl = props.match.url.includes('edit');
   const id = props.match.url.split('/')[4];
-  console.log('id', id);
+  const student = useSelector((state) => state.students.student);
+
+  useEffect(() => {
+    dispatch(getStudentById(id));
+  }, [dispatch, id]);
 
   const [newStudent, setNewStudent] = useState({
     firstName: '',
@@ -44,7 +48,7 @@ const StudentForm = (props) => {
       <Grid item xs={4}>
         <FormItem
           name='firstName'
-          value={newStudent.firstName}
+          value={editUrl ? student.firstName : newStudent.firstName}
           onChange={inputChangeHandler}
           label='Имя'
           type='text'
@@ -54,7 +58,7 @@ const StudentForm = (props) => {
       <Grid item xs={4}>
         <FormItem
           name='lastName'
-          value={newStudent.lastName}
+          value={editUrl ? student.lastName : newStudent.lastName}
           onChange={inputChangeHandler}
           label='Фамилия'
           type='text'
@@ -64,7 +68,7 @@ const StudentForm = (props) => {
       <Grid item xs={4}>
         <FormItem
           name='middleName'
-          value={newStudent.middleName}
+          value={editUrl ? student.middleName : newStudent.middleName}
           onChange={inputChangeHandler}
           label='Отчество'
           type='text'
@@ -73,7 +77,7 @@ const StudentForm = (props) => {
       <Grid item xs={3}>
         <FormItem
           name='grade'
-          value={newStudent.grade}
+          value={editUrl ? student.grade : newStudent.grade}
           onChange={inputChangeHandler}
           label='Класс'
           type='integer'
@@ -83,7 +87,7 @@ const StudentForm = (props) => {
       <Grid item xs={3}>
         <FormItem
           name='language'
-          value={newStudent.language}
+          value={editUrl ? student.language : newStudent.language}
           onChange={inputChangeHandler}
           label='Язык обучения'
           type='text'
@@ -93,7 +97,7 @@ const StudentForm = (props) => {
       <Grid item xs={6}>
         <FormItem
           name='school'
-          value={newStudent.school}
+          value={editUrl ? student.school : newStudent.school}
           onChange={inputChangeHandler}
           label='Школа'
           type='text'
@@ -102,7 +106,7 @@ const StudentForm = (props) => {
       <Grid item xs={12}>
         <FormItem
           name='parentsContacts'
-          value={newStudent.parentsContacts}
+          value={editUrl ? student.parentsContacts : newStudent.parentsContacts}
           onChange={inputChangeHandler}
           label='Контакты родителей'
           type='text'
@@ -112,7 +116,7 @@ const StudentForm = (props) => {
       <Grid item xs={12}>
         <FormItem
           name='stream'
-          value={newStudent.stream}
+          value={editUrl ? student.stream : newStudent.stream}
           onChange={inputChangeHandler}
           label='Направление'
           type='text'
@@ -122,7 +126,7 @@ const StudentForm = (props) => {
       <Grid item xs={12}>
         <FormItem
           name='address'
-          value={newStudent.address}
+          value={editUrl ? student.address : newStudent.address}
           onChange={inputChangeHandler}
           label='Адрес'
           type='text'
@@ -131,7 +135,7 @@ const StudentForm = (props) => {
       <Grid item xs={6}>
         <FormItem
           name='telephone'
-          value={newStudent.telephone}
+          value={editUrl ? student.telephone : newStudent.telephone}
           onChange={inputChangeHandler}
           label='Телефон'
           type='text'
@@ -140,7 +144,7 @@ const StudentForm = (props) => {
       <Grid item xs={6}>
         <FormItem
           name='email'
-          value={newStudent.email}
+          value={editUrl ? student.email : newStudent.email}
           onChange={inputChangeHandler}
           label='Email'
           type='text'
