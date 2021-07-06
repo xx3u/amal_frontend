@@ -15,7 +15,7 @@ const StudentsContainer = () => {
     { field: 'school', headerName: 'Школа', width: 150 },
     { field: 'grade', headerName: 'Класс', type: 'number', width: 120 },
     {
-      field: '',
+      field: 'Действия',
       sortable: false,
       width: 120,
       sortable: false,
