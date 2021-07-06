@@ -1,37 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Grid } from '@material-ui/core';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../components/UI/Form/FormSubmission/FormSubmission';
-import { addNewStudent, getStudentById } from '../../store/actions/studentsAction';
 
-const StudentForm = (props) => {
-  const dispatch = useDispatch();
-  const editUrl = props.match.url.includes('edit');
-  const id = props.match.url.split('/')[4];
-  const selectedStudent = useSelector((state) => state.students.student);
-
-  const [student, setStudent] = useState({
-    firstName: '',
-    lastName: '',
-    middleName: '',
-    grade: '',
-    language: '',
-    school: '',
-    parentsContacts: '',
-    stream: '',
-    address: '',
-    telephone: '',
-    email: '',
-  });
+const StudentForm = ({ title, submitData, selectedStudent, id }) => {
+  const [student, setStudent] = useState(selectedStudent);
 
   useEffect(() => {
-    dispatch(getStudentById(id));
-  }, [dispatch]);
-
-  useEffect(() => {
-    editUrl ? setStudent(selectedStudent) : setStudent(student);
-  }, [editUrl, selectedStudent]);
+    setStudent(selectedStudent);
+  }, [selectedStudent]);
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -40,19 +17,15 @@ const StudentForm = (props) => {
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-    dispatch(addNewStudent(student));
+    id ? submitData(id, student) : submitData(student);
   };
 
   return (
-    <FormSubmission
-      title={editUrl ? 'Редактировать ученика' : 'Добавить ученика'}
-      maxWidth='md'
-      onSubmit={submitFormHandler}
-    >
+    <FormSubmission title={title} maxWidth='md' onSubmit={submitFormHandler}>
       <Grid item xs={4}>
         <FormItem
           name='firstName'
-          value={student.firstName || ''}
+          value={student.firstName}
           onChange={inputChangeHandler}
           label='Имя'
           type='text'
