@@ -18,6 +18,17 @@ const statuses = [
   },
 ];
 
+const languages = [
+  {
+    value: 'KZ',
+    label: 'КАЗ',
+  },
+  {
+    value: 'RU',
+    label: 'РУС',
+  },
+];
+
 const StudentForm = ({ title, submitData, selectedStudent, id }) => {
   const [student, setStudent] = useState(selectedStudent);
 
@@ -84,7 +95,14 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
           label='Язык обучения'
           type='text'
           required
-        />
+          select
+        >
+          {languages.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.value}
+            </MenuItem>
+          ))}
+        </FormItem>
       </Grid>
       <Grid item xs={6}>
         <FormItem name='school' value={student.school || ''} onChange={inputChangeHandler} label='Школа' type='text' />
