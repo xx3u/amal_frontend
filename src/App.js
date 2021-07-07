@@ -6,6 +6,7 @@ import LessonsContainer from './containers/Lessons/LessonsContainer';
 import MainContainer from './containers/Main/MainContainer';
 import StudentForm from './containers/Forms/StudentForm';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
+import GroupForm from './containers/Forms/GroupForm';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/lessons' exact component={LessonsContainer} />
           <Route path='/admin-app/students/add' exact component={StudentForm} />
           <Route path='/admin-app/students' exact component={StudentsPage} />
+          <Route path='/admin-app/groups/add' exact component={GroupForm} />
         </Switch>
       </Layout>
     </div>
