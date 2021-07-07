@@ -20,9 +20,15 @@ const StudentsContainer = () => {
       width: 120,
       sortable: false,
       disableClickEventBubbling: true,
-      renderCell: function cellEdit() {
+      renderCell: function cellEdit(params) {
         return (
-          <Button variant='contained' color='default' size='small' component={Link} to={'/admin-app/students/edit'}>
+          <Button
+            variant='contained'
+            color='default'
+            size='small'
+            component={Link}
+            to={`/admin-app/students/edit/${params.row.id}`}
+          >
             Edit         
           </Button>
         );

@@ -6,6 +6,12 @@ import {
   FETCH_STUDENTS_FAILURE,
   FETCH_STUDENTS_REQUEST,
   FETCH_STUDENTS_SUCCESS,
+  GET_STUDENT_BY_ID_FAILURE,
+  GET_STUDENT_BY_ID_REQUEST,
+  GET_STUDENT_BY_ID_SUCCESS,
+  UPDATE_STUDENT_FAILURE,
+  UPDATE_STUDENT_REQUEST,
+  UPDATE_STUDENT_SUCCESS,
 } from '../actionTypes';
 import axios from '../../axiosApi';
 
@@ -46,5 +52,34 @@ export const addNewStudent = (newStudent) => async (dispatch) => {
     dispatch(push('/admin-app/students'));
   } catch (error) {
     dispatch(addNewStudentFailure(error));
+  }
+};
+
+const getStudentbyIdRequest = () => ({ type: GET_STUDENT_BY_ID_REQUEST });
+const getStudentByIdSuccess = (student) => ({ type: GET_STUDENT_BY_ID_SUCCESS, student });
+const getStudentByIdFailure = (error) => ({ type: GET_STUDENT_BY_ID_FAILURE, error });
+
+export const getStudentById = (id) => async (dispatch) => {
+  dispatch(getStudentbyIdRequest());
+  try {
+    await axios.get(`/students/${id}`).then((response) => dispatch(getStudentByIdSuccess(response.data)));
+  } catch (error) {
+    dispatch(getStudentByIdFailure(error));
+  }
+};
+
+const updateStudentRequest = () => ({ type: UPDATE_STUDENT_REQUEST });
+const updateStudentSuccess = (data) => ({ type: UPDATE_STUDENT_SUCCESS, data });
+const updateStudentFailure = (error) => ({ type: UPDATE_STUDENT_FAILURE, error });
+
+export const updateStudent = (id, updatedStudent) => async (dispatch) => {
+  dispatch(updateStudentRequest());
+  try {
+    await axios
+      .put(`/students/${id}`, updatedStudent)
+      .then((response) => dispatch(updateStudentSuccess(response.data)));
+    dispatch(push('/admin-app/students'));
+  } catch (error) {
+    dispatch(updateStudentFailure(error));
   }
 };
