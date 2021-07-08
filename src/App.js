@@ -6,8 +6,8 @@ import LessonsContainer from './containers/Lessons/LessonsContainer';
 import MainContainer from './containers/Main/MainContainer';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
-import CreateStudentForm from './containers/Forms/CreateStudentForm';
-import EditStudentForm from './containers/Forms/EditStudentForm';
+import CreateStudentForm from './containers/Forms/Student/CreateStudentForm';
+import EditStudentForm from './containers/Forms/Student/EditStudentForm';
 
 function App() {
   return (

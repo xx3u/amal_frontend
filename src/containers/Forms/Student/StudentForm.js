@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, MenuItem } from '@material-ui/core';
-import FormItem from '../../components/UI/Form/FormItem/FormItem';
-import FormSubmission from '../../components/UI/Form/FormSubmission/FormSubmission';
+import FormItem from '../../../components/UI/Form/FormItem/FormItem';
+import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 
 const statuses = [
   {

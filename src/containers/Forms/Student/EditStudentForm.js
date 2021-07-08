@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import StudentForm from './StudentForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStudentById, updateStudent } from '../../store/actions/studentsAction';
+import { getStudentById, updateStudent } from '../../../store/actions/studentsAction';
 
 const EditStudentForm = (props) => {
   const dispatch = useDispatch();
