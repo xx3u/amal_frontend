@@ -13,6 +13,7 @@ const CreateStudentForm = () => {
     school: '',
     parentsContacts: '',
     stream: '',
+    status: '',
     address: '',
     telephone: '',
     email: '',
