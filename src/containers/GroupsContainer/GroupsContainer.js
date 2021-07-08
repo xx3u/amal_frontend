@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import TableItems from '../../components/TableItems/TableItems';
 
 const GroupsContainer = () => {
@@ -7,10 +8,7 @@ const GroupsContainer = () => {
     { field: 'name', headerName: 'Наименование', width: 200 },
   ];
 
-  const rows = [
-    { id: 1, name: 'KZ01' },
-    { id: 2, name: 'RU01' },
-  ];
+  const rows = useSelector((state) => state.groups.groups);
 
   return <TableItems rows={rows} columns={columns} />;
 };
