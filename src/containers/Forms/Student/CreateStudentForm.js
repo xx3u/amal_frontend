@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import StudentForm from './StudentForm';
 import { useDispatch } from 'react-redux';
-import { addNewStudent } from '../../store/actions/studentsAction';
+import { addNewStudent } from '../../../store/actions/studentsAction';
 
 const CreateStudentForm = () => {
   const student = useState({
