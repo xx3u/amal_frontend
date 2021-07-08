@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, MenuItem } from '@material-ui/core';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
+
+const statuses = [
+  {
+    value: 'Активные',
+  },
+  {
+    value: 'В резерве',
+  },
+  {
+    value: 'Отчисленные',
+  },
+  {
+    value: 'В ожидании',
+  },
+];
 
 const StudentForm = ({ title, submitData, selectedStudent, id }) => {
   const [student, setStudent] = useState(selectedStudent);
@@ -84,7 +99,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
           required
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <FormItem
           name='stream'
           value={student.stream || ''}
@@ -93,6 +108,23 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
           type='text'
           required
         />
+      </Grid>
+      <Grid item xs={6}>
+        <FormItem
+          name='status'
+          value={student.status || 'В ожидании'}
+          onChange={inputChangeHandler}
+          label='Статус'
+          type='text'
+          required
+          select
+        >
+          {statuses.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.value}
+            </MenuItem>
+          ))}
+        </FormItem>
       </Grid>
       <Grid item xs={12}>
         <FormItem

@@ -13,6 +13,7 @@ const StudentsContainer = () => {
     { field: 'language', headerName: 'Язык обучения', width: 180 },
     { field: 'stream', headerName: 'Направление', width: 170 },
     { field: 'school', headerName: 'Школа', width: 150 },
+    { field: 'status', headerName: 'Статус', width: 150 },
     { field: 'grade', headerName: 'Класс', type: 'number', width: 120 },
     {
       field: 'Действия',
