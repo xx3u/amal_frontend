@@ -9,17 +9,18 @@ const GroupForm = () => {
   const dispatch = useDispatch();
 
   const [group, setGroup] = useState({
-    name: '',
+    groupName: '',
   });
 
   const inputChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setGroup({ ...group, [name]: value });
+    const value = e.target.value;
+    setGroup({ ...group, groupName: value });
   };
 
   const submitFormHandler = (e) => {
     e.preventDefault();
     dispatch(addNewGroup(group));
+    setGroup({ ...group, groupName: '' });
   };
 
   return (
@@ -27,7 +28,7 @@ const GroupForm = () => {
       <Grid item xs={12}>
         <FormItem
           name='name'
-          value={group.name}
+          value={group.groupName}
           onChange={inputChangeHandler}
           label='Наименование'
           type='text'
