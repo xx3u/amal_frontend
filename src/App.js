@@ -5,7 +5,6 @@ import Layout from './components/Layout/Layout';
 import LessonsContainer from './containers/Lessons/LessonsContainer';
 import MainContainer from './containers/Main/MainContainer';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
-import GroupForm from './containers/Forms/Group/GroupForm';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
 import CreateStudentForm from './containers/Forms/Student/CreateStudentForm';
 import EditStudentForm from './containers/Forms/Student/EditStudentForm';
@@ -21,7 +20,6 @@ function App() {
           <Route path='/admin-app/students/edit/:id' exact component={EditStudentForm} />
           <Route path='/admin-app/students/add' exact component={CreateStudentForm} />
           <Route path='/admin-app/students' exact component={StudentsPage} />
-          <Route path='/admin-app/groups/add' exact component={GroupForm} />
           <Route path='/admin-app/groups' exact component={GroupsPage} />
         </Switch>
       </Layout>
