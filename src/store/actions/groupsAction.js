@@ -1,5 +1,12 @@
 import axios from '../../axiosApi';
-import { ADD_NEW_GROUP_FAILURE, ADD_NEW_GROUP_REQUEST, ADD_NEW_GROUP_SUCCESS, FETCH_GROUPS_FAILURE, FETCH_GROUPS_REQUEST, FETCH_GROUPS_SUCCESS } from '../actionTypes';
+import {
+  ADD_NEW_GROUP_FAILURE,
+  ADD_NEW_GROUP_REQUEST,
+  ADD_NEW_GROUP_SUCCESS,
+  FETCH_GROUPS_FAILURE,
+  FETCH_GROUPS_REQUEST,
+  FETCH_GROUPS_SUCCESS,
+} from '../actionTypes';
 
 export const fetchGroupsSuccess = (groups) => ({
   type: FETCH_GROUPS_SUCCESS,
