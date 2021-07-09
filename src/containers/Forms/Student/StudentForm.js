@@ -5,13 +5,13 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 
 const statuses = [
   {
-    value: 'Активные',
+    value: 'Активный',
   },
   {
     value: 'В резерве',
   },
   {
-    value: 'Отчисленные',
+    value: 'Отчисленный',
   },
   {
     value: 'В ожидании',
