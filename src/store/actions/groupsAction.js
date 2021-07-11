@@ -1,5 +1,12 @@
 import axios from '../../axiosApi';
-import { FETCH_GROUPS_FAILURE, FETCH_GROUPS_REQUEST, FETCH_GROUPS_SUCCESS } from '../actionTypes';
+import {
+  ADD_NEW_GROUP_FAILURE,
+  ADD_NEW_GROUP_REQUEST,
+  ADD_NEW_GROUP_SUCCESS,
+  FETCH_GROUPS_FAILURE,
+  FETCH_GROUPS_REQUEST,
+  FETCH_GROUPS_SUCCESS,
+} from '../actionTypes';
 
 export const fetchGroupsSuccess = (groups) => ({
   type: FETCH_GROUPS_SUCCESS,
@@ -24,5 +31,19 @@ export const fetchGroups = () => async (dispatch) => {
     } else {
       dispatch(fetchGroupsFailure(error));
     }
+  }
+};
+
+const addNewGroupRequest = () => ({ type: ADD_NEW_GROUP_REQUEST });
+const addNewGroupSuccess = (data) => ({ type: ADD_NEW_GROUP_SUCCESS, data });
+const addNewGroupFailure = (error) => ({ type: ADD_NEW_GROUP_FAILURE, error });
+
+export const addNewGroup = (newGroup) => async (dispatch) => {
+  dispatch(addNewGroupRequest());
+  try {
+    await axios.post('/groups', newGroup).then((response) => dispatch(addNewGroupSuccess(response.data)));
+    dispatch(push('/admin-app/groups'));
+  } catch (error) {
+    dispatch(addNewGroupFailure(error));
   }
 };
