@@ -18,20 +18,31 @@ const StudentsContainer = () => {
     {
       field: 'Действия',
       sortable: false,
-      width: 120,
+      width: 200,
       sortable: false,
       disableClickEventBubbling: true,
       renderCell: function cellEdit(params) {
         return (
-          <Button
-            variant='contained'
-            color='default'
-            size='small'
-            component={Link}
-            to={`/admin-app/students/edit/${params.row.id}`}
-          >
-            Edit         
-          </Button>
+          <div>
+            <Button
+              variant='contained'
+              color='default'
+              size='small'
+              component={Link}
+              to={`/admin-app/students/edit/${params.row.id}`}
+            >
+              Edit         
+            </Button>
+            <Button
+              variant='contained'
+              color='default'
+              size='small'
+              component={Link}
+              to={`/admin-app/students/${params.row.id}`}
+            >
+              Детали         
+            </Button>
+          </div>
         );
       },
     },
