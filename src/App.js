@@ -17,7 +17,7 @@ function App() {
         <Switch>
           <Route path='/' exact component={MainContainer} />
           <Route path='/lessons' exact component={LessonsContainer} />
-          <Route path='/admin-app/students/edit/:id' exact component={EditStudentForm} />
+          <Route path='/admin-app/students/:id/edit' exact component={EditStudentForm} />
           <Route path='/admin-app/students/add' exact component={CreateStudentForm} />
           <Route path='/admin-app/students' exact component={StudentsPage} />
           <Route path='/admin-app/groups' exact component={GroupsPage} />
