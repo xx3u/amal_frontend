@@ -1,23 +1,39 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import TableItems from '../../components/TableItems/TableItems';
+import MyAccordion from '../../components/UI/MyAccordion/MyAccordion';
+import SimpleTable from '../../components/UI/SimpleTable/SimpleTable';
 import { fetchGroups } from '../../store/actions/groupsAction';
 
 const GroupsContainer = () => {
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'groupName', headerName: 'Наименование', width: 200 },
-  ];
-
+  const dispatch = useDispatch();
   const rows = useSelector((state) => state.groups.groups);
 
-  const dispatch = useDispatch();
+  const columns = [
+    { field: 'firstName', headerName: 'Имя', width: 150 },
+    { field: 'lastName', headerName: 'Фамилия', width: 200 },
+    { field: 'grade', headerName: 'Класс', type: 'number', width: 120 },
+  ];
+
+  const students = [
+    { id: 1, firstName: 'Серік', lastName: 'Ахметов', grade: 5 },
+    { id: 2, firstName: 'Арман', lastName: 'Тасболат', grade: 2 },
+  ];
 
   useEffect(() => {
     dispatch(fetchGroups());
   }, [dispatch]);
 
-  return <TableItems rows={rows} columns={columns} />;
+  return (
+    <div className='GroupsContainer'>
+      {rows.map((row) => {
+        return (
+          <MyAccordion key={row.id} groupName={row.groupName}>
+            <SimpleTable rows={students} columns={columns} />
+          </MyAccordion>
+        );
+      })}
+    </div>
+  );
 };
 
 export default GroupsContainer;
