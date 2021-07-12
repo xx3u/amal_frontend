@@ -1,38 +1,41 @@
-// import React from "react";
-// import { makeStyles } from "@material-ui/core/styles";
-// import Accordion from "@material-ui/core/Accordion";
-// import AccordionSummary from "@material-ui/core/AccordionSummary";
-// import AccordionDetails from "@material-ui/core/AccordionDetails";
-// import Typography from "@material-ui/core/Typography";
-// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     width: "100%",
-//   },
-//   heading: {
-//     fontSize: theme.typography.pxToRem(15),
-//     fontWeight: theme.typography.fontWeightRegular,
-//   },
-// }));
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  accordion: {
+    border: '1px solid rgba(0, 0, 0, .125)',
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+}));
 
-// const MyAccordion = (props) => {
-//   const classes = useStyles();
+const MyAccordion = (props) => {
+  const classes = useStyles();
 
-//   return (
-//     <div className={classes.root}>
-//       <Accordion>
-//         <AccordionSummary
-//           expandIcon={<ExpandMoreIcon />}
-//           aria-controls="panel1a-content"
-//           id="panel1a-header"
-//         >
-//           <Typography className={classes.heading}>Accordion 1</Typography>
-//         </AccordionSummary>
-//         <AccordionDetails>{props.children}</AccordionDetails>
-//       </Accordion>
-//     </div>
-//   );
-// };
+  return (
+    <div className={classes.root}>
+      <Accordion className={classes.accordion}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel1a-content'
+          id='panel1a-header'
+        >
+          <Typography className={classes.heading}>{props.groupName}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>{props.children}</AccordionDetails>
+      </Accordion>
+    </div>
+  );
+};
 
-// export default MyAccordion;
+export default MyAccordion;
