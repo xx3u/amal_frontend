@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import TableItems from '../../components/TableItems/TableItems';
-import { fetchGroups } from '../../store/actions/groupsAction';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import TableItems from "../../components/TableItems/TableItems";
+import MyAccordion from "../../components/UI/MyAccordion/MyAccordion";
+import { fetchGroups } from "../../store/actions/groupsAction";
 
 const GroupsContainer = () => {
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'groupName', headerName: 'Наименование', width: 200 },
+    { field: "id", headerName: "ID", width: 100 },
+    { field: "groupName", headerName: "Наименование", width: 200 },
   ];
 
   const rows = useSelector((state) => state.groups.groups);
@@ -18,6 +19,11 @@ const GroupsContainer = () => {
   }, [dispatch]);
 
   return <TableItems rows={rows} columns={columns} />;
+  // return (
+  //   <MyAccordion >
+
+  //   </MyAccordion>
+  // )
 };
 
 export default GroupsContainer;
