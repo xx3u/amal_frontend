@@ -5,7 +5,7 @@ import { getStudentById, updateStudent } from '../../../store/actions/studentsAc
 
 const EditStudentForm = (props) => {
   const dispatch = useDispatch();
-  const id = props.match.url.split('/')[4];
+  const id = props.match.url.split('/')[3];
   const studentById = useSelector((state) => state.students.student);
 
   useEffect(() => {

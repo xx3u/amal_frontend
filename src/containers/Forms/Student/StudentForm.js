@@ -5,16 +5,27 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 
 const statuses = [
   {
-    value: 'Активные',
+    value: 'Активный',
   },
   {
     value: 'В резерве',
   },
   {
-    value: 'Отчисленные',
+    value: 'Отчисленный',
   },
   {
     value: 'В ожидании',
+  },
+];
+
+const languages = [
+  {
+    value: 'KZ',
+    label: 'КАЗ',
+  },
+  {
+    value: 'RU',
+    label: 'РУС',
   },
 ];
 
@@ -84,7 +95,14 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
           label='Язык обучения'
           type='text'
           required
-        />
+          select
+        >
+          {languages.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </FormItem>
       </Grid>
       <Grid item xs={6}>
         <FormItem name='school' value={student.school || ''} onChange={inputChangeHandler} label='Школа' type='text' />
