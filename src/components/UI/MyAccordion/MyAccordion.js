@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyAccordion = (props) => {
+const MyAccordion = ({ groupName, children }) => {
   const classes = useStyles();
 
   return (
@@ -30,9 +30,9 @@ const MyAccordion = (props) => {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <Typography className={classes.heading}>{props.groupName}</Typography>
+          <Typography className={classes.heading}>{groupName}</Typography>
         </AccordionSummary>
-        <AccordionDetails>{props.children}</AccordionDetails>
+        <AccordionDetails>{children}</AccordionDetails>
       </Accordion>
     </div>
   );
