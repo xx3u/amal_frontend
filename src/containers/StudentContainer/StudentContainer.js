@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   item: {
     marginBottom: theme.spacing(2),
   },
+  button: {
+    marginLeft: theme.spacing(2),
+  },
 }));
 
 const StudentContainer = (props) => {
@@ -89,6 +92,9 @@ const StudentContainer = (props) => {
       <Grid container className={classes.item} item>
         <Button variant='contained' component={Link} to='/admin-app/students' color='default'>
           К списку учащихся
+        </Button>
+        <Button className={classes.button} variant='contained' component={Link} to={`/admin-app/students/edit/${id}`} color='default'>
+          Изменить информацию
         </Button>
       </Grid>
     </Grid>
