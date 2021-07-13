@@ -37,9 +37,9 @@ const StudentsContainer = () => {
     },
   ];
 
-  const rows = useSelector((state) => state.students.students);
-  const students = rows.map((row) => {
-    return { ...row, streamName: row.Stream.name };
+  const students = useSelector((state) => state.students.students);
+  const changedStudents = students.map((student) => {
+    return { ...row, streamName: student.Stream.name };
   });
 
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const StudentsContainer = () => {
 
   return (
     <div className='StudentsContainer'>
-      <StudentsTable rows={students} columns={columns} />
+      <StudentsTable rows={changedStudents} columns={columns} />
     </div>
   );
 };
