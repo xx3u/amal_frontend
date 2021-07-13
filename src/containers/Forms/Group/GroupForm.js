@@ -1,10 +1,11 @@
 import { Grid, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import { addNewGroup } from '../../../store/actions/groupsAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { fetchStudents } from '../../../store/actions/studentsAction';
 
 const GroupForm = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,10 @@ const GroupForm = () => {
     groupName: '',
   });
   const [selectedStudents, setSelectedStudents] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchStudents());
+  }, [dispatch]);
 
   const inputChangeHandler = (e) => {
     const value = e.target.value;
@@ -24,7 +29,6 @@ const GroupForm = () => {
     dispatch(addNewGroup(group, selectedStudents));
     setGroup({ ...group, groupName: '' });
   };
-
   return (
     <FormSubmission title='Добавить группу' maxWidth='sm' onSubmit={submitFormHandler}>
       <Grid item xs={12}>
