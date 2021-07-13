@@ -28,6 +28,7 @@ const GroupForm = () => {
     e.preventDefault();
     dispatch(addNewGroup(group, selectedStudents));
     setGroup({ ...group, groupName: '' });
+    setSelectedStudents([]);
   };
   return (
     <FormSubmission title='Добавить группу' maxWidth='sm' onSubmit={submitFormHandler}>
