@@ -6,17 +6,12 @@ import { fetchGroups } from '../../store/actions/groupsAction';
 
 const GroupsContainer = () => {
   const dispatch = useDispatch();
-  const rows = useSelector((state) => state.groups.groups);
+  const groups = useSelector((state) => state.groups.groups);
 
   const columns = [
     { field: 'firstName', headerName: 'Имя', width: 150 },
     { field: 'lastName', headerName: 'Фамилия', width: 200 },
     { field: 'grade', headerName: 'Класс', type: 'number', width: 120 },
-  ];
-
-  const students = [
-    { id: 1, firstName: 'Серік', lastName: 'Ахметов', grade: 5 },
-    { id: 2, firstName: 'Арман', lastName: 'Тасболат', grade: 2 },
   ];
 
   useEffect(() => {
@@ -25,10 +20,10 @@ const GroupsContainer = () => {
 
   return (
     <div className='GroupsContainer'>
-      {rows.map((row) => {
+      {groups.map((group) => {
         return (
-          <MyAccordion key={row.id} groupName={row.groupName}>
-            <SimpleTable rows={students} columns={columns} />
+          <MyAccordion key={group.id} groupName={group.groupName}>
+            <SimpleTable rows={group.Students} columns={columns} />
           </MyAccordion>
         );
       })}
