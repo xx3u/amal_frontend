@@ -39,7 +39,7 @@ const StudentsContainer = () => {
 
   const students = useSelector((state) => state.students.students);
   const changedStudents = students.map((student) => {
-    return { ...row, streamName: student.Stream.name };
+    return { ...student, streamName: student.Stream.name };
   });
 
   const dispatch = useDispatch();
