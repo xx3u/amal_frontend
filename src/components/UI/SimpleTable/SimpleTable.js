@@ -21,13 +21,15 @@ const SimpleTable = ({ rows, columns }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              {columns.map((col) => {
-                return <TableCell key={`${row.id}${col.field}`}>{row[col.field]}</TableCell>;
-              })}
-            </TableRow>
-          ))}
+          {rows
+            ? rows.map((row) => (
+                <TableRow key={row.id}>
+                  {columns.map((col) => {
+                    return <TableCell key={`${row.id}${col.field}`}>{row[col.field]}</TableCell>;
+                  })}
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
     </TableContainer>
