@@ -29,7 +29,7 @@ const StudentsContainer = () => {
               color='default'
               size='small'
               component={Link}
-              to={`/admin-app/students/${params.row.id}`}/edit
+              to={`/admin-app/students/${params.row.id}/edit`}
             >
               Edit         
             </Button>
