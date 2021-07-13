@@ -48,7 +48,7 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
   try {
     const response = await axios.post('/groups', newGroup);
     const groupId = response.data.id;
-    addStudentsInGroup(groupId, students);
+    await addStudentsInGroup(groupId, students);
     dispatch(addNewGroupSuccess(response.data));
     dispatch(push('/admin-app/groups'));
   } catch (error) {
