@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accordion: {
     border: '1px solid rgba(0, 0, 0, .125)',
+    marginBottom: 10,
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
