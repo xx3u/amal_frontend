@@ -48,6 +48,7 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
       const studentIds = students.map((student) => student.id);
       await axios.put(`/groups/${groupId}/add-students`, { studentIds });
       dispatch(fetchStudents());
+      dispatch(fetchGroups());
     }
     dispatch(addNewGroupSuccess(response.data));
   } catch (error) {
