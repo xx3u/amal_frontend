@@ -8,6 +8,7 @@ import StudentsPage from './pages/StudentsPage/StudentsPage';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
 import CreateStudentForm from './containers/Forms/Student/CreateStudentForm';
 import EditStudentForm from './containers/Forms/Student/EditStudentForm';
+import StudentDetailPage from './pages/StudentDetailPage/StudentDetailPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/admin-app/students/add' exact component={CreateStudentForm} />
           <Route path='/admin-app/students' exact component={StudentsPage} />
           <Route path='/admin-app/groups' exact component={GroupsPage} />
+          <Route path='/admin-app/students/:id' exact component={StudentDetailPage} />
         </Switch>
       </Layout>
     </div>
