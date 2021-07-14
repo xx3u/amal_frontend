@@ -7,6 +7,7 @@ import {
   FETCH_GROUPS_REQUEST,
   FETCH_GROUPS_SUCCESS,
 } from '../actionTypes';
+import { fetchStudents } from './studentsAction';
 
 export const fetchGroupsSuccess = (groups) => ({
   type: FETCH_GROUPS_SUCCESS,
@@ -37,18 +38,17 @@ export const fetchGroups = () => async (dispatch) => {
 const addNewGroupRequest = () => ({ type: ADD_NEW_GROUP_REQUEST });
 const addNewGroupSuccess = (data) => ({ type: ADD_NEW_GROUP_SUCCESS, data });
 const addNewGroupFailure = (error) => ({ type: ADD_NEW_GROUP_FAILURE, error });
-const addStudentsInGroup = async (groupId, students) => {
-  if (students.length && groupId) {
-    const studentIds = students.map((student) => student.id);
-    await axios.put(`/groups/${groupId}/add-students`, { studentIds });
-  }
-};
+
 export const addNewGroup = (newGroup, students) => async (dispatch) => {
   dispatch(addNewGroupRequest());
   try {
     const response = await axios.post('/groups', newGroup);
     const groupId = response.data.id;
-    await addStudentsInGroup(groupId, students);
+    if (students.length && groupId) {
+      const studentIds = students.map((student) => student.id);
+      await axios.put(`/groups/${groupId}/add-students`, { studentIds });
+      dispatch(fetchStudents());
+    }
     dispatch(addNewGroupSuccess(response.data));
   } catch (error) {
     dispatch(addNewGroupFailure(error));
