@@ -6,7 +6,6 @@ import StudentDetailItem from '../../components/StudentDetailItem/StudentDetailI
 
 const StudentDetailContainer = ({ id }) => {
   const dispatch = useDispatch();
-  //const id = props.match.url.split('/')[3];
   const studentById = useSelector((state) => state.students.student);
 
   useEffect(() => {
