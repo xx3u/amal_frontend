@@ -119,8 +119,8 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       </Grid>
       <Grid item xs={6}>
         <FormItem
-          name='stream'
-          value={student.stream || ''}
+          name='streamId'
+          value={student.streamId || ''}
           onChange={inputChangeHandler}
           label='Направление'
           type='text'
