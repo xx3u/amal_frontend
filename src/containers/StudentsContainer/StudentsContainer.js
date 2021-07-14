@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import StudentsTable from '../../components/TableItems/TableItems';
 import { fetchStudents } from '../../store/actions/studentsAction';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const StudentsContainer = () => {
@@ -18,20 +18,31 @@ const StudentsContainer = () => {
     {
       field: 'Действия',
       sortable: false,
-      width: 120,
+      width: 260,
       sortable: false,
       disableClickEventBubbling: true,
       renderCell: function cellEdit(params) {
         return (
-          <Button
-            variant='contained'
-            color='default'
-            size='small'
-            component={Link}
-            to={`/admin-app/students/${params.row.id}/edit`}
-          >
-            Edit         
-          </Button>
+          <Grid container direction='row' justify='space-evenly'>
+            <Button
+              variant='contained'
+              color='default'
+              size='small'
+              component={Link}
+              to={`/admin-app/students/${params.row.id}/edit`}
+            >
+              Edit         
+            </Button>
+            <Button
+              variant='contained'
+              color='default'
+              size='small'
+              component={Link}
+              to={`/admin-app/students/${params.row.id}`}
+            >
+              Детали         
+            </Button>
+          </Grid>
         );
       },
     },
