@@ -21,7 +21,8 @@ const StudentDetailContainer = ({ id }) => {
       <StudentDetailItem label='Язык:' info={studentById.language} />
       <StudentDetailItem label='Школа:' info={studentById.school} />
       <StudentDetailItem label='Контакты родителя(ей):' info={studentById.parentsContacts} />
-      <StudentDetailItem label='Направление:' info={studentById.streamId} />
+      <StudentDetailItem label='Направление:' info={studentById.Stream.name} />
+      <StudentDetailItem label='Группа:' info={studentById.Group ? studentById.Group.groupName : ''} />
       <StudentDetailItem label='Адрес:' info={studentById.address} />
       <StudentDetailItem label='Телефон:' info={studentById.telephone} />
       <StudentDetailItem label='Email:' info={studentById.email} />
