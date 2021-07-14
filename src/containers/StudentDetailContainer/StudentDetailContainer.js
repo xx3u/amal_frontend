@@ -21,7 +21,7 @@ const StudentDetailContainer = ({ id }) => {
       <StudentDetailItem label='Язык:' info={studentById.language} />
       <StudentDetailItem label='Школа:' info={studentById.school} />
       <StudentDetailItem label='Контакты родителя(ей):' info={studentById.parentsContacts} />
-      <StudentDetailItem label='Поток:' info={studentById.stream} />
+      <StudentDetailItem label='Поток:' info={studentById.streamId} />
       <StudentDetailItem label='Адрес:' info={studentById.address} />
       <StudentDetailItem label='Телефон:' info={studentById.telephone} />
       <StudentDetailItem label='Email:' info={studentById.email} />
