@@ -50,7 +50,6 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
     const groupId = response.data.id;
     await addStudentsInGroup(groupId, students);
     dispatch(addNewGroupSuccess(response.data));
-    dispatch(push('/admin-app/groups'));
   } catch (error) {
     dispatch(addNewGroupFailure(error));
   }
