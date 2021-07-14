@@ -16,7 +16,7 @@ const GroupForm = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchStudents());
+    if (!students.length) dispatch(fetchStudents());
   }, [dispatch]);
 
   const inputChangeHandler = (e) => {
@@ -30,6 +30,9 @@ const GroupForm = () => {
     setGroup({ ...group, groupName: '' });
     setSelectedStudents([]);
   };
+
+  const emptyGroupFilter = (option) => !option.groupId;
+
   return (
     <FormSubmission title='Добавить группу' maxWidth='sm' onSubmit={submitFormHandler}>
       <Grid item xs={12}>
@@ -50,6 +53,9 @@ const GroupForm = () => {
           }}
           multiple
           id='tags-outlined'
+          filterOptions={(options) => {
+            return options.filter(emptyGroupFilter);
+          }}
           options={students}
           getOptionLabel={(option) => `${option.lastName} ${option.firstName}`}
           filterSelectedOptions
