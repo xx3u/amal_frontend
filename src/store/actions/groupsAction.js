@@ -7,6 +7,7 @@ import {
   FETCH_GROUPS_REQUEST,
   FETCH_GROUPS_SUCCESS,
 } from '../actionTypes';
+import { fetchStudents } from './studentsAction';
 
 export const fetchGroupsSuccess = (groups) => ({
   type: FETCH_GROUPS_SUCCESS,
@@ -38,11 +39,18 @@ const addNewGroupRequest = () => ({ type: ADD_NEW_GROUP_REQUEST });
 const addNewGroupSuccess = (data) => ({ type: ADD_NEW_GROUP_SUCCESS, data });
 const addNewGroupFailure = (error) => ({ type: ADD_NEW_GROUP_FAILURE, error });
 
-export const addNewGroup = (newGroup) => async (dispatch) => {
+export const addNewGroup = (newGroup, students) => async (dispatch) => {
   dispatch(addNewGroupRequest());
   try {
-    await axios.post('/groups', newGroup).then((response) => dispatch(addNewGroupSuccess(response.data)));
-    dispatch(push('/admin-app/groups'));
+    const response = await axios.post('/groups', newGroup);
+    const groupId = response.data.id;
+    if (students.length && groupId) {
+      const studentIds = students.map((student) => student.id);
+      await axios.put(`/groups/${groupId}/add-students`, { studentIds });
+      dispatch(fetchStudents());
+      dispatch(fetchGroups());
+    }
+    dispatch(addNewGroupSuccess(response.data));
   } catch (error) {
     dispatch(addNewGroupFailure(error));
   }
