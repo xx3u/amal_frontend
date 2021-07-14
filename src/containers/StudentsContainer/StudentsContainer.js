@@ -11,7 +11,7 @@ const StudentsContainer = () => {
     { field: 'firstName', headerName: 'Имя', width: 150 },
     { field: 'lastName', headerName: 'Фамилия', width: 200 },
     { field: 'language', headerName: 'Язык обучения', width: 180 },
-    { field: 'stream', headerName: 'Направление', width: 170 },
+    { field: 'streamName', headerName: 'Направление', width: 170 },
     { field: 'parentsContacts', headerName: 'Контакты родителей', width: 250 },
     { field: 'status', headerName: 'Статус', width: 150 },
     { field: 'grade', headerName: 'Класс', type: 'number', width: 120 },
@@ -37,7 +37,10 @@ const StudentsContainer = () => {
     },
   ];
 
-  const rows = useSelector((state) => state.students.students);
+  const students = useSelector((state) => state.students.students);
+  const changedStudents = students.map((student) => {
+    return { ...student, streamName: student.Stream.name };
+  });
 
   const dispatch = useDispatch();
 
@@ -47,7 +50,7 @@ const StudentsContainer = () => {
 
   return (
     <div className='StudentsContainer'>
-      <StudentsTable rows={rows} columns={columns} />
+      <StudentsTable rows={changedStudents} columns={columns} />
     </div>
   );
 };
