@@ -14,6 +14,7 @@ const StudentsContainer = () => {
     { field: 'streamName', headerName: 'Направление', width: 170 },
     { field: 'parentsContacts', headerName: 'Контакты родителей', width: 250 },
     { field: 'status', headerName: 'Статус', width: 150 },
+    { field: 'groupName', headerName: 'Группа', width: 130 },
     { field: 'grade', headerName: 'Класс', type: 'number', width: 120 },
     {
       field: 'Действия',
@@ -50,7 +51,7 @@ const StudentsContainer = () => {
 
   const students = useSelector((state) => state.students.students);
   const changedStudents = students.map((student) => {
-    return { ...student, streamName: student.Stream.name };
+    return { ...student, streamName: student.Stream.name, groupName: student.Group ? student.Group.groupName : '' };
   });
 
   const dispatch = useDispatch();
