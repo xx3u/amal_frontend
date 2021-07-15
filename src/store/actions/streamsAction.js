@@ -15,14 +15,12 @@ const fetchStreamsFailure = (payload) => ({
   payload,
 });
 
-export const fetchStreams = () => {
-  async (dispatch) => {
-    dispatch(fetchStreamsRequest());
-    try {
-      const response = await axios('/streams');
-      dispatch(fetchStreamsSuccess(response.data));
-    } catch (error) {
-      dispatch(fetchStreamsFailure(error));
-    }
-  };
+export const fetchStreams = () => async (dispatch) => {
+  dispatch(fetchStreamsRequest());
+  try {
+    const response = await axios('/streams');
+    dispatch(fetchStreamsSuccess(response.data));
+  } catch (error) {
+    dispatch(fetchStreamsFailure(error));
+  }
 };
