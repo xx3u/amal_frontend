@@ -4,6 +4,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import studentsReducer from './reducers/studentsReducer';
 import groupsReducer from './reducers/groupsReducer';
+import streamsReducer from './reducers/streamsReducer';
 
 export const history = createBrowserHistory();
 
@@ -12,6 +13,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   students: studentsReducer,
   groups: groupsReducer,
+  streams: streamsReducer,
   router: connectRouter(history),
 });
 
