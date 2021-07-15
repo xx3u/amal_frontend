@@ -4,6 +4,8 @@ import StudentsTable from '../../components/TableItems/TableItems';
 import { fetchStudents } from '../../store/actions/studentsAction';
 import { Button, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Actions from '../../components/Students/Actions/Actions';
+import Search from '../../components/Students/Search/Search';
 
 const StudentsContainer = () => {
   const columns = [
@@ -61,6 +63,12 @@ const StudentsContainer = () => {
 
   return (
     <div className='StudentsContainer'>
+      <Actions>
+        <Button variant='contained' component={Link} to='/admin-app/students/add' color='default'>
+          Добавить нового ученика
+        </Button>
+        <Search />
+      </Actions>
       <StudentsTable rows={changedStudents} columns={columns} />
     </div>
   );
