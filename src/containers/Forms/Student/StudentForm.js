@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Grid, MenuItem } from '@material-ui/core';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchStreams } from '../../../store/actions/streamsAction';
 
 const statuses = [
   {
@@ -31,6 +33,12 @@ const languages = [
 
 const StudentForm = ({ title, submitData, selectedStudent, id }) => {
   const [student, setStudent] = useState(selectedStudent);
+  const { streams } = useSelector((state) => state.streams);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchStreams());
+  }, []);
 
   useEffect(() => {
     setStudent(selectedStudent);
@@ -125,7 +133,14 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
           label='Направление'
           type='text'
           required
-        />
+          select
+        >
+          {streams.map((option) => (
+            <MenuItem key={option.id} value={option.id}>
+              {option.name}
+            </MenuItem>
+          ))}
+        </FormItem>
       </Grid>
       <Grid item xs={6}>
         <FormItem
