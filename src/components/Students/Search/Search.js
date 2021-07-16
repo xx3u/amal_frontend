@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = () => {
+const Search = ({ searchHandler }) => {
   const classes = useStyles();
   const [text, setText] = useState({
     firstName: '',
@@ -53,7 +53,14 @@ const Search = () => {
         }}
         value={text.firstName}
       />
-      <Button variant='contained'>Поиск</Button>
+      <Button
+        variant='contained'
+        onClick={() => {
+          searchHandler(text.firstName, text.lastName);
+        }}
+      >
+        Поиск
+      </Button>
     </div>
   );
 };

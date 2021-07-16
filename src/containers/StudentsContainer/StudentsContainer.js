@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import StudentsTable from '../../components/TableItems/TableItems';
-import { fetchStudents } from '../../store/actions/studentsAction';
+import { fetchStudents, getStudentsByParams } from '../../store/actions/studentsAction';
 import { Button, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
@@ -51,11 +51,19 @@ const StudentsContainer = () => {
   ];
 
   const students = useSelector((state) => state.students.students);
-  const changedStudents = students.map((student) => {
+  let changedStudents = students.map((student) => {
     return { ...student, streamName: student.Stream.name };
   });
 
   const dispatch = useDispatch();
+
+  const searchHandler = (firstName, lastName) => {
+    dispatch(getStudentsByParams(firstName, lastName));
+    // changedStudents = changedStudents.filter((student) => {
+    //   console.log('firstName', student.firstName.toLowerCase().includes(firstName.toLowerCase()));
+    //   return student.firstName.toLowerCase().includes(firstName.toLowerCase());
+    // });
+  };
 
   useEffect(() => {
     dispatch(fetchStudents());
@@ -67,7 +75,7 @@ const StudentsContainer = () => {
         <Button variant='contained' component={Link} to='/admin-app/students/add' color='default'>
           Добавить нового ученика
         </Button>
-        <Search />
+        <Search searchHandler={searchHandler} />
       </Actions>
       <StudentsTable rows={changedStudents} columns={columns} />
     </div>
