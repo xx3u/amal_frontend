@@ -24,7 +24,7 @@ const Header = () => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <Grid container justify='space-between' direction='row'>
+        <Grid container justifyContent='space-between' direction='row'>
           <Grid item>
             <Typography variant='h6' className={classes.logo}>
               AMAL LOGO
