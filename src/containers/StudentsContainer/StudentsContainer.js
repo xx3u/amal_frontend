@@ -60,10 +60,6 @@ const StudentsContainer = () => {
 
   const searchHandler = (firstName, lastName) => {
     dispatch(getStudentsByParams(firstName, lastName));
-    // changedStudents = changedStudents.filter((student) => {
-    //   console.log('firstName', student.firstName.toLowerCase().includes(firstName.toLowerCase()));
-    //   return student.firstName.toLowerCase().includes(firstName.toLowerCase());
-    // });
   };
 
   useEffect(() => {

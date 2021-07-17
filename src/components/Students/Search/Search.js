@@ -32,17 +32,6 @@ const Search = ({ searchHandler }) => {
   return (
     <div className={classes.search}>
       <TextField
-        name='lastName'
-        className={classes.textField}
-        label='Фамилия'
-        variant='outlined'
-        size='small'
-        onChange={(e) => {
-          changeInput(e);
-        }}
-        value={text.lastName}
-      />
-      <TextField
         name='firstName'
         className={classes.textField}
         label='Имя'
@@ -52,6 +41,17 @@ const Search = ({ searchHandler }) => {
           changeInput(e);
         }}
         value={text.firstName}
+      />
+      <TextField
+        name='lastName'
+        className={classes.textField}
+        label='Фамилия'
+        variant='outlined'
+        size='small'
+        onChange={(e) => {
+          changeInput(e);
+        }}
+        value={text.lastName}
       />
       <Button
         variant='contained'
