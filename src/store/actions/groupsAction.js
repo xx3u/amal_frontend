@@ -6,6 +6,9 @@ import {
   FETCH_GROUPS_FAILURE,
   FETCH_GROUPS_REQUEST,
   FETCH_GROUPS_SUCCESS,
+  UPDATE_GROUP_FAILURE,
+  UPDATE_GROUP_REQUEST,
+  UPDATE_GROUP_SUCCESS,
 } from '../actionTypes';
 import { fetchStudents } from './studentsAction';
 
@@ -53,5 +56,20 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
     dispatch(addNewGroupSuccess(response.data));
   } catch (error) {
     dispatch(addNewGroupFailure(error));
+  }
+};
+
+const updateGroupRequest = () => ({ type: UPDATE_GROUP_REQUEST });
+const updateGroupSuccess = (payload) => ({ type: UPDATE_GROUP_SUCCESS, payload });
+const updateGroupFailure = (payload) => ({ type: UPDATE_GROUP_FAILURE, payload });
+
+export const fetchUpdateGroup = (payload) => async (dispatch) => {
+  dispatch(updateGroupRequest());
+  try {
+    const response = await axios.put(`/groups/${payload.id}`, payload.value);
+    dispatch(updateGroupSuccess(response.data));
+    dispatch(fetchGroups());
+  } catch (error) {
+    dispatch(updateGroupFailure(error));
   }
 };
