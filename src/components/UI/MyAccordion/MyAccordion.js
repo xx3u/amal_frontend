@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles, Accordion, AccordionSummary, AccordionDetails, Typography } from '@material-ui/core';
+import { makeStyles, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditableTitle from '../EditableTitle/EditableTitle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,10 +10,6 @@ const useStyles = makeStyles((theme) => ({
   accordion: {
     border: '1px solid rgba(0, 0, 0, .125)',
     marginBottom: 10,
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
   },
 }));
 
@@ -23,7 +20,7 @@ const MyAccordion = ({ groupName, children }) => {
     <div className={classes.root}>
       <Accordion className={classes.accordion}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-          <Typography className={classes.heading}>{groupName}</Typography>
+          <EditableTitle value={groupName} />
         </AccordionSummary>
         <AccordionDetails>{children}</AccordionDetails>
       </Accordion>
