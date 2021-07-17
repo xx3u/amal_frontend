@@ -13,14 +13,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MyAccordion = ({ groupName, children }) => {
+const MyAccordion = ({ groupName, children, onSaveTitle }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Accordion className={classes.accordion}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-          <EditableTitle value={groupName} />
+          <EditableTitle value={groupName} onClickSave={onSaveTitle} />
         </AccordionSummary>
         <AccordionDetails>{children}</AccordionDetails>
       </Accordion>
