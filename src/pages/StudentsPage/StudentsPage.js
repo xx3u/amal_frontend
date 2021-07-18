@@ -6,7 +6,7 @@ import StudentsContainer from '../../containers/StudentsContainer/StudentsContai
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
-    marginBottom: theme.spacing(4),
+    margin: theme.spacing(4),
   },
 }));
 
@@ -14,7 +14,6 @@ const StudentsPage = () => {
   const classes = useStyles();
   return (
     <div>
-      <h1>Ученики</h1>
       <Button
         variant='contained'
         component={Link}
