@@ -299,11 +299,11 @@ export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, nu
                       {columns.map((column) => (
                         <TableCell key={nanoid()}>{row[column]}</TableCell>
                       ))}
-                      {/* <TableCell style={{ visibility: editBtn }}>
+                      <TableCell style={{ visibility: editBtn }}>
                         <IconButton component={Link} to={`/admin-app/students/${row.id}/edit`}>
                           <EditIcon />
                         </IconButton>
-                      </TableCell> */}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

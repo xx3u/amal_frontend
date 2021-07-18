@@ -47,7 +47,13 @@ const StudentsContainer = () => {
 
   return (
     <div className='StudentsContainer'>
-      <EnhancedTable rows={changedStudents} headCells={headCells} tableTitle='Студенты' numberOfRows={10} />
+      <EnhancedTable
+        rows={changedStudents}
+        headCells={headCells}
+        tableTitle='Студенты'
+        numberOfRows={10}
+        editBtn='visible'
+      />
     </div>
   );
 };
