@@ -53,6 +53,7 @@ const StudentsContainer = () => {
         tableTitle='Студенты'
         numberOfRows={10}
         editBtn='visible'
+        moreBtn='visible'
       />
     </div>
   );

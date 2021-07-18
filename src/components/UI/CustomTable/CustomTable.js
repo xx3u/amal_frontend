@@ -21,6 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { nanoid } from 'nanoid';
+import CustomButton from './../CustomButton/CustomButton';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -193,7 +194,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, numberOfRows }) {
+export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, numberOfRows, moreBtn }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
@@ -215,7 +216,7 @@ export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, nu
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -303,6 +304,16 @@ export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, nu
                         <IconButton component={Link} to={`/admin-app/students/${row.id}/edit`}>
                           <EditIcon />
                         </IconButton>
+                      </TableCell>
+                      <TableCell style={{ visibility: moreBtn }}>
+                        <CustomButton
+                          variant='contained'
+                          color='default'
+                          size='small'
+                          component={Link}
+                          to={`/admin-app/students/${row.id}`}
+                          title='Детали'
+                        />
                       </TableCell>
                     </TableRow>
                   );
