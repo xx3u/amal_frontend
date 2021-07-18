@@ -5,6 +5,9 @@ import {
   FETCH_GROUPS_FAILURE,
   FETCH_GROUPS_REQUEST,
   FETCH_GROUPS_SUCCESS,
+  UPDATE_GROUP_FAILURE,
+  UPDATE_GROUP_REQUEST,
+  UPDATE_GROUP_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -34,6 +37,13 @@ const reducer = (state = initialState, action) => {
       return { ...state, groups: updatedGroups, loading: false };
     }
     case ADD_NEW_GROUP_FAILURE:
+      return { ...state, error: action.error, loading: false };
+
+    case UPDATE_GROUP_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_GROUP_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case UPDATE_GROUP_FAILURE:
       return { ...state, error: action.error, loading: false };
     default:
       return state;
