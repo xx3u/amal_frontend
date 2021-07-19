@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MyAccordion from '../../components/UI/MyAccordion/MyAccordion';
 import SimpleTable from '../../components/UI/SimpleTable/SimpleTable';
-import { fetchGroups } from '../../store/actions/groupsAction';
+import { fetchGroups, fetchUpdateGroup } from '../../store/actions/groupsAction';
 
 const GroupsContainer = () => {
   const dispatch = useDispatch();
@@ -18,11 +18,17 @@ const GroupsContainer = () => {
     dispatch(fetchGroups());
   }, [dispatch]);
 
+  const onSaveTitleHandler = (id) => {
+    return (value) => {
+      dispatch(fetchUpdateGroup({ id, value: { groupName: value } }));
+    };
+  };
+
   return (
     <div className='GroupsContainer'>
       {groups.map((group) => {
         return (
-          <MyAccordion key={group.id} groupName={group.groupName}>
+          <MyAccordion key={group.id} groupName={group.groupName} onSaveTitle={onSaveTitleHandler(group.id)}>
             <SimpleTable rows={group.Students} columns={columns} />
           </MyAccordion>
         );
