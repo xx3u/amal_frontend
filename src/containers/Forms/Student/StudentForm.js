@@ -41,7 +41,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
   useEffect(() => {
     dispatch(fetchStreams());
     dispatch(fetchGroups());
-  }, []);   
+  }, []);
 
   useEffect(() => {
     setStudent(selectedStudent);
