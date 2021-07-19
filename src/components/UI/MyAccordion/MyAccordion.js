@@ -3,7 +3,7 @@ import { makeStyles, Accordion, AccordionSummary, AccordionDetails } from '@mate
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import EditableTitle from '../EditableTitle/EditableTitle';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
   },
