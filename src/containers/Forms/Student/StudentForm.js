@@ -44,10 +44,6 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
   }, []);   
 
   useEffect(() => {
-    dispatch(fetchGroups());
-  }, []);
-
-  useEffect(() => {
     setStudent(selectedStudent);
   }, [selectedStudent]);
 
