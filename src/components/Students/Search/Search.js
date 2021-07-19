@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, makeStyles, TextField } from '@material-ui/core';
+import { IconButton, makeStyles, TextField, Tooltip } from '@material-ui/core';
+import { Search as SearchIcon, Clear } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Search = ({ searchHandler }) => {
+const Search = ({ searchHandler, dropSearchHandler }) => {
   const classes = useStyles();
   const [text, setText] = useState({
     firstName: '',
@@ -26,6 +27,12 @@ const Search = ({ searchHandler }) => {
     const { name, value } = e.target;
     setText((prev) => {
       return { ...prev, [name]: value };
+    });
+  };
+
+  const resetText = () => {
+    setText((prev) => {
+      return { ...prev, firstName: '', lastName: '' };
     });
   };
 
@@ -53,14 +60,27 @@ const Search = ({ searchHandler }) => {
         }}
         value={text.lastName}
       />
-      <Button
-        variant='contained'
-        onClick={() => {
-          searchHandler(text.firstName, text.lastName);
-        }}
-      >
-        Поиск
-      </Button>
+      <Tooltip title='Поиск'>
+        <IconButton
+          color='primary'
+          onClick={() => {
+            searchHandler(text.firstName, text.lastName);
+          }}
+        >
+          <SearchIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title='Сброс'>
+        <IconButton
+          color='primary'
+          onClick={() => {
+            resetText();
+            dropSearchHandler();
+          }}
+        >
+          <Clear />
+        </IconButton>
+      </Tooltip>
     </div>
   );
 };

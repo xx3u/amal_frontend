@@ -62,6 +62,10 @@ const StudentsContainer = () => {
     dispatch(getStudentsByParams(firstName, lastName));
   };
 
+  const dropSearchHandler = () => {
+    dispatch(fetchStudents());
+  };
+
   useEffect(() => {
     dispatch(fetchStudents());
   }, [dispatch]);
@@ -72,7 +76,7 @@ const StudentsContainer = () => {
         <Button variant='contained' component={Link} to='/admin-app/students/add' color='default'>
           Добавить нового ученика
         </Button>
-        <Search searchHandler={searchHandler} />
+        <Search searchHandler={searchHandler} dropSearchHandler={dropSearchHandler} />
       </Actions>
       <StudentsTable rows={changedStudents} columns={columns} />
     </div>
