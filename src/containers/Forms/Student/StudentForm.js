@@ -4,6 +4,7 @@ import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchStreams } from '../../../store/actions/streamsAction';
+import { fetchGroups } from '../../../store/actions/groupsAction';
 
 const statuses = [
   {
@@ -34,11 +35,13 @@ const languages = [
 const StudentForm = ({ title, submitData, selectedStudent, id }) => {
   const [student, setStudent] = useState(selectedStudent);
   const { streams } = useSelector((state) => state.streams);
+  const { groups } = useSelector((state) => state.groups);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchStreams());
-  }, []);
+    dispatch(fetchGroups());
+  }, []);   
 
   useEffect(() => {
     setStudent(selectedStudent);
@@ -142,7 +145,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
           ))}
         </FormItem>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={3}>
         <FormItem
           name='status'
           value={student.status || 'В ожидании'}
@@ -155,6 +158,22 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
           {statuses.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.value}
+            </MenuItem>
+          ))}
+        </FormItem>
+      </Grid>
+      <Grid item xs={3}>
+        <FormItem
+          name='groupId'
+          value={student.groupId || ''}
+          onChange={inputChangeHandler}
+          label='Группа'
+          type='text'
+          select
+        >
+          {groups.map((option) => (
+            <MenuItem key={option.id} value={option.id}>
+              {option.groupName}
             </MenuItem>
           ))}
         </FormItem>
