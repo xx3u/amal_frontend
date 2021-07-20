@@ -20,9 +20,15 @@ const PaymentForm = () => {
   const { students } = useSelector((state) => state.students);
   const dispatch = useDispatch();
 
+  const [student, setStudent] = useState({id: ''});
+
   useEffect(() => {
     dispatch(fetchStudents());
   }, [dispatch]);
+
+  const inputChangeHandler = (value) => {
+    value ? setStudent({...student, id: value.id}) : '';
+  };
 
   return(
     <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
@@ -30,15 +36,12 @@ const PaymentForm = () => {
         <FormSubmission title='Добавить оплату' maxWidth='md'>
           <Grid item xs={12}>
             <Autocomplete
-              // value={students}
-              // onChange={(event, selectedStudents) => {
-              //   setSelectedStudents(selectedStudents);
-              // }}
               id='combo-box-demo'
               options={students}
               getOptionLabel={(option) => `${option.lastName} ${option.firstName}`}
+              onChange={(value) => inputChangeHandler(value)}
               renderInput={(params) => (
-                <TextField {...params} variant='outlined' label='Добавить студента' placeholder='Выберите' />
+                <TextField {...params} variant='outlined' label='Выберите студента' placeholder='Студент' />
               )}
             />
         </Grid>
