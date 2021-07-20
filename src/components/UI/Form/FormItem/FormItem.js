@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
 
-const FormItem = ({ required, name, type, multiline, label, value, onChange, className, error, select, children }) => (
+const FormItem = ({ required, name, type, multiline, label, value, onChange, className, error, select, defaultValue, children }) => (
   <TextField
     variant='outlined'
     fullWidth
@@ -19,6 +19,7 @@ const FormItem = ({ required, name, type, multiline, label, value, onChange, cla
     error={!!error}
     helperText={error}
     select={select}
+    defaultValue={defaultValue}
   >
     {children}
   </TextField>
