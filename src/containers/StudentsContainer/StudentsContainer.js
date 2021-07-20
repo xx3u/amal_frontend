@@ -2,12 +2,20 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
 import { fetchStudents, getStudentsByParams } from '../../store/actions/studentsAction';
-import { Button } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
 import Search from '../../components/Students/Search/Search';
 
+const useStyles = makeStyles(() => ({
+  StudentsContainer: {
+    marginTop: 20,
+  },
+}));
+
 const StudentsContainer = () => {
+  const classes = useStyles();
+
   const headCells = [
     { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
     { id: 'firstName', numeric: false, disablePadding: true, label: 'Имя' },
@@ -58,7 +66,7 @@ const StudentsContainer = () => {
   }, [dispatch]);
 
   return (
-    <div className='StudentsContainer'>
+    <div className={classes.StudentsContainer}>
       <Actions>
         <Button variant='contained' component={Link} to='/admin-app/students/add' color='default'>
           Добавить нового ученика
