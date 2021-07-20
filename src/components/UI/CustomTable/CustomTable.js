@@ -14,7 +14,6 @@ import {
   IconButton,
   makeStyles,
 } from '@material-ui/core';
-import { nanoid } from 'nanoid';
 import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 
@@ -171,7 +170,7 @@ export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, nu
                         {row.id}
                       </TableCell>
                       {columns.map((column) => (
-                        <TableCell key={nanoid()}>{row[column]}</TableCell>
+                        <TableCell key={column}>{row[column]}</TableCell>
                       ))}
                       <TableCell style={{ visibility: editBtn }}>
                         <IconButton component={Link} to={`/admin-app/students/${row.id}/edit`}>
