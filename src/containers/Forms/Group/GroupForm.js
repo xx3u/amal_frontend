@@ -16,7 +16,7 @@ const GroupForm = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   useEffect(() => {
-    if (!students.length) dispatch(fetchStudents());
+    dispatch(fetchStudents());
   }, [dispatch]);
 
   const inputChangeHandler = (e) => {
