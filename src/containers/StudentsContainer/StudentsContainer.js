@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import StudentsTable from '../../components/TableItems/TableItems';
 import { fetchStudents, getStudentsByParams } from '../../store/actions/studentsAction';
 import { Button, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -78,7 +77,6 @@ const StudentsContainer = () => {
         </Button>
         <Search searchHandler={searchHandler} dropSearchHandler={dropSearchHandler} />
       </Actions>
-      <StudentsTable rows={changedStudents} columns={columns} />
     </div>
   );
 };
