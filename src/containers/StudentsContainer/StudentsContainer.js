@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
-import StudentsTable from '../../components/TableItems/TableItems';
 import { fetchStudents, getStudentsByParams } from '../../store/actions/studentsAction';
-import { Button, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
 import Search from '../../components/Students/Search/Search';
