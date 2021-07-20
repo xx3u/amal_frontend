@@ -20,8 +20,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { Button } from '@material-ui/core';
 import { nanoid } from 'nanoid';
-import CustomButton from './../CustomButton/CustomButton';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -261,7 +261,7 @@ export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, nu
           <Table
             className={classes.table}
             aria-labelledby='tableTitle'
-            size={dense ? 'small' : 'medium'}
+            size={dense ? 'small' : 'small'}
             aria-label='enhanced table'
           >
             <EnhancedTableHead
@@ -306,14 +306,13 @@ export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, nu
                         </IconButton>
                       </TableCell>
                       <TableCell style={{ visibility: moreBtn }}>
-                        <CustomButton
+                        <Button
                           variant='contained'
                           color='default'
                           size='small'
                           component={Link}
                           to={`/admin-app/students/${row.id}`}
-                          title='Детали'
-                        />
+                        >Детали</Button>
                       </TableCell>
                     </TableRow>
                   );
