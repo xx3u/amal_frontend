@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, Button, DialogActions, Grid } from '@material-ui/core';
+import { Dialog, DialogContent, TextField, Grid } from '@material-ui/core';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -20,20 +20,27 @@ const PaymentForm = () => {
   const { students } = useSelector((state) => state.students);
   const dispatch = useDispatch();
 
-  const [student, setStudent] = useState({id: ''});
+  const [student, setStudent] = useState({ id: '' });
+  const today = new Date().toISOString().slice(0, 10);
 
   useEffect(() => {
     dispatch(fetchStudents());
   }, [dispatch]);
 
   const inputChangeHandler = (value) => {
-    value ? setStudent({...student, id: value.id}) : '';
+    value ? setStudent({ ...student, id: value.id }) : '';
   };
 
-  return(
-    <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby='form-dialog-title'
+      maxWidth={'sm'}
+      fullWidth={true}
+    >
       <DialogContent>
-        <FormSubmission title='Добавить оплату' maxWidth='md'>
+        <FormSubmission title='Добавить оплату'>
           <Grid item xs={12}>
             <Autocomplete
               id='combo-box-demo'
@@ -44,13 +51,14 @@ const PaymentForm = () => {
                 <TextField {...params} variant='outlined' label='Выберите студента' placeholder='Студент' />
               )}
             />
-        </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <FormItem id='paymentDate' label='Дата оплаты' type='date' defaultValue={today} />
+          </Grid>
         </FormSubmission>
       </DialogContent>
-      <DialogActions>
-      </DialogActions>
     </Dialog>
-  )
+  );
 };
 
 export default PaymentForm;
