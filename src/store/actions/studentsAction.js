@@ -41,6 +41,20 @@ export const fetchStudents = () => async (dispatch) => {
   }
 };
 
+export const getStudentsByParams = (firstName, lastName) => async (dispatch) => {
+  try {
+    dispatch(fetchStudentsRequest());
+    const response = await axios.get(`/students/?firstname=${firstName}&lastname=${lastName}`);
+    dispatch(fetchStudentsSuccess(response.data));
+  } catch (error) {
+    if (error.response && error.response.data) {
+      dispatch(fetchStudentsFailure(error.response.data));
+    } else {
+      dispatch(fetchStudentsFailure(error));
+    }
+  }
+};
+
 const addNewStudentRequest = () => ({ type: ADD_NEW_STUDENT_REQUEST });
 const addNewStudentSuccess = (data) => ({ type: ADD_NEW_STUDENT_SUCCESS, data });
 const addNewStudentFailure = (error) => ({ type: ADD_NEW_STUDENT_FAILURE, error });
