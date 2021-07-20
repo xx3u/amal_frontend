@@ -55,6 +55,9 @@ const PaymentForm = () => {
           <Grid item xs={12}>
             <FormItem id='paymentDate' label='Дата оплаты' type='date' defaultValue={today} />
           </Grid>
+          <Grid item xs={12}>
+            <FormItem id='paymentAmount' label='Сумма оплаты' type='integer' />
+          </Grid>
         </FormSubmission>
       </DialogContent>
     </Dialog>
