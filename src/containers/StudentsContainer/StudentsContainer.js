@@ -46,7 +46,7 @@ const StudentsContainer = () => {
   const changedStudents = students.map((student) => {
     return {
       ...student,
-      streamName: student.Stream.name,
+      streamName: student.Stream && student.Stream.name,
       groupName: student.Group ? student.Group.groupName : '',
     };
   });
