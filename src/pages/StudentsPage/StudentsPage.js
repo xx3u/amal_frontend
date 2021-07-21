@@ -4,7 +4,6 @@ import StudentsContainer from '../../containers/StudentsContainer/StudentsContai
 const StudentsPage = () => {
   return (
     <div>
-      <h1>Ученики</h1>
       <StudentsContainer />
     </div>
   );
