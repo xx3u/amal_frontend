@@ -1,7 +1,8 @@
 import React from 'react';
+import PaymentsTable from '../../components/PaymetsTable/PaymentsTable';
 
 const PaymentsContainer = () => {
-  return <div></div>;
+  return <PaymentsTable paymentsData={[]} />;
 };
 
 export default PaymentsContainer;
