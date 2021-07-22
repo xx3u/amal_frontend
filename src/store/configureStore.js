@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import studentsReducer from './reducers/studentsReducer';
 import groupsReducer from './reducers/groupsReducer';
 import streamsReducer from './reducers/streamsReducer';
+import paymentsReducer from './reducers/paymentsReducer';
 
 export const history = createBrowserHistory();
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   students: studentsReducer,
   groups: groupsReducer,
   streams: streamsReducer,
+  payments: paymentsReducer,
   router: connectRouter(history),
 });
 
