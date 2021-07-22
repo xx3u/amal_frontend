@@ -14,7 +14,7 @@ const CreateStudentForm = () => {
     parentsContacts: '',
     streamId: '',
     status: 'В ожидании',
-    groupId: '',
+    groupId: null,
     address: '',
     telephone: '',
     email: '',
