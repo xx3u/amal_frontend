@@ -1,3 +1,4 @@
+import axios from '../../axiosApi';
 import { FETCH_PAYMENTS_SUCCESS, FETCH_PAYMENTS_REQUEST, FETCH_PAYMENTS_FAILURE } from '../actionTypes';
 
 const fetchPaymentsRequest = () => ({ type: FETCH_PAYMENTS_REQUEST });
