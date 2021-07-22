@@ -5,7 +5,7 @@ const initialState = {
   error: null,
 };
 
-export default function streamsReducer(state = initialState, action) {
+export default function paymentsReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_PAYMENTS_SUCCESS:
       return { ...state, payments: action.payload, error: null };
