@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
 import { fetchStudents, getStudentsByParams } from '../../store/actions/studentsAction';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
 import Search from '../../components/Students/Search/Search';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
@@ -40,6 +41,38 @@ const StudentsContainer = () => {
     },
     { id: 'groupName', numeric: false, disablePadding: true, label: 'Группа' },
     { id: 'grade', numeric: true, disablePadding: true, label: 'Класс' },
+    {
+      id: 'editBtn',
+      numeric: false,
+      disablePadding: true,
+      label: '',
+      renderCell: function editBtn(row) {
+        return (
+          <IconButton component={Link} to={`/admin-app/students/${row.id}/edit`}>
+            <EditIcon />
+          </IconButton>
+        );
+      },
+    },
+    {
+      id: 'detailBtn',
+      numeric: false,
+      disablePadding: true,
+      label: '',
+      renderCell: function detailBtn(row) {
+        return (
+          <Button
+            variant='contained'
+            color='default'
+            size='small'
+            component={Link}
+            to={`/admin-app/students/${row.id}`}
+          >
+            Детали
+          </Button>
+        );
+      },
+    },
   ];
 
   const students = useSelector((state) => state.students.students);

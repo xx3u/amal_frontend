@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
+
 import {
   Table,
   TableBody,
@@ -10,8 +9,6 @@ import {
   TableRow,
   Paper,
   Checkbox,
-  Button,
-  IconButton,
   makeStyles,
 } from '@material-ui/core';
 import EnhancedTableHead from './EnhancedTableHead';
@@ -67,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, numberOfRows, moreBtn }) {
+export default function EnhancedTable({ headCells, rows, tableTitle, numberOfRows }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
@@ -169,25 +166,11 @@ export default function EnhancedTable({ headCells, rows, editBtn, tableTitle, nu
                       <TableCell component='th' id={labelId} scope='row' padding='none' align='left'>
                         {row.id}
                       </TableCell>
-                      {columns.map((column) => (
-                        <TableCell key={column}>{row[column]}</TableCell>
+                      {columns.map((column, index) => (
+                        <TableCell key={column}>
+                          {(headCells[index + 1].renderCell && headCells[index + 1].renderCell(row)) || row[column]}
+                        </TableCell>
                       ))}
-                      <TableCell style={{ visibility: editBtn }}>
-                        <IconButton component={Link} to={`/admin-app/students/${row.id}/edit`}>
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                      <TableCell style={{ visibility: moreBtn }}>
-                        <Button
-                          variant='contained'
-                          color='default'
-                          size='small'
-                          component={Link}
-                          to={`/admin-app/students/${row.id}`}
-                        >
-                          Детали
-                        </Button>
-                      </TableCell>
                     </TableRow>
                   );
                 })}
