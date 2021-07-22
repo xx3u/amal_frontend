@@ -1,23 +1,30 @@
 import React from 'react';
 import CustomTable from '../UI/CustomTable/CustomTable';
 import { IconButton } from '@material-ui/core';
-import { EditIcon } from '@material-ui/icons/Edit';
+import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
-
+import { format } from 'date-fns';
 const PaymentsTable = ({ paymentsData }) => {
   const headCells = [
-    { id: 'FullName', numeric: false, disablePadding: true, label: 'ФИО' },
+    { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
     {
-      id: 'status',
+      id: 'Student',
       numeric: false,
       disablePadding: true,
-      label: 'Статус оплаты',
+      label: 'ФИО',
+      renderCell: function editBtn(row) {
+        return `${row.Student.lastName} ${row.Student.firstName}`;
+      },
     },
+
     {
       id: 'date',
       numeric: false,
       disablePadding: true,
       label: 'Дата платежа',
+      renderCell: function editBtn(row) {
+        return format(new Date(row.date), 'MM/dd/yyyy');
+      },
     },
     {
       id: 'amount',
@@ -30,9 +37,9 @@ const PaymentsTable = ({ paymentsData }) => {
       numeric: false,
       disablePadding: true,
       label: '',
-      renderCell: function editBtn(params) {
+      renderCell: function editBtn(row) {
         return (
-          <IconButton key={params} component={Link} to={`/admin-app/payments/${params}/edit`}>
+          <IconButton component={Link} to={`/admin-app/payments/${row.id}/edit`}>
             <EditIcon />
           </IconButton>
         );
