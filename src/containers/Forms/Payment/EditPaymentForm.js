@@ -1,20 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogContent, Grid, Button } from '@material-ui/core';
+import { Dialog, DialogContent, Grid } from '@material-ui/core';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPayments } from '../../../store/actions/paymentAction';
+import { getPaymentById } from './../../../store/actions/paymentAction';
 
 const EditPaymentForm = (props) => {
-  const { payments } = useSelector((state) => state.payments);
+  const selectedPayment = useSelector((state) => state.payments.payment);
   const dispatch = useDispatch();
   const paymentId = props.match.url.split('/')[3];
 
-  const today = new Date().toISOString().slice(0, 10);
+  function formatDate(date) {
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+  }
+
+  let convertedDate = formatDate(selectedPayment.date);
+
+  useEffect(() => {
+    dispatch(getPaymentById(paymentId));
+  }, [paymentId]);
+
+  useEffect(() => {
+    setPayment({
+      ...payment,
+      studentId: selectedPayment.studentId,
+      date: convertedDate,
+      amount: selectedPayment.amount,
+    });
+  }, [selectedPayment]);
 
   const [payment, setPayment] = useState({
     studentId: '',
-    date: today,
+    date: '',
     amount: '',
   });
 
@@ -30,13 +54,15 @@ const EditPaymentForm = (props) => {
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
-    setPayment({ ...payment, [name]: value })
+    setPayment({ ...payment, [name]: value });
   };
 
   const submitFormHandler = (e) => {
     e.preventDefault();
     setOpen(false);
   };
+
+  console.log('payment', payment);
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
@@ -47,7 +73,7 @@ const EditPaymentForm = (props) => {
               name='studentId'
               label='Студент'
               type='text'
-              value={student || payment.studentId}
+              value={payment.studentId || ''}
               onChange={inputChangeHandler}
               required
             />
@@ -57,7 +83,7 @@ const EditPaymentForm = (props) => {
               name='date'
               label='Дата оплаты'
               type='date'
-              value={payment.date}
+              value={payment.date || ''}
               onChange={inputChangeHandler}
               required
             />
@@ -67,7 +93,7 @@ const EditPaymentForm = (props) => {
               name='amount'
               label='Сумма оплаты'
               type='text'
-              value={payment.amount}
+              value={payment.amount || ''}
               onChange={inputChangeHandler}
               required
             />
