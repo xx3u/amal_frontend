@@ -7,6 +7,9 @@ import {
   GET_PAYMENT_BY_ID_REQUEST,
   GET_PAYMENT_BY_ID_SUCCESS,
   GET_PAYMENT_BY_ID_FAILURE,
+  UPDATE_PAYMENT_REQUEST,
+  UPDATE_PAYMENT_SUCCESS,
+  UPDATE_PAYMENT_FAILURE,
 } from './../actionTypes';
 
 const initialState = {
@@ -33,6 +36,12 @@ export default function paymentsReducer(state = initialState, action) {
     case GET_PAYMENT_BY_ID_SUCCESS:
       return { ...state, payment: action.data, loading: false };
     case GET_PAYMENT_BY_ID_FAILURE:
+      return { ...state, error: action.error, loading: false };
+    case UPDATE_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_PAYMENT_SUCCESS:
+      return { ...state, loading: false };
+    case UPDATE_PAYMENT_FAILURE:
       return { ...state, error: action.error, loading: false };
     default:
       return state;

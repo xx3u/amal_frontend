@@ -3,7 +3,7 @@ import { Dialog, DialogContent, Grid } from '@material-ui/core';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPayments } from '../../../store/actions/paymentAction';
+import { fetchPayments, updatePayment } from '../../../store/actions/paymentAction';
 import { getPaymentById } from './../../../store/actions/paymentAction';
 import { push } from 'connected-react-router';
 
@@ -11,7 +11,6 @@ const EditPaymentForm = (props) => {
   const selectedPayment = useSelector((state) => state.payments.payment);
   const dispatch = useDispatch();
   const paymentId = props.match.url.split('/')[3];
-  console.log('selectedPayment', selectedPayment);
 
   function formatDate(date) {
     let d = new Date(date),
@@ -65,6 +64,7 @@ const EditPaymentForm = (props) => {
   const submitFormHandler = (e) => {
     e.preventDefault();
     setOpen(false);
+    dispatch(updatePayment(paymentId, { ...payment, studentId: selectedPayment.studentId }));
   };
 
   return (
