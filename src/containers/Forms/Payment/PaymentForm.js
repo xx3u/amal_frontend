@@ -5,6 +5,7 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchStudents } from '../../../store/actions/studentsAction';
+import { addNewPayment } from '../../../store/actions/paymentAction';
 
 const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
   const { students } = useSelector((state) => state.students);
@@ -23,9 +24,15 @@ const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
     amount: '',
   });
 
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     dispatch(fetchStudents());
   }, [dispatch]);
+
+  useEffect(() => {
+    isOpen ? setOpen(true) : setOpen(false);
+  }, [isOpen]);
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -45,11 +52,12 @@ const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-    console.log('payment', payment);
+    dispatch(addNewPayment(payment));
+    setOpen(false);
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
+    <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
       <DialogContent>
         <FormSubmission title={title} onSubmit={submitFormHandler}>
           <Grid item xs={12}>
