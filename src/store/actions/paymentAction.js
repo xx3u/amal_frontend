@@ -39,6 +39,7 @@ export const addNewPayment = (newPayment) => async (dispatch) => {
   try {
     const response = await axios.post('/payments', newPayment);
     dispatch(addNewPaymentSuccess(response.data));
+    dispatch(fetchPayments());
   } catch (error) {
     dispatch(addNewPaymentFailure(error));
   }
