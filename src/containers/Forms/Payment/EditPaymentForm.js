@@ -5,11 +5,13 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPayments } from '../../../store/actions/paymentAction';
 import { getPaymentById } from './../../../store/actions/paymentAction';
+import { push } from 'connected-react-router';
 
 const EditPaymentForm = (props) => {
   const selectedPayment = useSelector((state) => state.payments.payment);
   const dispatch = useDispatch();
   const paymentId = props.match.url.split('/')[3];
+  console.log('selectedPayment', selectedPayment);
 
   function formatDate(date) {
     let d = new Date(date),
@@ -30,7 +32,9 @@ const EditPaymentForm = (props) => {
   useEffect(() => {
     setPayment({
       ...payment,
-      studentId: selectedPayment.studentId,
+      studentId: selectedPayment.Student
+        ? `${selectedPayment.Student.firstName} ${selectedPayment.Student.lastName}`
+        : '',
       date: convertedDate,
       amount: selectedPayment.amount,
     });
@@ -46,6 +50,7 @@ const EditPaymentForm = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch(push('/admin-app/payments'));
   };
 
   useEffect(() => {
@@ -61,8 +66,6 @@ const EditPaymentForm = (props) => {
     e.preventDefault();
     setOpen(false);
   };
-
-  console.log('payment', payment);
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
