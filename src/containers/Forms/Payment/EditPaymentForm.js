@@ -3,7 +3,7 @@ import { Dialog, DialogContent, Grid, Button } from '@material-ui/core';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import { useSelector, useDispatch } from 'react-redux';
-import { addNewPayment, fetchPayments } from '../../../store/actions/paymentAction';
+import { fetchPayments } from '../../../store/actions/paymentAction';
 
 const EditPaymentForm = (props) => {
   const { payments } = useSelector((state) => state.payments);
@@ -35,7 +35,6 @@ const EditPaymentForm = (props) => {
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-    dispatch(addNewPayment(payment));
     setOpen(false);
   };
 
