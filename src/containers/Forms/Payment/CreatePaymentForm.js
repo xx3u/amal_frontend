@@ -7,14 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchStudents } from '../../../store/actions/studentsAction';
 import { addNewPayment } from '../../../store/actions/paymentAction';
 
-const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
+const CreatePaymentForm = ({ isOpen, handleClose, title }) => {
   const { students } = useSelector((state) => state.students);
   const dispatch = useDispatch();
-
-  let student;
-  students.forEach((stud) => {
-    stud.id === studId ? (student = `${stud.firstName} ${stud.lastName}`) : null;
-  });
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -35,15 +30,11 @@ const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
   }, [isOpen]);
 
   const inputChangeHandler = (e) => {
-    const { name, value } = e.target;
-
-    studId
-      ? setPayment({ ...payment, studentId: studId, [name]: value })
-      : setPayment({
-          ...payment,
-          date: e.target.name === 'date' ? e.target.value : payment.date,
-          amount: e.target.name === 'amount' ? e.target.value : payment.amount,
-        });
+    setPayment({
+      ...payment,
+      date: e.target.name === 'date' ? e.target.value : payment.date,
+      amount: e.target.name === 'amount' ? e.target.value : payment.amount,
+    });
   };
 
   const autocompleteChangeHandler = (value) => {
@@ -61,26 +52,15 @@ const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
       <DialogContent>
         <FormSubmission title={title} onSubmit={submitFormHandler}>
           <Grid item xs={12}>
-            {studId ? (
-              <FormItem
-                name='studentId'
-                label='Студент'
-                type='text'
-                value={student || payment.studentId}
-                onChange={inputChangeHandler}
-                required
-              />
-            ) : (
-              <Autocomplete
-                id='combo-box-demo'
-                options={students}
-                getOptionLabel={(option) => `${option.lastName} ${option.firstName}`}
-                onChange={(e, value) => autocompleteChangeHandler(value)}
-                renderInput={(params) => (
-                  <TextField {...params} variant='outlined' label='Выберите студента' placeholder='Студент' required />
-                )}
-              />
-            )}
+            <Autocomplete
+              id='combo-box-demo'
+              options={students}
+              getOptionLabel={(option) => `${option.lastName} ${option.firstName}`}
+              onChange={(e, value) => autocompleteChangeHandler(value)}
+              renderInput={(params) => (
+                <TextField {...params} variant='outlined' label='Выберите студента' placeholder='Студент' required />
+              )}
+            />
           </Grid>
           <Grid item xs={12}>
             <FormItem
@@ -108,4 +88,4 @@ const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
   );
 };
 
-export default PaymentForm;
+export default CreatePaymentForm;
