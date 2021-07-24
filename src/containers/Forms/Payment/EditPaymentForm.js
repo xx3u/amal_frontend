@@ -5,35 +5,31 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPayments, updatePayment } from '../../../store/actions/paymentAction';
 import { getPaymentById } from './../../../store/actions/paymentAction';
-import { push } from 'connected-react-router';
+import { format } from 'date-fns';
 
-const EditPaymentForm = (props) => {
+const EditPaymentForm = ({ isOpen, paymentId }) => {
   const selectedPayment = useSelector((state) => state.payments.payment);
   const dispatch = useDispatch();
-  const paymentId = props.match.url.split('/')[3];
-
-  function formatDate(date) {
-    let d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [year, month, day].join('-');
-  }
-
-  let convertedDate = formatDate(selectedPayment.date);
+  const [open, setOpen] = useState(isOpen.status);
 
   useEffect(() => {
-    dispatch(getPaymentById(paymentId));
+    setOpen(isOpen.status);
+  }, [isOpen]);
+
+  let convertedDate = selectedPayment.date && format(new Date(selectedPayment.date), 'yyyy-MM-dd');
+  let studentName;
+  if (selectedPayment.Student) {
+    studentName = `${selectedPayment.Student.firstName} ${selectedPayment.Student.lastName}`;
+  }
+
+  useEffect(() => {
+    paymentId && dispatch(getPaymentById(paymentId));
   }, [paymentId]);
 
   useEffect(() => {
     setPayment({
       ...payment,
-      studentId: selectedPayment.Student
-        ? `${selectedPayment.Student.firstName} ${selectedPayment.Student.lastName}`
-        : '',
+      studentId: selectedPayment.studentId,
       date: convertedDate,
       amount: selectedPayment.amount,
     });
@@ -45,11 +41,8 @@ const EditPaymentForm = (props) => {
     amount: '',
   });
 
-  const [open, setOpen] = useState(true);
-
   const handleClose = () => {
     setOpen(false);
-    dispatch(push('/admin-app/payments'));
   };
 
   useEffect(() => {
@@ -64,7 +57,7 @@ const EditPaymentForm = (props) => {
   const submitFormHandler = (e) => {
     e.preventDefault();
     setOpen(false);
-    dispatch(updatePayment(paymentId, { ...payment, studentId: selectedPayment.studentId }));
+    dispatch(updatePayment(paymentId, payment));
   };
 
   return (
@@ -72,15 +65,7 @@ const EditPaymentForm = (props) => {
       <DialogContent>
         <FormSubmission title={'Редактировать оплату'} onSubmit={submitFormHandler}>
           <Grid item xs={12}>
-            <FormItem
-              name='studentId'
-              label='Студент'
-              type='text'
-              value={payment.studentId || ''}
-              onChange={inputChangeHandler}
-              disabled
-              required
-            />
+            <FormItem name='studentId' label={studentName} type='text' disabled />
           </Grid>
           <Grid item xs={12}>
             <FormItem

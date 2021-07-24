@@ -6,12 +6,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchStudents } from '../../../store/actions/studentsAction';
 import { addNewPayment } from '../../../store/actions/paymentAction';
+import { format } from 'date-fns';
 
 const CreatePaymentForm = ({ isOpen, title }) => {
   const { students } = useSelector((state) => state.students);
   const dispatch = useDispatch();
 
-  const today = new Date().toISOString().slice(0, 10);
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   const [payment, setPayment] = useState({
     studentId: '',
@@ -34,15 +35,15 @@ const CreatePaymentForm = ({ isOpen, title }) => {
   }, [isOpen]);
 
   const inputChangeHandler = (e) => {
-    setPayment({
-      ...payment,
-      date: e.target.name === 'date' ? e.target.value : payment.date,
-      amount: e.target.name === 'amount' ? e.target.value : payment.amount,
-    });
+    const { name, value } = e.target;
+    setPayment((state) => ({
+      ...state,
+      [name]: value,
+    }));
   };
 
   const autocompleteChangeHandler = (value) => {
-    value ? setPayment({ ...payment, studentId: value.id }) : '';
+    value && setPayment({ ...payment, studentId: value.id });
   };
 
   const submitFormHandler = (e) => {
