@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchStudents } from '../../../store/actions/studentsAction';
 import { addNewPayment } from '../../../store/actions/paymentAction';
 
-const CreatePaymentForm = ({ isOpen, handleClose, title }) => {
+const CreatePaymentForm = ({ isOpen, title }) => {
   const { students } = useSelector((state) => state.students);
   const dispatch = useDispatch();
 
@@ -19,14 +19,18 @@ const CreatePaymentForm = ({ isOpen, handleClose, title }) => {
     amount: '',
   });
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(isOpen.status);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     dispatch(fetchStudents());
   }, [dispatch]);
 
   useEffect(() => {
-    isOpen ? setOpen(true) : setOpen(false);
+    setOpen(isOpen.status);
   }, [isOpen]);
 
   const inputChangeHandler = (e) => {
@@ -45,6 +49,11 @@ const CreatePaymentForm = ({ isOpen, handleClose, title }) => {
     e.preventDefault();
     dispatch(addNewPayment(payment));
     setOpen(false);
+    setPayment({
+      studentId: '',
+      date: today,
+      amount: '',
+    });
   };
 
   return (
