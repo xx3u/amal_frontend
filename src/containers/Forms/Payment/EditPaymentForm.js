@@ -78,6 +78,7 @@ const EditPaymentForm = (props) => {
               type='text'
               value={payment.studentId || ''}
               onChange={inputChangeHandler}
+              disabled
               required
             />
           </Grid>
