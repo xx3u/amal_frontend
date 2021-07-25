@@ -9,4 +9,4 @@ const TeachersPage = () => {
   );
 };
 
-export default TeachersContainer;
+export default TeachersPage;
