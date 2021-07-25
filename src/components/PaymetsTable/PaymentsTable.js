@@ -63,7 +63,7 @@ const PaymentsTable = ({ paymentsData }) => {
       label: '',
       renderCell: function detailBtn(row) {
         return (
-          <Button variant='contained' component={Link} to={`/admin-app/payments/${row.id}`}>
+          <Button variant='contained' component={Link} to={`/admin-app/payments/${row.studentId}`}>
             Детали
           </Button>
         );
