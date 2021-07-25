@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Edit as EditIcon, DeleteForever } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
-import { fetchTeachers } from '../../store/actions/teachersActions';
+import { deleteTeacher, fetchTeachers } from '../../store/actions/teachersActions';
 import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
 
 const TeachersContainer = () => {
@@ -49,15 +49,24 @@ const TeachersContainer = () => {
       numeric: false,
       disablePadding: true,
       label: '',
-      renderCell: function detailBtn(row) {
+      renderCell: function deleteBtn(row) {
         return (
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              deleteTeacherById(row.id);
+            }}
+          >
             <DeleteForever />
           </IconButton>
         );
       },
     },
   ];
+
+  async function deleteTeacherById(teacherId) {
+    await dispatch(deleteTeacher(teacherId));
+    await dispatch(fetchTeachers());
+  }
 
   useEffect(() => {
     dispatch(fetchTeachers());
