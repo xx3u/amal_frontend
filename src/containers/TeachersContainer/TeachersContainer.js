@@ -1,12 +1,14 @@
-import React from 'react';
-import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
-import { useDispatch } from 'react-redux';
-// import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Edit as EditIcon, DeleteForever } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
+import { fetchTeachers } from '../../store/actions/teachersActions';
+import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
 
 const TeachersContainer = () => {
   const dispatch = useDispatch();
+  const teachers = useSelector((state) => state.teachers.teachers);
   const headCells = [
     { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
     { id: 'firstName', numeric: false, disablePadding: true, label: 'Имя' },
@@ -56,10 +58,15 @@ const TeachersContainer = () => {
       },
     },
   ];
+
+  useEffect(() => {
+    dispatch(fetchTeachers());
+  }, [dispatch]);
+
   return (
     <div className='TeachersContainer'>
       <EnhancedTable
-        rows={[]}
+        rows={teachers}
         headCells={headCells}
         tableTitle='Учителя'
         numberOfRows={10}
