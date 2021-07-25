@@ -42,7 +42,7 @@ const PaymentsByStudentId = ({ id }) => {
   ];
 
   return (
-    <Grid item xs={8}>
+    <Grid item xs={12}>
       <Typography className={classes.title}>{`Детализация оплат по студенту: ${student.firstName} ${student.lastName}`}</Typography>
       <SimpleTable columns={columns} rows={changedPayments} />
     </Grid>
