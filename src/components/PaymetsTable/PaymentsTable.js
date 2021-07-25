@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import CustomTable from '../UI/CustomTable/CustomTable';
-import { IconButton } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { format } from 'date-fns';
 import EditPaymentForm from './../../containers/Forms/Payment/EditPaymentForm';
+import { Link } from 'react-router-dom';
 
 const PaymentsTable = ({ paymentsData }) => {
   const [isOpen, setIsOpen] = useState({ status: false });
@@ -52,6 +53,19 @@ const PaymentsTable = ({ paymentsData }) => {
           <IconButton onClick={(e) => openPaymentForm(e, row.id)}>
             <EditIcon />
           </IconButton>
+        );
+      },
+    },
+    {
+      id: 'detailBtn',
+      numeric: false,
+      disablePadding: true,
+      label: '',
+      renderCell: function detailBtn(row) {
+        return (
+          <Button variant='contained' component={Link} to={`/admin-app/payments/${row.id}`}>
+            Детали
+          </Button>
         );
       },
     },
