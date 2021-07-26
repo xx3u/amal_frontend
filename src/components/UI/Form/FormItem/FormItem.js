@@ -13,6 +13,7 @@ const FormItem = ({
   error,
   select,
   defaultValue,
+  disabled,
   children,
 }) => (
   <TextField
@@ -33,6 +34,7 @@ const FormItem = ({
     helperText={error}
     select={select}
     defaultValue={defaultValue}
+    disabled={disabled}
   >
     {children}
   </TextField>

@@ -5,17 +5,14 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchStudents } from '../../../store/actions/studentsAction';
+import { addNewPayment } from '../../../store/actions/paymentAction';
+import { format } from 'date-fns';
 
-const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
+const CreatePaymentForm = ({ isOpen, title }) => {
   const { students } = useSelector((state) => state.students);
   const dispatch = useDispatch();
 
-  let student;
-  students.forEach((stud) => {
-    stud.id === studId ? (student = `${stud.firstName} ${stud.lastName}`) : null;
-  });
-
-  const today = new Date().toISOString().slice(0, 10);
+  const today = format(new Date(), 'yyyy-MM-dd');
 
   const [payment, setPayment] = useState({
     studentId: '',
@@ -23,56 +20,57 @@ const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
     amount: '',
   });
 
+  const [open, setOpen] = useState(isOpen.status);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     dispatch(fetchStudents());
   }, [dispatch]);
 
+  useEffect(() => {
+    setOpen(isOpen.status);
+  }, [isOpen]);
+
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
-
-    studId
-      ? setPayment({ ...payment, studentId: studId, [name]: value })
-      : setPayment({
-          ...payment,
-          date: e.target.name === 'date' ? e.target.value : payment.date,
-          amount: e.target.name === 'amount' ? e.target.value : payment.amount,
-        });
+    setPayment((state) => ({
+      ...state,
+      [name]: value,
+    }));
   };
 
   const autocompleteChangeHandler = (value) => {
-    value ? setPayment({ ...payment, studentId: value.id }) : '';
+    value && setPayment({ ...payment, studentId: value.id });
   };
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-    console.log('payment', payment);
+    dispatch(addNewPayment(payment));
+    setOpen(false);
+    setPayment({
+      studentId: '',
+      date: today,
+      amount: '',
+    });
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
+    <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
       <DialogContent>
         <FormSubmission title={title} onSubmit={submitFormHandler}>
           <Grid item xs={12}>
-            {studId ? (
-              <FormItem
-                name='studentId'
-                label='Студент'
-                type='text'
-                value={student || payment.studentId}
-                onChange={inputChangeHandler}
-                required
-              />
-            ) : (
-              <Autocomplete
-                id='combo-box-demo'
-                options={students}
-                getOptionLabel={(option) => `${option.lastName} ${option.firstName}`}
-                onChange={(e, value) => autocompleteChangeHandler(value)}
-                renderInput={(params) => (
-                  <TextField {...params} variant='outlined' label='Выберите студента' placeholder='Студент' required />
-                )}
-              />
-            )}
+            <Autocomplete
+              id='combo-box-demo'
+              options={students}
+              getOptionLabel={(option) => `${option.lastName} ${option.firstName}`}
+              onChange={(e, value) => autocompleteChangeHandler(value)}
+              renderInput={(params) => (
+                <TextField {...params} variant='outlined' label='Выберите студента' placeholder='Студент' required />
+              )}
+            />
           </Grid>
           <Grid item xs={12}>
             <FormItem
@@ -100,4 +98,4 @@ const PaymentForm = ({ isOpen, handleClose, studId, title }) => {
   );
 };
 
-export default PaymentForm;
+export default CreatePaymentForm;
