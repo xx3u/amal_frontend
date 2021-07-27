@@ -8,9 +8,7 @@ import { getStudentById } from './../../store/actions/studentsAction';
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    marginBottom: theme.spacing(4),
-    fontWeight: 'bold',
-    fontSize: 25,
+    marginBottom: theme.spacing(3),
   },
 }));
 
@@ -44,6 +42,7 @@ const PaymentsByStudentId = ({ id }) => {
   return (
     <Grid item xs={12}>
       <Typography
+        variant='h5'
         className={classes.title}
       >{`Детализация оплат по студенту: ${student.firstName} ${student.lastName}`}</Typography>
       <SimpleTable columns={columns} rows={changedPayments} />

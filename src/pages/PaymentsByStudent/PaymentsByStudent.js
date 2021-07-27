@@ -4,11 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 import PaymentsByStudentId from '../../containers/PaymentsByStudentId/PaymentsByStudentId';
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    marginBottom: theme.spacing(4),
-    fontWeight: 'bold',
-    fontSize: 25,
-  },
   item: {
     marginTop: theme.spacing(2),
   },
