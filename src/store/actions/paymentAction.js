@@ -1,5 +1,19 @@
 import axios from '../../axiosApi';
-import { FETCH_PAYMENTS_SUCCESS, FETCH_PAYMENTS_REQUEST, FETCH_PAYMENTS_FAILURE } from '../actionTypes';
+import { push } from 'connected-react-router';
+import {
+  FETCH_PAYMENTS_SUCCESS,
+  FETCH_PAYMENTS_REQUEST,
+  FETCH_PAYMENTS_FAILURE,
+  ADD_NEW_STUDENT_FAILURE,
+  ADD_NEW_PAYMENT_REQUEST,
+  ADD_NEW_PAYMENT_SUCCESS,
+  GET_PAYMENT_BY_ID_REQUEST,
+  GET_PAYMENT_BY_ID_SUCCESS,
+  GET_PAYMENT_BY_ID_FAILURE,
+  UPDATE_PAYMENT_REQUEST,
+  UPDATE_PAYMENT_SUCCESS,
+  UPDATE_PAYMENT_FAILURE,
+} from '../actionTypes';
 
 const fetchPaymentsRequest = () => ({ type: FETCH_PAYMENTS_REQUEST });
 
@@ -20,5 +34,50 @@ export const fetchPayments = () => async (dispatch) => {
     dispatch(fetchPaymentsSuccess(response.data));
   } catch (error) {
     dispatch(fetchPaymentsFailure(error));
+  }
+};
+
+const addNewPaymentRequest = () => ({ type: ADD_NEW_PAYMENT_REQUEST });
+const addNewPaymentSuccess = (data) => ({ type: ADD_NEW_PAYMENT_SUCCESS, data });
+const addNewPaymentFailure = (error) => ({ type: ADD_NEW_STUDENT_FAILURE, error });
+
+export const addNewPayment = (newPayment) => async (dispatch) => {
+  dispatch(addNewPaymentRequest());
+  try {
+    const response = await axios.post('/payments', newPayment);
+    dispatch(addNewPaymentSuccess(response.data));
+    dispatch(fetchPayments());
+  } catch (error) {
+    dispatch(addNewPaymentFailure(error));
+  }
+};
+
+const getPaymentByIdRequest = () => ({ type: GET_PAYMENT_BY_ID_REQUEST });
+const getPaymentByIdSuccess = (data) => ({ type: GET_PAYMENT_BY_ID_SUCCESS, data });
+const getPaymentByIdFailure = (error) => ({ type: GET_PAYMENT_BY_ID_FAILURE, error });
+
+export const getPaymentById = (id) => async (dispatch) => {
+  dispatch(getPaymentByIdRequest());
+  try {
+    const response = await axios.get(`/payments/${id}`);
+    dispatch(getPaymentByIdSuccess(response.data));
+  } catch (error) {
+    dispatch(getPaymentByIdFailure(error));
+  }
+};
+
+const updatePaymentRequest = () => ({ type: UPDATE_PAYMENT_REQUEST });
+const updatePaymentSuccess = (data) => ({ type: UPDATE_PAYMENT_SUCCESS, data });
+const updatePaymentFailure = (error) => ({ type: UPDATE_PAYMENT_FAILURE, error });
+
+export const updatePayment = (id, payment) => async (dispatch) => {
+  dispatch(updatePaymentRequest());
+  try {
+    const response = await axios.put(`/payments/${id}`, payment);
+    dispatch(updatePaymentSuccess(response.data));
+    dispatch(fetchPayments());
+    dispatch(push('/admin-app/payments'));
+  } catch (error) {
+    dispatch(updatePaymentFailure(error));
   }
 };
