@@ -52,15 +52,6 @@ const Header = () => {
             >
               Платежи
             </Button>
-            <Button
-              component={Link}
-              to='/admin-app/subjects'
-              color='inherit'
-              variant='outlined'
-              className={classes.btn}
-            >
-              Предметы
-            </Button>
           </Grid>
           <Grid item>
             <Button color='inherit' className={classes.menuButton}>
