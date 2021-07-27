@@ -3,17 +3,10 @@ import SimpleTable from '../../components/UI/SimpleTable/SimpleTable';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPaymentsByStudentId } from './../../store/actions/paymentAction';
 import { format } from 'date-fns';
-import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { getStudentById } from './../../store/actions/studentsAction';
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    marginBottom: theme.spacing(3),
-  },
-}));
-
 const PaymentsByStudentId = ({ id }) => {
-  const classes = useStyles();
   const payments = useSelector((state) => state.payments.paymentsByStudent);
   const dispatch = useDispatch();
   const changedPayments = payments.map((payment) => {
@@ -43,7 +36,7 @@ const PaymentsByStudentId = ({ id }) => {
     <Grid item xs={12}>
       <Typography
         variant='h5'
-        className={classes.title}
+        paragraph={true}
       >{`Детализация оплат по студенту: ${student.firstName} ${student.lastName}`}</Typography>
       <SimpleTable columns={columns} rows={changedPayments} />
     </Grid>
