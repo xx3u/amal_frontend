@@ -7,10 +7,17 @@ import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
     marginTop: 20,
+  },
+  iconStatus: {
+    verticalAlign: 'middle',
+    marginLeft: 10,
   },
 }));
 
@@ -41,6 +48,12 @@ const StudentsContainer = () => {
     },
     { id: 'groupName', numeric: false, disablePadding: true, label: 'Группа' },
     { id: 'grade', numeric: true, disablePadding: true, label: 'Класс' },
+    {
+      id: 'paymentStatus',
+      numeric: false,
+      disablePadding: false,
+      label: 'Статус оплаты',
+    },
     {
       id: 'editBtn',
       numeric: false,
@@ -81,6 +94,22 @@ const StudentsContainer = () => {
       ...student,
       streamName: student.Stream && student.Stream.name,
       groupName: student.Group ? student.Group.groupName : '',
+      paymentStatus: student.LastPayment[0]?.status ? (
+        <p>
+          {'Оплачено'}
+          <CheckCircleOutlineIcon
+            className={classes.iconStatus}
+            style={{
+              color: green[500],
+            }}
+          />
+        </p>
+      ) : (
+        <p>
+          {'Не оплачено'}
+          <ErrorOutlineIcon color='secondary' className={classes.iconStatus} />
+        </p>
+      ),
     };
   });
 
