@@ -10,6 +10,7 @@ import EditStudentForm from './containers/Forms/Student/EditStudentForm';
 import StudentDetailPage from './pages/StudentDetailPage/StudentDetailPage';
 import PaymentsPage from './pages/PaymentsPage/PaymentsPage';
 import TeachersPage from './pages/TeachersPage/TeachersPage';
+import CreateTeacherForm from './containers/Forms/Teacher/CreateTeacherForm';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path={['/admin-app/students', '/']} exact component={StudentsPage} />
           <Route path='/admin-app/payments' exact component={PaymentsPage} />
           <Route path='/admin-app/teachers' exact component={TeachersPage} />
+          <Route path='/admin-app/teachers/add' exact component={CreateTeacherForm} />
         </Switch>
       </Layout>
     </div>

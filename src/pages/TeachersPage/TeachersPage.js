@@ -15,7 +15,7 @@ const TeachersPage = () => {
   return (
     <div className={classes.main}>
       <Actions>
-        <Button variant='contained' component={Link} to='' color='default'>
+        <Button variant='contained' component={Link} to='/admin-app/teachers/add' color='default'>
           Добавить учителя
         </Button>
       </Actions>
