@@ -38,7 +38,7 @@ const TeachersContainer = () => {
       label: '',
       renderCell: function editBtn(row) {
         return (
-          <IconButton component={Link} to={``}>
+          <IconButton component={Link} to={`/admin-app/teachers/${row.id}/edit`}>
             <EditIcon />
           </IconButton>
         );

@@ -1,4 +1,5 @@
 import axios from '../../axiosApi';
+import { push } from 'connected-react-router';
 import {
   FETCH_TEACHERS_FAILURE,
   FETCH_TEACHERS_REQUEST,
@@ -6,6 +7,15 @@ import {
   DELETE_TEACHER_FAILURE,
   DELETE_TEACHER_REQUEST,
   DELETE_TEACHER_SUCCESS,
+  ADD_TEACHER_REQUEST,
+  ADD_TEACHER_SUCCESS,
+  ADD_TEACHER_FAILURE,
+  EDIT_TEACHER_REQUEST,
+  EDIT_TEACHER_SUCCESS,
+  EDIT_TEACHER_FAILURE,
+  GET_TEACHER_BY_ID_REQUEST,
+  GET_TEACHER_BY_ID_SUCCESS,
+  GET_TEACHER_BY_ID_FAILURE,
 } from '../actionTypes';
 
 const fetchTeachersRequest = () => {
@@ -52,6 +62,80 @@ export const deleteTeacher = (teacherId) => {
       dispatch(deleteTeacherSuccess(resp.data));
     } catch (error) {
       dispatch(deleteTeacherFailure(error));
+    }
+  };
+};
+
+const addTeacherRequest = () => {
+  return { type: ADD_TEACHER_REQUEST };
+};
+
+const addTeacherSucces = (teacher) => {
+  return { type: ADD_TEACHER_SUCCESS, teacher };
+};
+
+const addTeacherFailure = (error) => {
+  return { type: ADD_TEACHER_FAILURE, error };
+};
+
+export const addTeacher = (teacher) => {
+  return async (dispatch) => {
+    try {
+      dispatch(addTeacherRequest());
+      const response = await axios.post('/teachers', teacher);
+      dispatch(addTeacherSucces(response.data));
+      dispatch(push('/admin-app/teachers'));
+    } catch (error) {
+      dispatch(addTeacherFailure(error));
+    }
+  };
+};
+
+const editTeacherRequest = () => {
+  return { type: EDIT_TEACHER_REQUEST };
+};
+
+const editTeacherSuccess = () => {
+  return { type: EDIT_TEACHER_SUCCESS };
+};
+
+const editTeacherFailure = (error) => {
+  return { type: EDIT_TEACHER_FAILURE, error };
+};
+
+export const editTeacher = (teacher, id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(editTeacherRequest());
+      await axios.put(`/teachers/${id}`, teacher);
+      dispatch(editTeacherSuccess());
+      dispatch(push('/admin-app/teachers'));
+    } catch (error) {
+      dispatch(editTeacherFailure(error));
+    }
+  };
+};
+
+const getTeacherByIdRequest = () => {
+  return { type: GET_TEACHER_BY_ID_REQUEST };
+};
+
+const getTeacherByIdSuccess = (teacher) => {
+  return { type: GET_TEACHER_BY_ID_SUCCESS, teacher };
+};
+
+const getTeacherByIdFailure = (error) => {
+  return { type: GET_TEACHER_BY_ID_FAILURE, error };
+};
+
+export const getTeacherById = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getTeacherByIdRequest());
+      const resp = await axios.get('/teachers/' + id);
+      dispatch(getTeacherByIdSuccess(resp.data));
+    } catch (error) {
+      dispatch(getTeacherByIdFailure(error));
     }
   };
 };
