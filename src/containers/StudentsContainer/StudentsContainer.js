@@ -7,18 +7,11 @@ import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import { green } from '@material-ui/core/colors';
 import CustomGridContainer from '../../components/UI/CustomGridContainer/CustomGridContainer';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
     marginTop: 20,
-  },
-  iconStatus: {
-    verticalAlign: 'middle',
-    marginLeft: 10,
   },
 }));
 
@@ -55,24 +48,7 @@ const StudentsContainer = () => {
       disablePadding: false,
       label: 'Статус оплаты',
       renderCell: function paymentStatus(row) {
-        return row.paymentStatus ? (
-          <CustomGridContainer
-            text='Оплачено'
-            icon={
-              <CheckCircleOutlineIcon
-                className={classes.iconStatus}
-                style={{
-                  color: green[500],
-                }}
-              />
-            }
-          />
-        ) : (
-          <CustomGridContainer
-            text='Не оплачено'
-            icon={<ErrorOutlineIcon color='secondary' className={classes.iconStatus} />}
-          />
-        );
+        return <CustomGridContainer status={row.paymentStatus} />;
       },
     },
     {
