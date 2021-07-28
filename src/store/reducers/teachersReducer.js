@@ -24,7 +24,7 @@ const initState = {
   isLoading: false,
 };
 
-const reduser = (state = initState, action) => {
+const reducer = (state = initState, action) => {
   switch (action.type) {
     case FETCH_TEACHERS_REQUEST:
       return { ...state, isLoading: true };
@@ -61,4 +61,4 @@ const reduser = (state = initState, action) => {
   }
 };
 
-export default reduser;
+export default reducer;

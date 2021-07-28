@@ -7,12 +7,12 @@ import {
   DELETE_TEACHER_FAILURE,
   DELETE_TEACHER_REQUEST,
   DELETE_TEACHER_SUCCESS,
-  ADD_TEACHER_REQUEST,
-  ADD_TEACHER_SUCCESS,
-  ADD_TEACHER_FAILURE,
-  EDIT_TEACHER_REQUEST,
-  EDIT_TEACHER_SUCCESS,
-  EDIT_TEACHER_FAILURE,
+  ADD_NEW_TEACHER_REQUEST,
+  ADD_NEW_TEACHER_SUCCESS,
+  ADD_NEW_TEACHER_FAILURE,
+  UPDATE_TEACHER_REQUEST,
+  UPDATE_TEACHER_SUCCESS,
+  UPDATE_TEACHER_FAILURE,
   GET_TEACHER_BY_ID_REQUEST,
   GET_TEACHER_BY_ID_SUCCESS,
   GET_TEACHER_BY_ID_FAILURE,
@@ -67,15 +67,15 @@ export const deleteTeacher = (teacherId) => {
 };
 
 const addTeacherRequest = () => {
-  return { type: ADD_TEACHER_REQUEST };
+  return { type: ADD_NEW_TEACHER_REQUEST };
 };
 
 const addTeacherSucces = (teacher) => {
-  return { type: ADD_TEACHER_SUCCESS, teacher };
+  return { type: ADD_NEW_TEACHER_SUCCESS, teacher };
 };
 
 const addTeacherFailure = (error) => {
-  return { type: ADD_TEACHER_FAILURE, error };
+  return { type: ADD_NEW_TEACHER_FAILURE, error };
 };
 
 export const addTeacher = (teacher) => {
@@ -92,15 +92,15 @@ export const addTeacher = (teacher) => {
 };
 
 const editTeacherRequest = () => {
-  return { type: EDIT_TEACHER_REQUEST };
+  return { type: UPDATE_TEACHER_REQUEST };
 };
 
 const editTeacherSuccess = () => {
-  return { type: EDIT_TEACHER_SUCCESS };
+  return { type: UPDATE_TEACHER_SUCCESS };
 };
 
 const editTeacherFailure = (error) => {
-  return { type: EDIT_TEACHER_FAILURE, error };
+  return { type: UPDATE_TEACHER_FAILURE, error };
 };
 
 export const editTeacher = (teacher, id) => {

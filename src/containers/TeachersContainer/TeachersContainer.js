@@ -53,7 +53,7 @@ const TeachersContainer = () => {
         return (
           <IconButton
             onClick={() => {
-              deleteTeacherById(row.id);
+              deleteBtnHandler(row.id);
             }}
           >
             <DeleteForever />
@@ -63,7 +63,7 @@ const TeachersContainer = () => {
     },
   ];
 
-  async function deleteTeacherById(teacherId) {
+  async function deleteBtnHandler(teacherId) {
     await dispatch(deleteTeacher(teacherId));
     await dispatch(fetchTeachers());
   }
@@ -74,14 +74,7 @@ const TeachersContainer = () => {
 
   return (
     <div className='TeachersContainer'>
-      <EnhancedTable
-        rows={teachers}
-        headCells={headCells}
-        tableTitle='Учителя'
-        numberOfRows={10}
-        editBtn='visible'
-        moreBtn='visible'
-      />
+      <EnhancedTable rows={teachers} headCells={headCells} tableTitle='Учителя' numberOfRows={10} />
     </div>
   );
 };

@@ -14,9 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Actions = ({ children }) => {
+const ActionsArea = ({ children }) => {
   const classes = useStyles();
   return <div className={classes.actions}>{children}</div>;
 };
 
-export default Actions;
+export default ActionsArea;
