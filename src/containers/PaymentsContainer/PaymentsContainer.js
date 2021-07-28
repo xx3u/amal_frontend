@@ -8,7 +8,7 @@ const PaymentsContainer = () => {
   const { students } = useSelector((state) => state.students);
 
   const lastPayments = [];
-  students.map((student) => {
+  students.forEach((student) => {
     if (student.LastPayment[0]) {
       lastPayments.push({
         id: student.LastPayment[0].id,
@@ -20,7 +20,6 @@ const PaymentsContainer = () => {
         studentId: student.id,
       });
     }
-    return lastPayments;
   });
 
   useEffect(() => {
