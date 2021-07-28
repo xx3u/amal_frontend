@@ -5,15 +5,15 @@ import {
   DELETE_TEACHER_REQUEST,
   DELETE_TEACHER_SUCCESS,
   DELETE_TEACHER_FAILURE,
-  ADD_TEACHER_REQUEST,
-  ADD_TEACHER_FAILURE,
-  ADD_TEACHER_SUCCESS,
+  ADD_NEW_TEACHER_REQUEST,
+  ADD_NEW_TEACHER_SUCCESS,
+  ADD_NEW_TEACHER_FAILURE,
+  UPDATE_TEACHER_REQUEST,
+  UPDATE_TEACHER_SUCCESS,
+  UPDATE_TEACHER_FAILURE,
   GET_TEACHER_BY_ID_REQUEST,
   GET_TEACHER_BY_ID_SUCCESS,
   GET_TEACHER_BY_ID_FAILURE,
-  EDIT_TEACHER_REQUEST,
-  EDIT_TEACHER_SUCCESS,
-  EDIT_TEACHER_FAILURE,
 } from '../actionTypes';
 
 const initState = {
@@ -32,11 +32,11 @@ const reducer = (state = initState, action) => {
       return { ...state, teachers: action.teachers, isLoading: false, error: null };
     case FETCH_TEACHERS_FAILURE:
       return { ...state, error: action.error, isLoading: false };
-    case ADD_TEACHER_REQUEST:
+    case ADD_NEW_TEACHER_REQUEST:
       return { ...state, isLoading: true };
-    case ADD_TEACHER_SUCCESS:
+    case ADD_NEW_TEACHER_SUCCESS:
       return { ...state, teacher: action.teacher, isLoading: false, error: null };
-    case ADD_TEACHER_FAILURE:
+    case ADD_NEW_TEACHER_FAILURE:
       return { ...state, error: action.error, isLoading: false };
     case GET_TEACHER_BY_ID_REQUEST:
       return { ...state, isLoading: true };
@@ -44,11 +44,11 @@ const reducer = (state = initState, action) => {
       return { ...state, teacher: action.teacher, isLoading: false, error: null };
     case GET_TEACHER_BY_ID_FAILURE:
       return { ...state, error: action.error, isLoading: false };
-    case EDIT_TEACHER_REQUEST:
+    case UPDATE_TEACHER_REQUEST:
       return { ...state, isLoading: true };
-    case EDIT_TEACHER_SUCCESS:
+    case UPDATE_TEACHER_SUCCESS:
       return { ...state, isLoading: false, error: null };
-    case EDIT_TEACHER_FAILURE:
+    case UPDATE_TEACHER_FAILURE:
       return { ...state, error: action.error, isLoading: false };
     case DELETE_TEACHER_REQUEST:
       return { ...state, isLoading: true };
