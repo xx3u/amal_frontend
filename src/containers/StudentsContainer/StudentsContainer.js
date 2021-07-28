@@ -10,6 +10,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { green } from '@material-ui/core/colors';
+import CustomGridContainer from '../../components/UI/CustomGridContainer/CustomGridContainer';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
@@ -53,6 +54,26 @@ const StudentsContainer = () => {
       numeric: false,
       disablePadding: false,
       label: 'Статус оплаты',
+      renderCell: function paymentStatus(row) {
+        return row.paymentStatus ? (
+          <CustomGridContainer
+            text='Оплачено'
+            icon={
+              <CheckCircleOutlineIcon
+                className={classes.iconStatus}
+                style={{
+                  color: green[500],
+                }}
+              />
+            }
+          />
+        ) : (
+          <CustomGridContainer
+            text='Не оплачено'
+            icon={<ErrorOutlineIcon color='secondary' className={classes.iconStatus} />}
+          />
+        );
+      },
     },
     {
       id: 'editBtn',
@@ -94,22 +115,7 @@ const StudentsContainer = () => {
       ...student,
       streamName: student.Stream && student.Stream.name,
       groupName: student.Group ? student.Group.groupName : '',
-      paymentStatus: student.LastPayment[0]?.status ? (
-        <p>
-          {'Оплачено'}
-          <CheckCircleOutlineIcon
-            className={classes.iconStatus}
-            style={{
-              color: green[500],
-            }}
-          />
-        </p>
-      ) : (
-        <p>
-          {'Не оплачено'}
-          <ErrorOutlineIcon color='secondary' className={classes.iconStatus} />
-        </p>
-      ),
+      paymentStatus: student.LastPayment[0]?.status,
     };
   });
 
