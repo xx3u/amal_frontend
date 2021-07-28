@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
-import CustomGridContainer from '../../components/UI/CustomGridContainer/CustomGridContainer';
+import StatusIconText from '../../components/UI/StatusIconText/StatusIconText';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
@@ -48,7 +48,7 @@ const StudentsContainer = () => {
       disablePadding: false,
       label: 'Статус оплаты',
       renderCell: function paymentStatus(row) {
-        return <CustomGridContainer status={row.paymentStatus} />;
+        return <StatusIconText status={row.paymentStatus} />;
       },
     },
     {

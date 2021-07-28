@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CustomGridContainer = ({ status }) => {
+const StatusIconText = ({ status }) => {
   const classes = useStyles();
 
   return (
@@ -30,4 +30,4 @@ const CustomGridContainer = ({ status }) => {
   );
 };
 
-export default CustomGridContainer;
+export default StatusIconText;
