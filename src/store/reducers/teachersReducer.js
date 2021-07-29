@@ -54,7 +54,7 @@ const reducer = (state = initState, action) => {
     case DELETE_TEACHER_SUCCESS:
       return { ...state, loading: false };
     case DELETE_TEACHER_FAILURE:
-      return { ...state, loading: false };
+      return { ...state, error: action.error, loading: false };
     default:
       return state;
   }
