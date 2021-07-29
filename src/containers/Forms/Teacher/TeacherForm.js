@@ -129,7 +129,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
         <FormItem name='email' value={teacher.email || ''} onChange={inputChangeHandler} label='Email' type='text' />
       </Grid>
       <Grid container>
-        <CreateSubjectForm isOpen={isOpen} />
+        <CreateSubjectForm isOpen={isOpen} title='Добавить предмет'/>
       </Grid>
     </FormSubmission>
   );
