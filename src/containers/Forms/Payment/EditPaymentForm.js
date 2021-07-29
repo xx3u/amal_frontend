@@ -32,6 +32,7 @@ const EditPaymentForm = ({ isOpen, paymentId }) => {
       studentId: selectedPayment.studentId,
       date: convertedDate,
       amount: selectedPayment.amount,
+      comment: selectedPayment.comment,
     });
   }, [selectedPayment]);
 
@@ -39,6 +40,7 @@ const EditPaymentForm = ({ isOpen, paymentId }) => {
     studentId: '',
     date: '',
     amount: '',
+    comment: '',
   });
 
   const handleClose = () => {
@@ -83,6 +85,16 @@ const EditPaymentForm = ({ isOpen, paymentId }) => {
               label='Сумма оплаты'
               type='text'
               value={payment.amount || ''}
+              onChange={inputChangeHandler}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormItem
+              name='comment'
+              label='Комментарий'
+              type='text'
+              value={payment.comment || ''}
               onChange={inputChangeHandler}
               required
             />
