@@ -19,43 +19,42 @@ import {
 const initState = {
   teachers: [],
   teacher: {},
-  deleteMessage: '',
   error: null,
-  isLoading: false,
+  loading: false,
 };
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case FETCH_TEACHERS_REQUEST:
-      return { ...state, isLoading: true };
+      return { ...state, loading: true };
     case FETCH_TEACHERS_SUCCESS:
-      return { ...state, teachers: action.teachers, isLoading: false, error: null };
+      return { ...state, teachers: action.teachers, loading: false, error: null };
     case FETCH_TEACHERS_FAILURE:
-      return { ...state, error: action.error, isLoading: false };
+      return { ...state, error: action.error, loading: false };
     case ADD_NEW_TEACHER_REQUEST:
-      return { ...state, isLoading: true };
+      return { ...state, loading: true };
     case ADD_NEW_TEACHER_SUCCESS:
-      return { ...state, teacher: action.teacher, isLoading: false, error: null };
+      return { ...state, teacher: action.teacher, loading: false, error: null };
     case ADD_NEW_TEACHER_FAILURE:
-      return { ...state, error: action.error, isLoading: false };
+      return { ...state, error: action.error, loading: false };
     case GET_TEACHER_BY_ID_REQUEST:
-      return { ...state, isLoading: true };
+      return { ...state, loading: true };
     case GET_TEACHER_BY_ID_SUCCESS:
-      return { ...state, teacher: action.teacher, isLoading: false, error: null };
+      return { ...state, teacher: action.teacher, loading: false, error: null };
     case GET_TEACHER_BY_ID_FAILURE:
-      return { ...state, error: action.error, isLoading: false };
+      return { ...state, error: action.error, loading: false };
     case UPDATE_TEACHER_REQUEST:
-      return { ...state, isLoading: true };
+      return { ...state, loading: true };
     case UPDATE_TEACHER_SUCCESS:
-      return { ...state, isLoading: false, error: null };
+      return { ...state, loading: false, error: null };
     case UPDATE_TEACHER_FAILURE:
-      return { ...state, error: action.error, isLoading: false };
+      return { ...state, error: action.error, loading: false };
     case DELETE_TEACHER_REQUEST:
-      return { ...state, isLoading: true };
+      return { ...state, loading: true };
     case DELETE_TEACHER_SUCCESS:
-      return { ...state, deleteMessage: action.message, isLoading: false };
+      return { ...state, loading: false };
     case DELETE_TEACHER_FAILURE:
-      return { ...state, deleteMessage: action.error, isLoading: false };
+      return { ...state, loading: false };
     default:
       return state;
   }

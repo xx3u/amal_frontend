@@ -52,7 +52,8 @@ const TeachersContainer = () => {
       renderCell: function deleteBtn(row) {
         return (
           <IconButton
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               deleteBtnHandler(row.id);
             }}
           >
@@ -64,7 +65,7 @@ const TeachersContainer = () => {
   ];
 
   function deleteBtnHandler(teacherId) {
-    dispatch(deleteTeacher(teacherId));    
+    dispatch(deleteTeacher(teacherId));
   }
 
   useEffect(() => {

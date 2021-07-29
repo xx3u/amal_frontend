@@ -14,12 +14,17 @@ const EditTeacherForm = () => {
     dispatch(getTeacherById(paramsId));
   }, [dispatch, paramsId]);
 
-  const updateTeacher = (teacherForUpdate, id) => {
+  const updateTeacherHandler = (teacherForUpdate, id) => {
     dispatch(editTeacher(teacherForUpdate, id));
   };
 
   return (
-    <TeacherForm title='Редактировать учителя' submitData={updateTeacher} selectedTeacher={teacher} id={paramsId} />
+    <TeacherForm
+      title='Редактировать учителя'
+      submitData={updateTeacherHandler}
+      selectedTeacher={teacher}
+      id={paramsId}
+    />
   );
 };
 
