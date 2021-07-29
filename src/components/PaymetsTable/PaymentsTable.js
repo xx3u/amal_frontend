@@ -17,15 +17,17 @@ const PaymentsTable = ({ paymentsData }) => {
   };
 
   const headCells = [
-    { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
     {
-      id: 'Student',
+      id: 'id',
+      numeric: true,
+      disablePadding: true,
+      label: 'ID',
+    },
+    {
+      id: 'student',
       numeric: false,
       disablePadding: true,
       label: 'ФИО',
-      renderCell: function editBtn(row) {
-        return `${row.Student.lastName} ${row.Student.firstName}`;
-      },
     },
 
     {
@@ -33,7 +35,7 @@ const PaymentsTable = ({ paymentsData }) => {
       numeric: false,
       disablePadding: true,
       label: 'Дата платежа',
-      renderCell: function editBtn(row) {
+      renderCell: function date(row) {
         return format(new Date(row.date), 'MM/dd/yyyy');
       },
     },
@@ -42,6 +44,18 @@ const PaymentsTable = ({ paymentsData }) => {
       numeric: false,
       disablePadding: true,
       label: 'Сумма платежа',
+    },
+    {
+      id: 'status',
+      numeric: false,
+      disablePadding: true,
+      label: 'Статус',
+    },
+    {
+      id: 'comment',
+      numeric: false,
+      disablePadding: true,
+      label: 'Комментарий',
     },
     {
       id: 'editBtn',
