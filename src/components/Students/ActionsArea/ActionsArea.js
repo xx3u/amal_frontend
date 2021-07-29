@@ -9,14 +9,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'start',
     marginBottom: theme.spacing(4),
   },
 }));
 
-const Actions = ({ children }) => {
+const ActionsArea = ({ children }) => {
   const classes = useStyles();
   return <div className={classes.actions}>{children}</div>;
 };
 
-export default Actions;
+export default ActionsArea;

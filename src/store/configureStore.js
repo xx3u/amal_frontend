@@ -7,6 +7,7 @@ import groupsReducer from './reducers/groupsReducer';
 import streamsReducer from './reducers/streamsReducer';
 import paymentsReducer from './reducers/paymentsReducer';
 import subjectsReducer from './reducers/subjectsReducer';
+import teachersReducer from './reducers/teachersReducer';
 
 export const history = createBrowserHistory();
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   streams: streamsReducer,
   payments: paymentsReducer,
   subjects: subjectsReducer,
+  teachers: teachersReducer,
   router: connectRouter(history),
 });
 
