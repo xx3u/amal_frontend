@@ -60,6 +60,7 @@ export const deleteTeacher = (teacherId) => {
       dispatch(deleteTeacherRequest());
       const resp = await axios.delete(`/teachers/${teacherId}`);
       dispatch(deleteTeacherSuccess(resp.data));
+      dispatch(fetchTeachers());
     } catch (error) {
       dispatch(deleteTeacherFailure(error));
     }

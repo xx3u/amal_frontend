@@ -63,9 +63,8 @@ const TeachersContainer = () => {
     },
   ];
 
-  async function deleteBtnHandler(teacherId) {
-    await dispatch(deleteTeacher(teacherId));
-    await dispatch(fetchTeachers());
+  function deleteBtnHandler(teacherId) {
+    dispatch(deleteTeacher(teacherId));    
   }
 
   useEffect(() => {
