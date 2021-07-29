@@ -13,7 +13,11 @@ import {
   UPDATE_PAYMENT_REQUEST,
   UPDATE_PAYMENT_SUCCESS,
   UPDATE_PAYMENT_FAILURE,
+  GET_PAYMENTS_BY_STUDENT_ID_REQUEST,
+  GET_PAYMENTS_BY_STUDENT_ID_SUCCESS,
+  GET_PAYMENTS_BY_STUDENT_ID_FAILURE,
 } from '../actionTypes';
+import { fetchStudents } from './studentsAction';
 
 const fetchPaymentsRequest = () => ({ type: FETCH_PAYMENTS_REQUEST });
 
@@ -46,7 +50,7 @@ export const addNewPayment = (newPayment) => async (dispatch) => {
   try {
     const response = await axios.post('/payments', newPayment);
     dispatch(addNewPaymentSuccess(response.data));
-    dispatch(fetchPayments());
+    dispatch(fetchStudents());
   } catch (error) {
     dispatch(addNewPaymentFailure(error));
   }
@@ -75,9 +79,23 @@ export const updatePayment = (id, payment) => async (dispatch) => {
   try {
     const response = await axios.put(`/payments/${id}`, payment);
     dispatch(updatePaymentSuccess(response.data));
-    dispatch(fetchPayments());
+    dispatch(fetchStudents());
     dispatch(push('/admin-app/payments'));
   } catch (error) {
     dispatch(updatePaymentFailure(error));
+  }
+};
+
+const getPaymentsByStudentIdRequest = () => ({ type: GET_PAYMENTS_BY_STUDENT_ID_REQUEST });
+const getPaymentsByStudentIdSuccess = (data) => ({ type: GET_PAYMENTS_BY_STUDENT_ID_SUCCESS, data });
+const getPaymentsByStudentIdFailure = (error) => ({ type: GET_PAYMENTS_BY_STUDENT_ID_FAILURE, error });
+
+export const getPaymentsByStudentId = (id) => async (dispatch) => {
+  dispatch(getPaymentsByStudentIdRequest());
+  try {
+    const response = await axios.get(`/payments?studentId=${id}`);
+    dispatch(getPaymentsByStudentIdSuccess(response.data));
+  } catch (error) {
+    dispatch(getPaymentsByStudentIdFailure(error));
   }
 };

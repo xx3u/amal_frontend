@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Actions from '../../components/Students/Actions/Actions';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
+import StatusIconText from '../../components/UI/StatusIconText/StatusIconText';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
@@ -41,6 +42,15 @@ const StudentsContainer = () => {
     },
     { id: 'groupName', numeric: false, disablePadding: true, label: 'Группа' },
     { id: 'grade', numeric: true, disablePadding: true, label: 'Класс' },
+    {
+      id: 'paymentStatus',
+      numeric: false,
+      disablePadding: false,
+      label: 'Статус оплаты',
+      renderCell: function paymentStatus(row) {
+        return <StatusIconText status={row.paymentStatus} />;
+      },
+    },
     {
       id: 'editBtn',
       numeric: false,
@@ -81,6 +91,7 @@ const StudentsContainer = () => {
       ...student,
       streamName: student.Stream && student.Stream.name,
       groupName: student.Group ? student.Group.groupName : '',
+      paymentStatus: student.LastPayment[0]?.status,
     };
   });
 

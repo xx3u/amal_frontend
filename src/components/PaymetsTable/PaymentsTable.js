@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import CustomTable from '../UI/CustomTable/CustomTable';
-import { IconButton } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import { format } from 'date-fns';
 import EditPaymentForm from './../../containers/Forms/Payment/EditPaymentForm';
+import { Link } from 'react-router-dom';
 
 const PaymentsTable = ({ paymentsData }) => {
   const [isOpen, setIsOpen] = useState({ status: false });
@@ -16,15 +17,17 @@ const PaymentsTable = ({ paymentsData }) => {
   };
 
   const headCells = [
-    { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
     {
-      id: 'Student',
+      id: 'id',
+      numeric: true,
+      disablePadding: true,
+      label: 'ID',
+    },
+    {
+      id: 'student',
       numeric: false,
       disablePadding: true,
       label: 'ФИО',
-      renderCell: function editBtn(row) {
-        return `${row.Student.lastName} ${row.Student.firstName}`;
-      },
     },
 
     {
@@ -32,7 +35,7 @@ const PaymentsTable = ({ paymentsData }) => {
       numeric: false,
       disablePadding: true,
       label: 'Дата платежа',
-      renderCell: function editBtn(row) {
+      renderCell: function date(row) {
         return format(new Date(row.date), 'MM/dd/yyyy');
       },
     },
@@ -41,6 +44,18 @@ const PaymentsTable = ({ paymentsData }) => {
       numeric: false,
       disablePadding: true,
       label: 'Сумма платежа',
+    },
+    {
+      id: 'status',
+      numeric: false,
+      disablePadding: true,
+      label: 'Статус',
+    },
+    {
+      id: 'comment',
+      numeric: false,
+      disablePadding: true,
+      label: 'Комментарий',
     },
     {
       id: 'editBtn',
@@ -52,6 +67,19 @@ const PaymentsTable = ({ paymentsData }) => {
           <IconButton onClick={(e) => openPaymentForm(e, row.id)}>
             <EditIcon />
           </IconButton>
+        );
+      },
+    },
+    {
+      id: 'detailBtn',
+      numeric: false,
+      disablePadding: true,
+      label: '',
+      renderCell: function detailBtn(row) {
+        return (
+          <Button variant='contained' component={Link} to={`/admin-app/payments/${row.studentId}`}>
+            Детали
+          </Button>
         );
       },
     },
