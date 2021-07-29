@@ -52,6 +52,15 @@ const Header = () => {
             >
               Платежи
             </Button>
+            <Button
+              component={Link}
+              to='/admin-app/teachers'
+              color='inherit'
+              variant='outlined'
+              className={classes.btn}
+            >
+              Учителя
+            </Button>
           </Grid>
           <Grid item>
             <Button color='inherit' className={classes.menuButton}>

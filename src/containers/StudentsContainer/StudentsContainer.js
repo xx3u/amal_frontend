@@ -4,7 +4,7 @@ import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
 import { fetchStudents, getStudentsByParams } from '../../store/actions/studentsAction';
 import { Button, makeStyles, IconButton } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import Actions from '../../components/Students/Actions/Actions';
+import ActionsArea from '../../components/Students/ActionsArea/ActionsArea';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import StatusIconText from '../../components/UI/StatusIconText/StatusIconText';
@@ -111,12 +111,12 @@ const StudentsContainer = () => {
 
   return (
     <div className={classes.StudentsContainer}>
-      <Actions>
+      <ActionsArea>
         <Button variant='contained' component={Link} to='/admin-app/students/add' color='default'>
           Добавить нового ученика
         </Button>
         <Search searchHandler={searchHandler} dropSearchHandler={dropSearchHandler} />
-      </Actions>
+      </ActionsArea>
       <EnhancedTable
         rows={changedStudents}
         headCells={headCells}
