@@ -18,6 +18,7 @@ const CreatePaymentForm = ({ isOpen, title }) => {
     studentId: '',
     date: today,
     amount: '',
+    comment: '',
   });
 
   const [open, setOpen] = useState(isOpen.status);
@@ -88,6 +89,16 @@ const CreatePaymentForm = ({ isOpen, title }) => {
               label='Сумма оплаты'
               type='text'
               value={payment.amount}
+              onChange={inputChangeHandler}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormItem
+              name='comment'
+              label='Комментарий'
+              type='text'
+              value={payment.comment}
               onChange={inputChangeHandler}
               required
             />
