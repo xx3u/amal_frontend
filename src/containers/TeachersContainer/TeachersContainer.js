@@ -9,6 +9,10 @@ import EnhancedTable from '../../components/UI/CustomTable/CustomTable';
 const TeachersContainer = () => {
   const dispatch = useDispatch();
   const teachers = useSelector((state) => state.teachers.teachers);
+  const changedTeachers = teachers.map((teacher) => {
+    return { ...teacher, subjectName: teacher.Subject ? teacher.Subject.subjectName : '' };
+  });
+
   const headCells = [
     { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
     { id: 'firstName', numeric: false, disablePadding: true, label: 'Имя' },
@@ -19,6 +23,7 @@ const TeachersContainer = () => {
       disablePadding: true,
       label: 'Язык обучения',
     },
+    { id: 'subjectName', numeric: false, disablePadding: true, label: 'Предмет' },
     {
       id: 'telephone',
       numeric: false,
@@ -74,7 +79,7 @@ const TeachersContainer = () => {
 
   return (
     <div className='TeachersContainer'>
-      <EnhancedTable rows={teachers} headCells={headCells} tableTitle='Учителя' numberOfRows={10} />
+      <EnhancedTable rows={changedTeachers} headCells={headCells} tableTitle='Учителя' numberOfRows={10} />
     </div>
   );
 };
