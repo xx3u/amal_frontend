@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Route, Switch } from 'react-router';
 import Layout from './components/Layout/Layout';
-import LessonsContainer from './containers/Lessons/LessonsContainer';
+import LessonsContainer from './containers/LessonsContainer/LessonsContainer';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
 import CreateStudentForm from './containers/Forms/Student/CreateStudentForm';
