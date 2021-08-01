@@ -5,6 +5,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import { fetchSubjects } from '../../../store/actions/subjectsAction';
+import CreateSubjectForm from '../../../containers/Forms/Subject/CreateSubjectForm';
 
 const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
   const dispatch = useDispatch();
@@ -14,6 +15,11 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
   useEffect(() => {
     dispatch(fetchSubjects());
   }, []);
+  const [isOpen, setIsOpen] = useState({ status: false });
+
+  const openSubjectForm = () => {
+    setIsOpen({ status: true });
+  };
 
   useEffect(() => {
     setTeacher(selectedTeacher);
@@ -102,7 +108,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
         </Grid>
         <Grid item xs={1}>
           <Tooltip title='Добавить предмет'>
-            <IconButton>
+            <IconButton onClick={openSubjectForm}>
               <AddBoxIcon color='inherit' fontSize='large' />
             </IconButton>
           </Tooltip>
@@ -119,6 +125,9 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
       </Grid>
       <Grid item xs={6}>
         <FormItem name='email' value={teacher.email || ''} onChange={inputChangeHandler} label='Email' type='text' />
+      </Grid>
+      <Grid container>
+        <CreateSubjectForm isOpen={isOpen} title='Добавить предмет' />
       </Grid>
     </FormSubmission>
   );
