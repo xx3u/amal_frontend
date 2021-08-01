@@ -1,20 +1,38 @@
 import { Grid, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
+import { getTeachersBySubject } from '../../store/actions/teachersActions';
 
 const LessonsContainer = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchGroups());
     dispatch(fetchSubjects());
   }, [dispatch]);
+
   const { groups } = useSelector((state) => state.groups);
   const { subjects } = useSelector((state) => state.subjects);
+  const { teachersBySubject } = useSelector((state) => state.teachers);
+  const [subjectId, setSubjectId] = useState(null);
+
+  const onChangeSubject = (event, value) => {
+    setSubjectId(value.id);
+  };
+
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      dispatch(getTeachersBySubject(subjectId));
+    }
+  }, [subjectId]);
 
   return (
     <Grid item xs={12}>
@@ -22,6 +40,7 @@ const LessonsContainer = () => {
         id='groups-lessons'
         options={groups}
         getOptionLabel={(option) => option.groupName}
+        noOptionsText={'список пуст'}
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
       />
@@ -29,8 +48,18 @@ const LessonsContainer = () => {
         id='subjects-lessons'
         options={subjects}
         getOptionLabel={(option) => option.subjectName}
+        onChange={onChangeSubject}
+        noOptionsText={'список пуст'}
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />}
+      />
+      <Autocomplete
+        id='teachers-lessons'
+        options={teachersBySubject}
+        getOptionLabel={(option) => option.firstName}
+        noOptionsText={'выберите сначала предмета'}
+        style={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
       />
     </Grid>
   );
