@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Grid, MenuItem, IconButton, Tooltip } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
+import { fetchSubjects } from '../../../store/actions/subjectsAction';
 
 const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
+  const dispatch = useDispatch();
   const [teacher, setTeacher] = useState(selectedTeacher);
+  const subjects = useSelector((state) => state.subjects.subjects);
+
+  useEffect(() => {
+    dispatch(fetchSubjects());
+  }, []);
 
   useEffect(() => {
     setTeacher(selectedTeacher);
   }, [selectedTeacher]);
 
-  const subjects = [
-    {
-      value: 'kaz',
-      label: 'қазақ тілі',
-    },
-    {
-      value: 'math',
-      label: 'математика',
-    },
-  ];
   const languages = [
     {
       value: 'KZ',
@@ -87,8 +85,8 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
       <Grid item xs={6} container direction='row' justifyContent='space-between'>
         <Grid item xs={11}>
           <FormItem
-            name='subject'
-            value={teacher.subject || ''}
+            name='subjectId'
+            value={teacher.subjectId || ''}
             onChange={inputChangeHandler}
             label='Предмет'
             type='text'
@@ -96,8 +94,8 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
             select
           >
             {subjects.map((subject) => (
-              <MenuItem key={subject.value} value={subject.value}>
-                {subject.label}
+              <MenuItem key={subject.id} value={subject.id}>
+                {subject.subjectName}
               </MenuItem>
             ))}
           </FormItem>

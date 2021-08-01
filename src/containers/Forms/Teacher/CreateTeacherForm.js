@@ -8,7 +8,7 @@ const CreateTeacherForm = () => {
   const teacher = {
     firstName: '',
     lastName: '',
-    subject: '',
+    subjectId: '',
     language: '',
     telephone: '',
     email: '',
