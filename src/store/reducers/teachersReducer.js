@@ -14,11 +14,14 @@ import {
   GET_TEACHER_BY_ID_REQUEST,
   GET_TEACHER_BY_ID_SUCCESS,
   GET_TEACHER_BY_ID_FAILURE,
+  GET_TEACHERS_BY_SUBJECT_SUCCESS,
+  GET_TEACHERS_BY_SUBJECT_FAILURE,
 } from '../actionTypes';
 
 const initState = {
   teachers: [],
   teacher: {},
+  teachersBySubject: [],
   error: null,
   loading: false,
 };
@@ -55,6 +58,10 @@ const reducer = (state = initState, action) => {
       return { ...state, loading: false };
     case DELETE_TEACHER_FAILURE:
       return { ...state, error: action.error, loading: false };
+    case GET_TEACHERS_BY_SUBJECT_SUCCESS:
+      return { ...state, teachersBySubject: action.teachers, error: null };
+    case GET_TEACHERS_BY_SUBJECT_FAILURE:
+      return { ...state, error: action.error };
     default:
       return state;
   }
