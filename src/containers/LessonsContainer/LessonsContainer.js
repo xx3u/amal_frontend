@@ -25,7 +25,7 @@ const LessonsContainer = () => {
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
       />
-       <Autocomplete
+      <Autocomplete
         id='subjects-lessons'
         options={subjects}
         getOptionLabel={(option) => option.subjectName}
