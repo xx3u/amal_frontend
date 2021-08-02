@@ -20,7 +20,7 @@ function App() {
       <CssBaseline />
       <Layout>
         <Switch>
-          <Route path='/lessons' exact component={LessonsPage} />
+          <Route path='/admin-app/lessons' exact component={LessonsPage} />
           <Route path='/admin-app/students/:id/edit' exact component={EditStudentForm} />
           <Route path='/admin-app/students/add' exact component={CreateStudentForm} />
           <Route path='/admin-app/groups' exact component={GroupsPage} />
