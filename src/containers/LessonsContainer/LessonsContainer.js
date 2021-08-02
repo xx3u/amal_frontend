@@ -1,5 +1,7 @@
 import { Grid, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -20,6 +22,9 @@ const LessonsContainer = () => {
   const { subjects } = useSelector((state) => state.subjects);
   const { teachersBySubject } = useSelector((state) => state.teachers);
   const [subjectId, setSubjectId] = useState(null);
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const onChangeSubject = (event, value) => {
     setSubjectId(value.id);
@@ -61,6 +66,10 @@ const LessonsContainer = () => {
         style={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
       />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker value={startDate} onChange={(date) => setStartDate(date)} format='yyyy/MM/dd' />
+        <KeyboardDatePicker value={endDate} onChange={(date) => setEndDate(date)} format='yyyy/MM/dd' />
+      </MuiPickersUtilsProvider>
     </Grid>
   );
 };
