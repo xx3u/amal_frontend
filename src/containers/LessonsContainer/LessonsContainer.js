@@ -102,7 +102,7 @@ const LessonsContainer = () => {
           id='teachers-lessons'
           className={classes.autoComplTeacher}
           options={teachersBySubject}
-          getOptionLabel={(option) => option.firstName || ''}
+          getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
           value={teacher}
           onChange={(event, value) => setTeacher(value)}
           noOptionsText={'выберите сначала предмета'}
