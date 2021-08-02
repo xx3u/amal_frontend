@@ -19,16 +19,18 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
   },
   autocomplete: {
-    marginBottom: 20,
-  },
-  dates: {
-    padding: 15,
+    marginBottom: 25,
   },
   dateBox: {
-    marginBottom: 50,
+    textAlign: 'center',
   },
   dateText: {
     marginBottom: 5,
+    textAlign: 'start',
+    marginLeft: 20,
+  },
+  autoComplTeacher: {
+    marginTop: 20,
   },
 }));
 
@@ -88,8 +90,17 @@ const LessonsContainer = () => {
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />}
         />
+      </Grid>
+      <Grid>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Box className={classes.dateBox}>
+            <Typography className={classes.dateText}>Дата</Typography>
+            <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
+          </Box>
+        </MuiPickersUtilsProvider>
         <Autocomplete
           id='teachers-lessons'
+          className={classes.autoComplTeacher}
           options={teachersBySubject}
           getOptionLabel={(option) => option.firstName || ''}
           value={teacher}
@@ -98,14 +109,6 @@ const LessonsContainer = () => {
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
         />
-      </Grid>
-      <Grid className={classes.dates}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Box className={classes.dateBox}>
-            <Typography className={classes.dateText}>Дата</Typography>
-            <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
-          </Box>
-        </MuiPickersUtilsProvider>
       </Grid>
     </Grid>
   );
