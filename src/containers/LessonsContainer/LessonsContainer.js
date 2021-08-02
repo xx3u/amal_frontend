@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject } from '../../store/actions/teachersActions';
+import { getWeekdates } from '../../helpers/helpers';
 
 const useStyles = makeStyles(() => ({
   lessonsData: {
@@ -47,15 +48,17 @@ const LessonsContainer = () => {
   const [group, setGroup] = useState(null);
   const [subject, setSubject] = useState(null);
   const [teacher, setTeacher] = useState(null);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const copySelectedDate = new Date(selectedDate);
+  getWeekdates(copySelectedDate);
 
   const isInitialMount = useRef(true);
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      dispatch(getTeachersBySubject(subject.id));
+      dispatch(getTeachersBySubject(subject && subject.id));
     }
   }, [subject]);
 
@@ -99,12 +102,8 @@ const LessonsContainer = () => {
       <Grid className={classes.dates}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Box className={classes.dateBox}>
-            <Typography className={classes.dateText}>Дата начала</Typography>
-            <KeyboardDatePicker value={startDate} onChange={(date) => setStartDate(date)} format='yyyy/MM/dd' />
-          </Box>
-          <Box>
-            <Typography className={classes.dateText}>Дата конца</Typography>
-            <KeyboardDatePicker value={endDate} onChange={(date) => setEndDate(date)} format='yyyy/MM/dd' />
+            <Typography className={classes.dateText}>Дата</Typography>
+            <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
           </Box>
         </MuiPickersUtilsProvider>
       </Grid>
