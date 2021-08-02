@@ -43,14 +43,12 @@ const LessonsContainer = () => {
   const { groups } = useSelector((state) => state.groups);
   const { subjects } = useSelector((state) => state.subjects);
   const { teachersBySubject } = useSelector((state) => state.teachers);
-  const [subjectId, setSubjectId] = useState(null);
 
+  const [groupId, setGroupId] = useState();
+  const [subjectId, setSubjectId] = useState();
+  const [teacherId, setTeacherId] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-
-  const onChangeSubject = (event, value) => {
-    setSubjectId(value.id);
-  };
 
   const isInitialMount = useRef(true);
   useEffect(() => {
@@ -67,6 +65,9 @@ const LessonsContainer = () => {
         <Autocomplete
           id='groups-lessons'
           className={classes.autocomplete}
+          name='groupId'
+          value={groupId}
+          onChange={(event, value) => setGroupId(value.id)}
           options={groups}
           getOptionLabel={(option) => option.groupName}
           noOptionsText={'список пуст'}
@@ -76,9 +77,10 @@ const LessonsContainer = () => {
         <Autocomplete
           id='subjects-lessons'
           className={classes.autocomplete}
+          value={subjectId}
+          onChange={(event, value) => setSubjectId(value.id)}
           options={subjects}
           getOptionLabel={(option) => option.subjectName}
-          onChange={onChangeSubject}
           noOptionsText={'список пуст'}
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />}
@@ -87,6 +89,8 @@ const LessonsContainer = () => {
           id='teachers-lessons'
           options={teachersBySubject}
           getOptionLabel={(option) => option.firstName}
+          value={teacherId}
+          onChange={(event, value) => setTeacherId(value.id)}
           noOptionsText={'выберите сначала предмета'}
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
