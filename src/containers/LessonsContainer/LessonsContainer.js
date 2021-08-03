@@ -13,8 +13,7 @@ import { getWeekdates } from '../../helpers/helpers';
 const useStyles = makeStyles(() => ({
   lessonsData: {
     margin: 50,
-    paddingLeft: 300,
-    paddingRight: 600,
+    paddingLeft: 100,
     display: 'flex',
     justifyContent: 'space-between',
   },
