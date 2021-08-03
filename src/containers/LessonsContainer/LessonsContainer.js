@@ -76,7 +76,7 @@ const LessonsContainer = () => {
         <Autocomplete
           id='groups-lessons'
           className={classes.autocomplete}
-          onChange={(event, value) => setLesson({ ...lesson, groupId: value?.id })}
+          onChange={(event, value) => setLesson((state) => ({ ...state, groupId: value?.id }))}
           options={groups}
           getOptionLabel={(option) => option.groupName}
           noOptionsText={'список пуст'}
@@ -86,7 +86,7 @@ const LessonsContainer = () => {
         <Autocomplete
           id='subjects-lessons'
           className={classes.autocomplete}
-          onChange={(event, value) => setLesson({ ...lesson, subjectId: value?.id })}
+          onChange={(event, value) => setLesson((state) => ({ ...state, subjectId: value?.id }))}
           options={subjects}
           getOptionLabel={(option) => option.subjectName || ''}
           noOptionsText={'список пуст'}
@@ -106,7 +106,7 @@ const LessonsContainer = () => {
           className={classes.autoComplTeacher}
           options={teachersBySubject}
           getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
-          onChange={(event, value) => setLesson({ ...lesson, teacherId: value?.id })}
+          onChange={(event, value) => setLesson((state) => ({ ...state, teacherId: value?.id }))}
           noOptionsText={'выберите сначала предмета'}
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
