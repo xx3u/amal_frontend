@@ -2,7 +2,6 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Route, Switch } from 'react-router';
 import Layout from './components/Layout/Layout';
-import LessonsContainer from './containers/Lessons/LessonsContainer';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
 import CreateStudentForm from './containers/Forms/Student/CreateStudentForm';
@@ -13,6 +12,7 @@ import TeachersPage from './pages/TeachersPage/TeachersPage';
 import CreateTeacherForm from './containers/Forms/Teacher/CreateTeacherForm';
 import EditTeacherForm from './containers/Forms/Teacher/EditTeacherForm';
 import PaymentsByStudent from './pages/PaymentsByStudent/PaymentsByStudent';
+import LessonsPage from './pages/LessonsPage/LessonsPage';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
       <CssBaseline />
       <Layout>
         <Switch>
-          <Route path='/lessons' exact component={LessonsContainer} />
+          <Route path='/admin-app/lessons' exact component={LessonsPage} />
           <Route path='/admin-app/students/:id/edit' exact component={EditStudentForm} />
           <Route path='/admin-app/students/add' exact component={CreateStudentForm} />
           <Route path='/admin-app/groups' exact component={GroupsPage} />

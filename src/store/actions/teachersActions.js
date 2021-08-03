@@ -16,6 +16,8 @@ import {
   GET_TEACHER_BY_ID_REQUEST,
   GET_TEACHER_BY_ID_SUCCESS,
   GET_TEACHER_BY_ID_FAILURE,
+  GET_TEACHERS_BY_SUBJECT_SUCCESS,
+  GET_TEACHERS_BY_SUBJECT_FAILURE,
 } from '../actionTypes';
 
 const fetchTeachersRequest = () => {
@@ -137,6 +139,25 @@ export const getTeacherById = (id) => {
       dispatch(getTeacherByIdSuccess(resp.data));
     } catch (error) {
       dispatch(getTeacherByIdFailure(error));
+    }
+  };
+};
+
+const getTeachersBySubjectSuccess = (teachers) => {
+  return { type: GET_TEACHERS_BY_SUBJECT_SUCCESS, teachers };
+};
+
+const getTeachersBySubjectFailure = (error) => {
+  return { type: GET_TEACHERS_BY_SUBJECT_FAILURE, error };
+};
+
+export const getTeachersBySubject = (id) => {
+  return async (dispatch) => {
+    try {
+      const resp = await axios.get(`/teachers?subjectId=${id}`);
+      dispatch(getTeachersBySubjectSuccess(resp.data));
+    } catch (error) {
+      dispatch(getTeachersBySubjectFailure(error));
     }
   };
 };
