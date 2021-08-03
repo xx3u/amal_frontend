@@ -13,8 +13,8 @@ import { getWeekdates } from '../../helpers/helpers';
 const useStyles = makeStyles(() => ({
   lessonsData: {
     margin: 50,
-    paddingLeft: 100,
-    paddingRight: 400,
+    paddingLeft: 300,
+    paddingRight: 600,
     display: 'flex',
     justifyContent: 'space-between',
   },
@@ -47,17 +47,29 @@ const LessonsContainer = () => {
   const { subjects } = useSelector((state) => state.subjects);
   const { teachersBySubject } = useSelector((state) => state.teachers);
 
-  const [group, setGroup] = useState(null);
-  const [subject, setSubject] = useState(null);
-  const [teacher, setTeacher] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const copySelectedDate = new Date(selectedDate);
-  getWeekdates(copySelectedDate);
+  const [lesson, setLesson] = useState({
+    groupId: '',
+    subjectId: '',
+    teacherId: '',
+    startTime: '',
+    endTime: '',
+  });
 
   useEffect(() => {
-    subject && dispatch(getTeachersBySubject(subject.id));
-  }, [subject]);
+    lesson.subjectId && dispatch(getTeachersBySubject(lesson.subjectId));
+  }, [lesson.subjectId]);
+
+  useEffect(() => {
+    const copyDate = new Date(selectedDate);
+    const newCopyDate = new Date(selectedDate);
+    setLesson({
+      ...lesson,
+      startTime: getWeekdates(copyDate).firstday,
+      endTime: getWeekdates(newCopyDate).lastday,
+    });
+  }, [selectedDate]);
 
   return (
     <Grid item xs={12} className={classes.lessonsData}>
@@ -65,8 +77,7 @@ const LessonsContainer = () => {
         <Autocomplete
           id='groups-lessons'
           className={classes.autocomplete}
-          value={group}
-          onChange={(event, value) => setGroup(value)}
+          onChange={(event, value) => setLesson({ ...lesson, groupId: value?.id })}
           options={groups}
           getOptionLabel={(option) => option.groupName}
           noOptionsText={'список пуст'}
@@ -76,8 +87,7 @@ const LessonsContainer = () => {
         <Autocomplete
           id='subjects-lessons'
           className={classes.autocomplete}
-          value={subject}
-          onChange={(event, value) => setSubject(value)}
+          onChange={(event, value) => setLesson({ ...lesson, subjectId: value?.id })}
           options={subjects}
           getOptionLabel={(option) => option.subjectName || ''}
           noOptionsText={'список пуст'}
@@ -97,8 +107,7 @@ const LessonsContainer = () => {
           className={classes.autoComplTeacher}
           options={teachersBySubject}
           getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
-          value={teacher}
-          onChange={(event, value) => setTeacher(value)}
+          onChange={(event, value) => setLesson({ ...lesson, teacherId: value?.id })}
           noOptionsText={'выберите сначала предмета'}
           style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
