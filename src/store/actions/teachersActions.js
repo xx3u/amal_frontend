@@ -154,7 +154,7 @@ const getTeachersBySubjectFailure = (error) => {
 export const getTeachersBySubject = (id) => {
   return async (dispatch) => {
     try {
-      const resp = await axios.get('/teachers?subjectId=' + id);
+      const resp = await axios.get(`/teachers?subjectId=${id}`);
       dispatch(getTeachersBySubjectSuccess(resp.data));
     } catch (error) {
       dispatch(getTeachersBySubjectFailure(error));
