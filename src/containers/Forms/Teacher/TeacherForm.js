@@ -121,6 +121,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
           onChange={inputChangeHandler}
           label='Телефон'
           type='text'
+          required
         />
       </Grid>
       <Grid item xs={6}>
