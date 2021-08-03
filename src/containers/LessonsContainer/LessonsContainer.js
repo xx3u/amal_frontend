@@ -55,13 +55,8 @@ const LessonsContainer = () => {
   const copySelectedDate = new Date(selectedDate);
   getWeekdates(copySelectedDate);
 
-  const isInitialMount = useRef(true);
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      dispatch(getTeachersBySubject(subject && subject.id));
-    }
+    subject && dispatch(getTeachersBySubject(subject.id));
   }, [subject]);
 
   return (
@@ -70,7 +65,6 @@ const LessonsContainer = () => {
         <Autocomplete
           id='groups-lessons'
           className={classes.autocomplete}
-          name='groupId'
           value={group}
           onChange={(event, value) => setGroup(value)}
           options={groups}
