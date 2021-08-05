@@ -1,5 +1,12 @@
 import axios from '../../axiosApi';
-import { FETCH_LESSONS_FAILURE, FETCH_LESSONS_REQUEST, FETCH_LESSONS_SUCCESS } from '../actionTypes';
+import {
+  ADD_NEW_LESSON_FAILURE,
+  ADD_NEW_LESSON_REQUEST,
+  ADD_NEW_LESSON_SUCCESS,
+  FETCH_LESSONS_FAILURE,
+  FETCH_LESSONS_REQUEST,
+  FETCH_LESSONS_SUCCESS,
+} from '../actionTypes';
 
 const fetchLessonsRequest = () => {
   return { type: FETCH_LESSONS_REQUEST };
@@ -21,6 +28,31 @@ export const fetchLessonsByGroupId = (groupId, startTime, endTime) => {
       dispatch(fetchLessonsSucces(response.data));
     } catch (error) {
       dispatch(fetchLessonsFailure(error));
+    }
+  };
+};
+
+const addNewLessonRequest = () => {
+  return { type: ADD_NEW_LESSON_REQUEST };
+};
+
+const addNewLessonSucces = () => {
+  return { type: ADD_NEW_LESSON_SUCCESS };
+};
+
+const addNewLessonFailure = (error) => {
+  return { type: ADD_NEW_LESSON_FAILURE, error };
+};
+
+export const addNewLesson = (lesson) => {
+  return async (dispatch) => {
+    try {
+      dispatch(addNewLessonRequest());
+      await axios.get('/lessons', lesson);
+      dispatch(addNewLessonSucces());
+      dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+    } catch (error) {
+      dispatch(addNewLessonFailure(error));
     }
   };
 };
