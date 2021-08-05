@@ -2,11 +2,12 @@ import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LessonsContainer from '../../containers/LessonsContainer/LessonsContainer';
+import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
 const useStyles = makeStyles(() => ({
   lessonsPage: {
-    paddingLeft: 200,
-    paddingRight: 700,
+    // paddingLeft: 200,
+    // paddingRight: 700,
   },
   title: {
     margin: 20,
@@ -24,6 +25,7 @@ const LessonsPage = () => {
         Групповые занятия
       </Typography>
       <LessonsContainer />
+      <ScheduleTable />
     </Grid>
   );
 };
