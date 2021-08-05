@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TableWithCard = ({ rows, columns }) => {
+const TableWithCard = ({ rows, columns, onClickHandler }) => {
   const classes = useStyles();
 
   return (
@@ -26,18 +26,19 @@ const TableWithCard = ({ rows, columns }) => {
             ? rows.map((row, index) => (
                 <TableRow key={index}>
                   {columns.map((col) => {
-                    console.log('row[col.field]: ', row[col.field]);
                     if (typeof row[col.field] === 'string') {
                       return <TableCell key={`${index}${col.field}`}>{row[col.field]}</TableCell>;
                     } else {
-                      const values = Object.keys(row[col.field])
-                        ? Object.keys(row[col.field]).map((key) => {
-                            return row[col.field][key];
-                          })
-                        : ['', '', ''];
                       return (
                         <TableCell key={`${index}${col.field}`}>
-                          <CustomCard id={values[0]} value1={values[1]} value2={values[2]} />
+                          <CustomCard
+                            id={row[col.field].id}
+                            subject={row[col.field].subject}
+                            teacher={row[col.field].teacher}
+                            onClickHandler={onClickHandler}
+                            startTime={row[col.field].startTime}
+                            endTime={row[col.field].endTime}
+                          />
                         </TableCell>
                       );
                     }

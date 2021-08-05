@@ -1,101 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
+import { getDateWithTime } from '../../helpers/getDateWithTime';
+import { addDays } from '../../helpers/addDays';
 
-const ScheduleTable = () => {
+const ScheduleTable = ({ selectedParams }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
-  const [weekLessons, setWeekLessons] = useState({
-    lesson1: {
-      slot: '09:00 - 10:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
-    lesson2: {
-      slot: '10:00 - 11:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
-    lesson3: {
-      slot: '11:00 - 12:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
-    lesson4: {
-      slot: '12:00 - 13:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
-    lanchBreak: {
-      slot: '',
-      mon: '',
-      tue: '',
-      wed: '',
-      thu: '',
-      fri: '',
-      sat: '',
-      sun: '',
-    },
-    lesson5: {
-      slot: '14:00 - 15:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
-    lesson6: {
-      slot: '15:00 - 16:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
-    lesson7: {
-      slot: '16:00 - 17:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
-    lesson8: {
-      slot: '17:00 - 18:00',
-      mon: {},
-      tue: {},
-      wed: {},
-      thu: {},
-      fri: {},
-      sat: {},
-      sun: {},
-    },
+
+  const times = [9, 10, 11, 12, 14, 15, 16, 17];
+  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  // console.log('changed plus: ', getDateWithTime(addDays(monday, 1), 9, 0));
+
+  let initWeekLessons = {};
+  times.forEach((time, index) => {
+    const startTimeString = getTimeStringInDoubleFigures(time);
+    const endTimeString = getTimeStringInDoubleFigures(time + 1);
+    const lesson = `lesson${index + 1}`;
+    initWeekLessons[lesson] = { slot: `${startTimeString} - ${endTimeString}` };
+    days.forEach((day) => {
+      initWeekLessons[lesson][day] = {
+        startTime: null,
+        endTime: null,
+      };
+    });
   });
+
+  const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
   const columns = [
     { field: 'slot', headerName: 'Время', width: 100 },
@@ -129,17 +60,32 @@ const ScheduleTable = () => {
   };
 
   useEffect(() => {
-    lessons.forEach((lesson) => {
-      console.log('weekDay: ', lesson && new Date(lesson.startTime).getDay());
-      console.log('start time: ', lesson && new Date(lesson.startTime).getUTCHours());
+    const monday = new Date(selectedParams.startTime);
+    setWeekLessons((prev) => {
+      const copyLessons = { ...prev };
+      times.forEach((time, index) => {
+        const lesson = `lesson${index + 1}`;
+        days.forEach((day, dayIndex) => {
+          copyLessons[lesson][day] = {
+            startTime: getDateWithTime(addDays(monday, dayIndex), time, 0),
+            endTime: getDateWithTime(addDays(monday, dayIndex), time + 1, 0),
+          };
+        });
+      });
+      return copyLessons;
+    });
+  }, [selectedParams]);
 
+  useEffect(() => {
+    if (lessons.length <= 0) {
+      setWeekLessons(initWeekLessons);
+    }
+    lessons.forEach((lesson) => {
       if (lesson) {
         const startTime = new Date(lesson.startTime).getUTCHours();
-        const endTime = new Date(lesson.endTime).getUTCHours();
         const lessonweekDay = new Date(lesson.startTime).getDay();
 
         const curLesson = getLesson(startTime);
-        console.log('cur lesson num: ', curLesson);
 
         setWeekLessons((prev) => {
           switch (lessonweekDay) {
@@ -149,6 +95,7 @@ const ScheduleTable = () => {
                 [curLesson]: {
                   ...prev[curLesson],
                   mon: {
+                    ...prev[curLesson].mon,
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
                     teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
@@ -161,9 +108,10 @@ const ScheduleTable = () => {
                 [curLesson]: {
                   ...prev[curLesson],
                   tue: {
+                    ...prev[curLesson].tue,
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
-                    teacher: lesson.Teacher.firstName + +' ' + lesson.Teacher.lastName,
+                    teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
                   },
                 },
               };
@@ -173,6 +121,7 @@ const ScheduleTable = () => {
                 [curLesson]: {
                   ...prev[curLesson],
                   wed: {
+                    ...prev[curLesson].wed,
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
                     teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
@@ -185,6 +134,7 @@ const ScheduleTable = () => {
                 [curLesson]: {
                   ...prev[curLesson],
                   thu: {
+                    ...prev[curLesson].thu,
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
                     teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
@@ -197,6 +147,7 @@ const ScheduleTable = () => {
                 [curLesson]: {
                   ...prev[curLesson],
                   fri: {
+                    ...prev[curLesson].fri,
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
                     teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
@@ -209,6 +160,7 @@ const ScheduleTable = () => {
                 [curLesson]: {
                   ...prev[curLesson],
                   sat: {
+                    ...prev[curLesson].sat,
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
                     teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
@@ -221,6 +173,7 @@ const ScheduleTable = () => {
                 [curLesson]: {
                   ...prev[curLesson],
                   sun: {
+                    ...prev[curLesson].sun,
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
                     teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
@@ -235,15 +188,15 @@ const ScheduleTable = () => {
     });
   }, [lessons]);
 
+  const onClickHandler = (startTime, endTime) => {
+    console.log('clicked table card startTime', startTime, endTime);
+  };
+
   const rows = Object.keys(weekLessons).map((key) => {
     return weekLessons[key];
   });
 
-  return (
-    <>
-      <TableWithCard columns={columns} rows={rows} />
-    </>
-  );
+  return <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} />;
 };
 
 export default ScheduleTable;

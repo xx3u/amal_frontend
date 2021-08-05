@@ -16,17 +16,23 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ id = '', value1 = '', value2 = '' }) => {
+const CustomCard = ({ id = '', subject = '', teacher = '', onClickHandler, startTime, endTime }) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} variant='outlined'>
+    <Card
+      className={classes.root}
+      variant='outlined'
+      onClick={() => {
+        onClickHandler(startTime, endTime);
+      }}
+    >
       <CardContent>
         <Typography variant='body1' component='p'>
-          {value1}
+          {subject}
         </Typography>
         <Typography variant='body2' component='p'>
-          {value2}
+          {teacher}
         </Typography>
       </CardContent>
     </Card>
