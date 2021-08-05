@@ -9,9 +9,9 @@ import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
-import { fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
-import { alpha } from '@material-ui/core/styles';
+import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
+import { getDateISOString } from '../../helpers/getDateISOString';
 
 const useStyles = makeStyles(() => ({
   lessonsData: {
@@ -40,6 +40,11 @@ const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const [dates, setDates] = useState({
+    startDate: '',
+    endDate: '',
+  });
+
   useEffect(() => {
     dispatch(fetchGroups());
     dispatch(fetchSubjects());
@@ -60,24 +65,34 @@ const LessonsContainer = () => {
   });
 
   useEffect(() => {
-    const startDate = new Date(lesson.startTime);
-    // startDate.setHours(0, 0);
-    const endDate = new Date(lesson.endTime);
-    // endDate.setHours(23, 59);
-    const startTime = lesson.startTime
-      ? `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}`
-      : '';
-    const endTime = lesson.startTime ? `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}` : '';
-    // const startTime = startDate.toISOString();
-    // const endTime = endDate.toISOString();
-    lesson.startTime && dispatch(fetchLessonsByGroupId(lesson.groupId, startTime, endTime));
-    // console.log('start time: ', startTime, 'endTime: ', endTime);
-    // console.log('start date: ', startYear, startMonth, startDay);
-  }, [lesson.groupId]);
+    lesson.startTime && dispatch(fetchLessonsByGroupId(lesson.groupId, dates.startDate, dates.endDate));
+  }, [lesson.groupId, dispatch]);
+
+  const onClickHandler = async (startTime, endTime) => {
+    const newLesson = {
+      groupId: lesson.groupId,
+      subjectId: lesson.subjectId,
+      teacherId: lesson.teacherId,
+      startTime: startTime,
+      endTime: endTime,
+    };
+    await dispatch(addNewLesson(newLesson));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, dates.startDate, dates.endDate));
+  };
 
   useEffect(() => {
     lesson.subjectId && dispatch(getTeachersBySubject(lesson.subjectId));
   }, [lesson.subjectId]);
+
+  useEffect(() => {
+    setDates((prev) => {
+      const lessonStartTime = new Date(lesson.startTime);
+      const lessonEndTime = new Date(lesson.endTime);
+      const startTime = lesson.startTime ? getDateISOString(lessonStartTime, 0, 0) : '';
+      const endTime = lesson.endTime ? getDateISOString(lessonEndTime, 23, 59) : '';
+      return { ...prev, startDate: startTime, endDate: endTime };
+    });
+  }, [lesson.startTime]);
 
   useEffect(() => {
     const copyDate = new Date(selectedDate);
@@ -137,7 +152,7 @@ const LessonsContainer = () => {
           />
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} />
+      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} />
     </>
   );
 };

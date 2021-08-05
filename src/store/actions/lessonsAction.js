@@ -45,12 +45,12 @@ const addNewLessonFailure = (error) => {
 };
 
 export const addNewLesson = (lesson) => {
+  console.log('lesson: ', lesson);
   return async (dispatch) => {
     try {
       dispatch(addNewLessonRequest());
-      await axios.get('/lessons', lesson);
+      await axios.post('/lessons', lesson);
       dispatch(addNewLessonSucces());
-      dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
     } catch (error) {
       dispatch(addNewLessonFailure(error));
     }
