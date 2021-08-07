@@ -11,7 +11,6 @@ import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
 import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
-import { getDateISOString } from '../../helpers/getDateISOString';
 
 const useStyles = makeStyles(() => ({
   lessonsData: {
@@ -40,11 +39,6 @@ const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [dates, setDates] = useState({
-    startDate: '',
-    endDate: '',
-  });
-
   useEffect(() => {
     dispatch(fetchGroups());
     dispatch(fetchSubjects());
@@ -65,7 +59,7 @@ const LessonsContainer = () => {
   });
 
   useEffect(() => {
-    lesson.startTime && dispatch(fetchLessonsByGroupId(lesson.groupId, dates.startDate, dates.endDate));
+    lesson.startTime && dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   }, [lesson.groupId, dispatch]);
 
   const onClickHandler = async (startTime, endTime) => {
@@ -77,22 +71,12 @@ const LessonsContainer = () => {
       endTime: endTime,
     };
     await dispatch(addNewLesson(newLesson));
-    dispatch(fetchLessonsByGroupId(lesson.groupId, dates.startDate, dates.endDate));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
   useEffect(() => {
     lesson.subjectId && dispatch(getTeachersBySubject(lesson.subjectId));
   }, [lesson.subjectId]);
-
-  useEffect(() => {
-    setDates((prev) => {
-      const lessonStartTime = new Date(lesson.startTime);
-      const lessonEndTime = new Date(lesson.endTime);
-      const startTime = lesson.startTime ? getDateISOString(lessonStartTime, 0, 0) : '';
-      const endTime = lesson.endTime ? getDateISOString(lessonEndTime, 23, 59) : '';
-      return { ...prev, startDate: startTime, endDate: endTime };
-    });
-  }, [lesson.startTime]);
 
   useEffect(() => {
     const copyDate = new Date(selectedDate);
