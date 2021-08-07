@@ -13,25 +13,8 @@ import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessons
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
 const useStyles = makeStyles(() => ({
-  lessonsData: {
-    margin: 50,
-    paddingLeft: 100,
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  autocomplete: {
-    marginBottom: 25,
-  },
-  dateBox: {
-    textAlign: 'center',
-  },
-  dateText: {
-    marginBottom: 5,
-    textAlign: 'start',
-    marginLeft: 20,
-  },
-  autoComplTeacher: {
-    marginTop: 20,
+  container: {
+    marginBottom: 20,
   },
 }));
 
@@ -90,8 +73,8 @@ const LessonsContainer = () => {
 
   return (
     <>
-      <Grid item xs={12} className={classes.lessonsData}>
-        <Grid>
+      <Grid container spacing={3} className={classes.container}>
+        <Grid item xs={3}>
           <Autocomplete
             id='groups-lessons'
             className={classes.autocomplete}
@@ -102,6 +85,8 @@ const LessonsContainer = () => {
             style={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
           />
+        </Grid>
+        <Grid item xs={3}>
           <Autocomplete
             id='subjects-lessons'
             className={classes.autocomplete}
@@ -115,13 +100,15 @@ const LessonsContainer = () => {
             )}
           />
         </Grid>
-        <Grid>
+        <Grid item xs={3}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Box className={classes.dateBox}>
               <Typography className={classes.dateText}>Дата</Typography>
               <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
             </Box>
           </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={3}>
           <Autocomplete
             id='teachers-lessons'
             className={classes.autoComplTeacher}
