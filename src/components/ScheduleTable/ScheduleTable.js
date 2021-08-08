@@ -73,7 +73,7 @@ const ScheduleTable = ({ selectedParams, onClickHandler }) => {
       });
       return copyLessons;
     });
-  }, [selectedParams]);
+  }, [selectedParams.startTime, selectedParams.groupId]);
 
   useEffect(() => {
     if (!lessons.length) {

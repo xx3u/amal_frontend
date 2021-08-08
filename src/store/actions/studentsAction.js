@@ -13,6 +13,7 @@ import {
   UPDATE_STUDENT_REQUEST,
   UPDATE_STUDENT_SUCCESS,
 } from '../actionTypes';
+import { NotificationManager } from 'react-notifications';
 import axios from '../../axiosApi';
 
 export const fetchStudentsSuccess = (students) => ({
@@ -35,8 +36,10 @@ export const fetchStudents = () => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(fetchStudentsFailure(error.response.data));
+      dispatch(NotificationManager.error(error.response.data.message));
     } else {
       dispatch(fetchStudentsFailure(error));
+      dispatch(NotificationManager.error('Error'));
     }
   }
 };

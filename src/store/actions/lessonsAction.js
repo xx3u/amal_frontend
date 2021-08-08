@@ -24,7 +24,7 @@ export const fetchLessonsByGroupId = (groupId, startTime, endTime) => {
   return async (dispatch) => {
     try {
       dispatch(fetchLessonsRequest());
-      const response = await axios.get(`/lessons?groupId=${groupId}&startTime=${startTime}&endTime=${endTime}`);
+      const response = await axios.get(`/groups/${groupId}/lessons?startTime=${startTime}&endTime=${endTime}`);
       dispatch(fetchLessonsSucces(response.data));
     } catch (error) {
       dispatch(fetchLessonsFailure(error));

@@ -1,6 +1,7 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Route, Switch } from 'react-router';
+import { NotificationContainer } from 'react-notifications';
 import Layout from './components/Layout/Layout';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
@@ -19,6 +20,7 @@ function App() {
     <div className='App'>
       <CssBaseline />
       <Layout>
+        <NotificationContainer />
         <Switch>
           <Route path='/admin-app/lessons' exact component={LessonsPage} />
           <Route path='/admin-app/students/:id/edit' exact component={EditStudentForm} />

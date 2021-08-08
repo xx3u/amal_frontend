@@ -8,6 +8,7 @@ import ActionsArea from '../../components/Students/ActionsArea/ActionsArea';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import StatusIconText from '../../components/UI/StatusIconText/StatusIconText';
+import ErrorAlert from '../../components/UI/ErrorAlert/ErrorAlert';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
@@ -86,6 +87,7 @@ const StudentsContainer = () => {
   ];
 
   const students = useSelector((state) => state.students.students);
+  const error = useSelector((state) => state.students.error);
   const changedStudents = students.map((student) => {
     return {
       ...student,
@@ -111,6 +113,7 @@ const StudentsContainer = () => {
 
   return (
     <div className={classes.StudentsContainer}>
+     
       <ActionsArea>
         <Button variant='contained' component={Link} to='/admin-app/students/add' color='default'>
           Добавить нового ученика
