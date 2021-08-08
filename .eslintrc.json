@@ -58,6 +58,7 @@
         "object-shorthand": "off",
         "class-methods-use-this": "off",
         "react/prop-types": "off",
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "react/display-name":"off"
     }
 }

@@ -16,15 +16,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ErrorAlert = ({ error, message }) => {
+const ErrorAlert = ({ message }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-
-  if (error !== null) {
-    setOpen(true);
-  } else {
-    setOpen(false);
-  }
+  const [open, setOpen] = useState(true);
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -34,8 +28,16 @@ const ErrorAlert = ({ error, message }) => {
   };
   return (
     <div className={classes.root}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert severity='error'> {message} </Alert>
+      <Snackbar
+        open={open}
+        autoHideDuration={15000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleClose} severity='error'>
+          {' '}
+          {message}{' '}
+        </Alert>
       </Snackbar>
     </div>
   );
