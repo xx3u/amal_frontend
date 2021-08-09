@@ -9,22 +9,13 @@ const useStyles = makeStyles({
     minWidth: 200,
     minHeight: 86,
   },
-  title: {
-    fontSize: 14,
-  },
 });
 
-const CustomCard = ({ subject = '', teacher = '', onClickHandler, startTime, endTime }) => {
+const CustomCard = ({ subject = '', teacher = '', onClickHandler }) => {
   const classes = useStyles();
 
   return (
-    <Card
-      className={classes.root}
-      variant='outlined'
-      onClick={() => {
-        onClickHandler(startTime, endTime);
-      }}
-    >
+    <Card className={classes.root} variant='outlined' onClick={onClickHandler}>
       <CardContent>
         <Typography variant='body1' component='p'>
           {subject}

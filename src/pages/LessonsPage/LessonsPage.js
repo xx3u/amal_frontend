@@ -5,10 +5,7 @@ import LessonsContainer from '../../containers/LessonsContainer/LessonsContainer
 // import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
 const useStyles = makeStyles(() => ({
-  lessonsPage: {
-    // paddingLeft: 200,
-    // paddingRight: 700,
-  },
+  lessonsPage: {},
   title: {
     margin: 20,
     marginLeft: 150,
@@ -25,7 +22,6 @@ const LessonsPage = () => {
         Групповые занятия
       </Typography>
       <LessonsContainer />
-      {/* <ScheduleTable /> */}
     </Grid>
   );
 };
