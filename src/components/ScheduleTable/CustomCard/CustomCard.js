@@ -9,9 +9,6 @@ const useStyles = makeStyles({
     minWidth: 200,
     minHeight: 86,
   },
-  title: {
-    fontSize: 14,
-  },
 });
 
 const CustomCard = ({ subject = '', teacher = '', onClickHandler, startTime, endTime }) => {
