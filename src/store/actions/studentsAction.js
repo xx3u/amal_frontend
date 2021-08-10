@@ -52,8 +52,10 @@ export const getStudentsByParams = (firstName, lastName) => async (dispatch) => 
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(fetchStudentsFailure(error.response.data));
+      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
     } else {
       dispatch(fetchStudentsFailure(error));
+      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
     }
   }
 };
@@ -69,7 +71,7 @@ export const addNewStudent = (newStudent) => async (dispatch) => {
     dispatch(push('/admin-app/students'));
   } catch (error) {
     dispatch(addNewStudentFailure(error));
-    NotificationManager.error(error.message, 'Error!', 5000);
+    NotificationManager.error(error.message, 'Post error!', 5000);
   }
 };
 
@@ -83,6 +85,7 @@ export const getStudentById = (id) => async (dispatch) => {
     await axios.get(`/students/${id}`).then((response) => dispatch(getStudentByIdSuccess(response.data)));
   } catch (error) {
     dispatch(getStudentByIdFailure(error));
+    NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
   }
 };
 
@@ -99,5 +102,6 @@ export const updateStudent = (id, updatedStudent) => async (dispatch) => {
     dispatch(push('/admin-app/students'));
   } catch (error) {
     dispatch(updateStudentFailure(error));
+    NotificationManager.error(error.response.data.message, 'Put error!', 5000);
   }
 };
