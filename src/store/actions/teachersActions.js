@@ -19,7 +19,7 @@ import {
   GET_TEACHERS_BY_SUBJECT_SUCCESS,
   GET_TEACHERS_BY_SUBJECT_FAILURE,
 } from '../actionTypes';
-
+import { NotificationManager } from 'react-notifications';
 const fetchTeachersRequest = () => {
   return { type: FETCH_TEACHERS_REQUEST };
 };
@@ -40,6 +40,7 @@ export const fetchTeachers = () => {
       dispatch(fetchTeachersSuccess(response.data));
     } catch (error) {
       dispatch(fetchTeachersFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -65,6 +66,7 @@ export const deleteTeacher = (teacherId) => {
       dispatch(fetchTeachers());
     } catch (error) {
       dispatch(deleteTeacherFailure(error));
+      NotificationManager.error(error.message, 'Delete error!', 5000);
     }
   };
 };
@@ -90,6 +92,7 @@ export const addTeacher = (teacher) => {
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
       dispatch(addTeacherFailure(error));
+      NotificationManager.error(error.message, 'Post error!', 5000);
     }
   };
 };
@@ -115,6 +118,7 @@ export const editTeacher = (teacher, id) => {
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
       dispatch(editTeacherFailure(error));
+      NotificationManager.error(error.message, 'Put error!', 5000);
     }
   };
 };
@@ -139,6 +143,7 @@ export const getTeacherById = (id) => {
       dispatch(getTeacherByIdSuccess(resp.data));
     } catch (error) {
       dispatch(getTeacherByIdFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -158,6 +163,7 @@ export const getTeachersBySubject = (id) => {
       dispatch(getTeachersBySubjectSuccess(resp.data));
     } catch (error) {
       dispatch(getTeachersBySubjectFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };

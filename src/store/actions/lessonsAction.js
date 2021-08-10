@@ -7,6 +7,7 @@ import {
   FETCH_LESSONS_REQUEST,
   FETCH_LESSONS_SUCCESS,
 } from '../actionTypes';
+import { NotificationManager } from 'react-notifications';
 
 const fetchLessonsRequest = () => {
   return { type: FETCH_LESSONS_REQUEST };
@@ -28,6 +29,7 @@ export const fetchLessonsByGroupId = (groupId, startTime, endTime) => {
       dispatch(fetchLessonsSucces(response.data));
     } catch (error) {
       dispatch(fetchLessonsFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -53,6 +55,7 @@ export const addNewLesson = (lesson) => {
       dispatch(addNewLessonSucces());
     } catch (error) {
       dispatch(addNewLessonFailure(error));
+      NotificationManager.error(error.message, 'Post error!', 5000);
     }
   };
 };

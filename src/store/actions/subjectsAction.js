@@ -10,7 +10,7 @@ import {
   UPDATE_SUBJECT_REQUEST,
   UPDATE_SUBJECT_SUCCESS,
 } from '../actionTypes';
-
+import { NotificationManager } from 'react-notifications';
 export const fetchSubjectsSuccess = (subjects) => ({
   type: FETCH_SUBJECTS_SUCCESS,
   subjects,
@@ -31,8 +31,10 @@ export const fetchSubjects = () => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(fetchSubjectsFailure(error.response.data));
+      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
     } else {
       dispatch(fetchSubjectsFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   }
 };
@@ -48,6 +50,7 @@ export const addNewSubject = (newSubj) => async (dispatch) => {
     dispatch(push('/'));
   } catch (error) {
     dispatch(addNewSubjectFailure(error));
+    NotificationManager.error(error.response.data.message, 'Post error!', 5000);
   }
 };
 
@@ -63,5 +66,6 @@ export const fetchUpdateGroup = (payload) => async (dispatch) => {
     dispatch(fetchSubjects());
   } catch (error) {
     dispatch(updateSubjectFailure(error));
+    NotificationManager.error(error.response.data.message, 'Put error!', 5000);
   }
 };
