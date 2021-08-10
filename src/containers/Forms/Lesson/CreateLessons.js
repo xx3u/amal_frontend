@@ -4,6 +4,9 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { ru } from 'date-fns/locale';
 import { registerLocale } from 'react-datepicker';
+import { add, compareAsc } from 'date-fns';
+import { useDispatch } from 'react-redux';
+import { createLessons } from './../../../store/actions/lessonsAction';
 
 const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
   registerLocale('ru', ru);
@@ -11,11 +14,12 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
   const [createDateRange, setCreateDateRange] = useState({
     startTime,
     endTime,
-    createStartDate: new Date(),
-    createEndDate: new Date(),
+    createStartTime: new Date(),
+    createEndTime: new Date(),
   });
 
   const [open, setOpen] = useState(isOpen.status);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setOpen(isOpen.status);
@@ -27,7 +31,11 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
   };
 
   const submitHandler = () => {
-    handleClose();
+    const checkOneYear = add(new Date(createDateRange.createStartTime), { years: 1});
+    if (compareAsc(new Date(createDateRange.createEndTime), new Date(checkOneYear)) === -1) {
+      dispatch(createLessons(groupId, createDateRange));
+      handleClose();
+    }
   };
 
   return (
@@ -43,8 +51,8 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
               margin='normal'
               id='date-picker-inline'
               label='Дата начала периода'
-              value={createDateRange.createStartDate}
-              onChange={(date) => setCreateDateRange({ ...createDateRange, createStartDate: date })}
+              value={createDateRange.createStartTime}
+              onChange={(date) => setCreateDateRange({ ...createDateRange, createStartTime: date })}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
@@ -56,8 +64,8 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
               margin='normal'
               id='date-picker-inline'
               label='Дата окончания периода'
-              value={createDateRange.createEndDate}
-              onChange={(date) => setCreateDateRange({ ...createDateRange, createEndDate: date })}
+              value={createDateRange.createEndTime}
+              onChange={(date) => setCreateDateRange({ ...createDateRange, createEndTime: date })}
               KeyboardButtonProps={{
                 'aria-label': 'change date',
               }}
