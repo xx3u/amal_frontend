@@ -8,8 +8,6 @@ import ActionsArea from '../../components/Students/ActionsArea/ActionsArea';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import StatusIconText from '../../components/UI/StatusIconText/StatusIconText';
-import ErrorAlert from '../../components/UI/ErrorAlert/ErrorAlert';
-import withErrorHandler from '../../components/HOC/withErrorHandler';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
@@ -131,4 +129,4 @@ const StudentsContainer = () => {
   );
 };
 
-export default withErrorHandler(StudentsContainer);
+export default StudentsContainer;
