@@ -5,9 +5,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
-import { fetchTeachers } from '../../store/actions/teachersActions';
+import { fetchTeachers, getTeachersLessons } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
-import { fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
 const useStyles = makeStyles(() => ({
@@ -22,6 +21,7 @@ const useStyles = makeStyles(() => ({
 const LessonsByTeacher = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const teachersLessons = useSelector((state) => state.teachers.teachersLessons);
 
   useEffect(() => {
     dispatch(fetchTeachers());
@@ -32,7 +32,6 @@ const LessonsByTeacher = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [lesson, setLesson] = useState({
-    groupId: '',
     subjectId: '',
     teacherId: '',
     startTime: '',
@@ -40,8 +39,8 @@ const LessonsByTeacher = () => {
   });
 
   useEffect(() => {
-    lesson.startTime && dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
-  }, [lesson.groupId, dispatch]);
+    dispatch(getTeachersLessons(lesson.teacherId, lesson.startTime, lesson.endTime));
+  }, [lesson.teacherId, lesson.startTime]);
 
   useEffect(() => {
     const copyDate = new Date(selectedDate);
@@ -52,6 +51,10 @@ const LessonsByTeacher = () => {
       endTime: getWeekdates(newCopyDate).lastday,
     });
   }, [selectedDate]);
+
+  const onClickHandler = () => {
+    console.log('');
+  };
 
   return (
     <>
@@ -82,7 +85,7 @@ const LessonsByTeacher = () => {
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} />
+      <ScheduleTable selectedParams={lesson} lessons={teachersLessons} onClickHandler={onClickHandler} />
     </>
   );
 };
