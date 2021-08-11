@@ -16,6 +16,9 @@ import {
   GET_TEACHER_BY_ID_FAILURE,
   GET_TEACHERS_BY_SUBJECT_SUCCESS,
   GET_TEACHERS_BY_SUBJECT_FAILURE,
+  GET_TEACHERS_LESSONS_REQUEST,
+  GET_TEACHERS_LESSONS_FAILURE,
+  GET_TEACHERS_LESSONS_SUCCESS,
 } from '../actionTypes';
 
 const initState = {
@@ -24,6 +27,7 @@ const initState = {
   teachersBySubject: [],
   error: null,
   loading: false,
+  teachersLessons: [],
 };
 
 const reducer = (state = initState, action) => {
@@ -62,6 +66,12 @@ const reducer = (state = initState, action) => {
       return { ...state, teachersBySubject: action.teachers, error: null };
     case GET_TEACHERS_BY_SUBJECT_FAILURE:
       return { ...state, error: action.error };
+    case GET_TEACHERS_LESSONS_REQUEST:
+      return { ...state, loading: true };
+    case GET_TEACHERS_LESSONS_SUCCESS:
+      return { ...state, loading: false, teachersLessons: action.data, error: null };
+    case GET_TEACHERS_LESSONS_FAILURE:
+      return { ...state, loading: false, error: action.error };
     default:
       return state;
   }
