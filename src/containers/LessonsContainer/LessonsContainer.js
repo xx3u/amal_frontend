@@ -9,27 +9,12 @@ import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
+import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
+import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
 const useStyles = makeStyles(() => ({
-  lessonsData: {
-    margin: 50,
-    paddingLeft: 100,
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  autocomplete: {
-    marginBottom: 25,
-  },
-  dateBox: {
-    textAlign: 'center',
-  },
-  dateText: {
-    marginBottom: 5,
-    textAlign: 'start',
-    marginLeft: 20,
-  },
-  autoComplTeacher: {
-    marginTop: 20,
+  container: {
+    marginBottom: 20,
   },
 }));
 
@@ -57,6 +42,24 @@ const LessonsContainer = () => {
   });
 
   useEffect(() => {
+    lesson.startTime &&
+      lesson.groupId &&
+      dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  }, [lesson.groupId, lesson.startTime, dispatch]);
+
+  const onClickHandler = async (startTime, endTime) => {
+    const newLesson = {
+      groupId: lesson.groupId,
+      subjectId: lesson.subjectId,
+      teacherId: lesson.teacherId,
+      startTime: startTime,
+      endTime: endTime,
+    };
+    await dispatch(addNewLesson(newLesson));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  };
+
+  useEffect(() => {
     lesson.subjectId && dispatch(getTeachersBySubject(lesson.subjectId));
   }, [lesson.subjectId]);
 
@@ -71,48 +74,59 @@ const LessonsContainer = () => {
   }, [selectedDate]);
 
   return (
-    <Grid item xs={12} className={classes.lessonsData}>
-      <Grid>
-        <Autocomplete
-          id='groups-lessons'
-          className={classes.autocomplete}
-          onChange={(event, value) => setLesson((state) => ({ ...state, groupId: value?.id }))}
-          options={groups}
-          getOptionLabel={(option) => option.groupName}
-          noOptionsText={'список пуст'}
-          style={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
-        />
-        <Autocomplete
-          id='subjects-lessons'
-          className={classes.autocomplete}
-          onChange={(event, value) => setLesson((state) => ({ ...state, subjectId: value?.id }))}
-          options={subjects}
-          getOptionLabel={(option) => option.subjectName || ''}
-          noOptionsText={'список пуст'}
-          style={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />}
-        />
+    <>
+      <Grid container spacing={3} className={classes.container}>
+        <Grid item xs={3}>
+          <Autocomplete
+            id='groups-lessons'
+            className={classes.autocomplete}
+            onChange={(event, value) => setLesson((state) => ({ ...state, groupId: value?.id }))}
+            options={groups}
+            getOptionLabel={(option) => option.groupName}
+            noOptionsText={'список пуст'}
+            style={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <Autocomplete
+            id='subjects-lessons'
+            className={classes.autocomplete}
+            onChange={(event, value) => setLesson((state) => ({ ...state, subjectId: value?.id }))}
+            options={subjects}
+            getOptionLabel={(option) => option.subjectName || ''}
+            noOptionsText={'список пуст'}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />
+            )}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Box className={classes.dateBox}>
+              <Typography className={classes.dateText}>Дата</Typography>
+              <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
+            </Box>
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={3}>
+          <Autocomplete
+            id='teachers-lessons'
+            className={classes.autoComplTeacher}
+            options={teachersBySubject}
+            getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
+            onChange={(event, value) => setLesson((state) => ({ ...state, teacherId: value?.id }))}
+            noOptionsText={'выберите сначала предмета'}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
+            )}
+          />
+        </Grid>
       </Grid>
-      <Grid>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Box className={classes.dateBox}>
-            <Typography className={classes.dateText}>Дата</Typography>
-            <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
-          </Box>
-        </MuiPickersUtilsProvider>
-        <Autocomplete
-          id='teachers-lessons'
-          className={classes.autoComplTeacher}
-          options={teachersBySubject}
-          getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
-          onChange={(event, value) => setLesson((state) => ({ ...state, teacherId: value?.id }))}
-          noOptionsText={'выберите сначала предмета'}
-          style={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
-        />
-      </Grid>
-    </Grid>
+      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} />
+    </>
   );
 };
 

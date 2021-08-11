@@ -4,10 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import LessonsContainer from '../../containers/LessonsContainer/LessonsContainer';
 
 const useStyles = makeStyles(() => ({
-  lessonsPage: {
-    paddingLeft: 200,
-    paddingRight: 700,
-  },
   title: {
     margin: 20,
     marginLeft: 150,
@@ -19,7 +15,7 @@ const LessonsPage = () => {
   const classes = useStyles();
 
   return (
-    <Grid className={classes.lessonsPage}>
+    <Grid>
       <Typography variant='h5' className={classes.title}>
         Групповые занятия
       </Typography>
