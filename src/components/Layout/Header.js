@@ -58,10 +58,12 @@ const Header = () => {
               Расписание
             </Button>
             <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-              <MenuItem component={Link} to='/admin-app/lessons'>
+              <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
                 Раписание по Группам
               </MenuItem>
-              <MenuItem onClick={handleClose}>Расписание по Учителям</MenuItem>
+              <MenuItem component={Link} to='/admin-app/teachers/lessons' onClick={handleClose}>
+                Расписание по Учителям
+              </MenuItem>
             </Menu>
           </Grid>
           <Grid item>
