@@ -17,7 +17,7 @@ const initialState = {
   students: [],
   error: null,
   loading: false,
-  student: {},
+  student: null,
   updatedStudent: {},
 };
 
