@@ -3,33 +3,35 @@ import { useSelector } from 'react-redux';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
-import { addDays } from '../../helpers/addDays';
+import { addDays, getDay } from 'date-fns';
 
 const ScheduleTable = ({ selectedParams, onClickHandler }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
 
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-  const initWeekLessons = {};
 
   const setCellsTimes = (times, days, lessons, monday, setSlot = false) => {
+    const copyLessons = { ...lessons };
     times.forEach((time, index) => {
       const lesson = `lesson${index + 1}`;
-      if (!setSlot) {
+      copyLessons[lesson] = {};
+      if (setSlot) {
         const startTimeString = getTimeStringInDoubleFigures(time);
         const endTimeString = getTimeStringInDoubleFigures(time + 1);
-        lessons[lesson] = { slot: `${startTimeString} - ${endTimeString}` };
+        copyLessons[lesson]['slot'] = `${startTimeString} - ${endTimeString}`;
       }
       days.forEach((day, dayIndex) => {
-        lessons[lesson][day] = {
+        copyLessons[lesson][day] = {
           startTime: monday ? getDateWithTime(addDays(monday, dayIndex), time, 0) : null,
           endTime: monday ? getDateWithTime(addDays(monday, dayIndex), time + 1, 0) : null,
         };
       });
     });
+    return copyLessons;
   };
 
-  setCellsTimes(times, days, initWeekLessons, true);
+  const initWeekLessons = setCellsTimes(times, days, {}, selectedParams.startTime, true);
 
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
@@ -68,20 +70,22 @@ const ScheduleTable = ({ selectedParams, onClickHandler }) => {
     const monday = selectedParams.startTime;
     setWeekLessons((prev) => {
       const copyLessons = { ...prev };
-      setCellsTimes(times, days, copyLessons, monday);
-      return copyLessons;
+      const resLessons = setCellsTimes(times, days, copyLessons, monday, true);
+
+      return resLessons;
     });
   }, [selectedParams.startTime, selectedParams.groupId]);
 
   useEffect(() => {
-    if (!lessons.length) {
+    if (lessons.length <= 0) {
       setWeekLessons(initWeekLessons);
     } else {
       days.forEach((day, index) => {
         lessons.forEach((lesson) => {
-          const startTime = new Date(lesson.startTime).getUTCHours();
-
-          const lessonweekDay = new Date(lesson.startTime).getDay();
+          const lessonStartDate = new Date(lesson.startTime);
+          const startTime = lessonStartDate.getUTCHours();
+          let lessonweekDay = getDay(lessonStartDate);
+          lessonweekDay = lessonweekDay === 0 ? 7 : lessonweekDay;
           const curLesson = getLesson(startTime);
           if (index + 1 === lessonweekDay) {
             setWeekLessons((prev) => {

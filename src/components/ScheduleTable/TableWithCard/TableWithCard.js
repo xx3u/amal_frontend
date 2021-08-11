@@ -32,9 +32,9 @@ const TableWithCard = ({ rows, columns, onClickHandler }) => {
                       return (
                         <TableCell key={`${index}${field}`}>
                           <CustomCard
-                            id={row[field].id}
-                            subject={row[field].subject}
-                            teacher={row[field].teacher}
+                            id={row[field] ? row[field].id : ''}
+                            subject={row[field] ? row[field].subject : ''}
+                            teacher={row[field] ? row[field].teacher : ''}
                             onClickHandler={() => {
                               onClickHandler(row[field].startTime, row[field].endTime);
                             }}
