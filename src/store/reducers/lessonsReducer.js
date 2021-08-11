@@ -20,8 +20,9 @@ const reducer = (state = initState, action) => {
     case CREATE_LESSONS_REQUEST:
       return { ...state, loading: true };
     case CREATE_LESSONS_SUCCESS:
-      return { ...state, loading: false };
+      return { ...state, loading: false, error: null };
     case CREATE_LESSONS_FAILURE:
+      return { ...state, loading: false, error: action.error };
     case FETCH_LESSONS_REQUEST:
       return { ...state, loading: true };
     case FETCH_LESSONS_SUCCESS:
