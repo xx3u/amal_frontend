@@ -47,9 +47,9 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
             <KeyboardDatePicker
               disableToolbar
               variant='inline'
-              format='MM/dd/yyyy'
+              format='dd MMM yyyy'
               margin='normal'
-              id='date-picker-inline'
+              id='date-picker-startTime'
               label='Дата начала периода'
               value={createDateRange.createStartTime}
               onChange={(date) => setCreateDateRange({ ...createDateRange, createStartTime: date })}
@@ -60,9 +60,9 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
             <KeyboardDatePicker
               disableToolbar
               variant='inline'
-              format='MM/dd/yyyy'
+              format='dd MMM yyyy'
               margin='normal'
-              id='date-picker-inline'
+              id='date-picker-endTime'
               label='Дата окончания периода'
               value={createDateRange.createEndTime}
               onChange={(date) => setCreateDateRange({ ...createDateRange, createEndTime: date })}

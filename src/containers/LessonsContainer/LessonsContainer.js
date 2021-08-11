@@ -131,7 +131,7 @@ const LessonsContainer = () => {
           />
         </Grid>
         <Grid item>
-          <Button variant='contained' onClick={(e) => openPaymentForm(e)}>
+          <Button variant='contained' onClick={(e) => openPaymentForm(e)} disabled={lesson.groupId  === '' || lesson.groupId === undefined}>
             Создать на период
           </Button>
         </Grid>
