@@ -21,6 +21,7 @@ const useStyles = makeStyles(() => ({
 const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const lessons = useSelector((state) => state.lessons.lessons);
 
   useEffect(() => {
     dispatch(fetchGroups());
@@ -125,7 +126,7 @@ const LessonsContainer = () => {
           />
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} />
+      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} lessons={lessons} />
     </>
   );
 };
