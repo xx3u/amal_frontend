@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import { IconButton } from '@material-ui/core';
 import { DeleteForever } from '@material-ui/icons';
 
@@ -33,13 +32,10 @@ const CustomCard = ({ id = '', subject = '', teacher = '', onClickHandler, openD
     <Card className={classes.root} variant='outlined' onClick={onClickHandler}>
       <CardContent>
         <Typography variant='body1' component='p'>
-          {subject}
+          {subject} {delBtn}
         </Typography>
         <Typography variant='body2' component='p'>
           {teacher}
-        </Typography>
-        <Typography variant='body3' component='p'>
-        {delBtn}
         </Typography>
       </CardContent>
     </Card>
