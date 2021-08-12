@@ -6,6 +6,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { ru } from 'date-fns/locale';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { fetchTeachers, getTeachersLessons } from '../../store/actions/teachersActions';
+import { deleteLesson } from '../../store/actions/lessonsAction';
 import { getWeekdates } from '../../helpers/helpers';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
@@ -37,6 +38,11 @@ const LessonsByTeacher = () => {
     startTime: '',
     endTime: '',
   });
+
+  const deleteLessonHandler = async (lessonId) => {
+    await dispatch(deleteLesson(lessonId));
+    dispatch(getTeachersLessons(lesson.teacherId, lesson.startTime, lesson.endTime));
+  };
 
   useEffect(() => {
     lesson.teacherId && dispatch(getTeachersLessons(lesson.teacherId, lesson.startTime, lesson.endTime));
@@ -85,7 +91,12 @@ const LessonsByTeacher = () => {
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} lessons={teachersLessons} onClickHandler={onClickHandler} />
+      <ScheduleTable
+        selectedParams={lesson}
+        lessons={teachersLessons}
+        onClickHandler={onClickHandler}
+        deleteLessonHandler={deleteLessonHandler}
+      />
     </>
   );
 };
