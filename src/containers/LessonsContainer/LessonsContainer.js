@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, TextField, Typography } from '@material-ui/core';
+import { Box, Grid, TextField, Typography, Button } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -11,6 +11,7 @@ import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
 import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
+import CreateLessons from '../Forms/Lesson/CreateLessons';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -73,6 +74,13 @@ const LessonsContainer = () => {
     });
   }, [selectedDate]);
 
+  const [isOpen, setIsOpen] = useState({ status: false });
+
+  const openPaymentForm = (e) => {
+    e.stopPropagation();
+    setIsOpen({ status: true });
+  };
+
   return (
     <>
       <Grid container spacing={3} className={classes.container}>
@@ -89,6 +97,14 @@ const LessonsContainer = () => {
           />
         </Grid>
         <Grid item xs={3}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Box className={classes.dateBox}>
+              <Typography className={classes.dateText}>Дата</Typography>
+              <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
+            </Box>
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={3}>
           <Autocomplete
             id='subjects-lessons'
             className={classes.autocomplete}
@@ -101,14 +117,6 @@ const LessonsContainer = () => {
               <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />
             )}
           />
-        </Grid>
-        <Grid item xs={3}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Box className={classes.dateBox}>
-              <Typography className={classes.dateText}>Дата</Typography>
-              <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
-            </Box>
-          </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={3}>
           <Autocomplete
@@ -124,8 +132,14 @@ const LessonsContainer = () => {
             )}
           />
         </Grid>
+        <Grid item>
+          <Button variant='contained' onClick={(e) => openPaymentForm(e)} disabled={!lesson.groupId}>
+            Создать на период
+          </Button>
+        </Grid>
       </Grid>
       <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} />
+      <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
     </>
   );
 };
