@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TableWithCard = ({ rows, columns, onClickHandler }) => {
+const TableWithCard = ({ rows, columns, onClickHandler, openDeleteModal }) => {
   const classes = useStyles();
 
   return (
@@ -35,9 +35,11 @@ const TableWithCard = ({ rows, columns, onClickHandler }) => {
                             id={row[field] ? row[field].id : ''}
                             subject={row[field] ? row[field].subject : ''}
                             teacher={row[field] ? row[field].teacher : ''}
+                            lessonId={row[field] ? row[field].id : ''}
                             onClickHandler={() => {
                               onClickHandler(row[field].startTime, row[field].endTime);
                             }}
+                            openDeleteModal={openDeleteModal}
                           />
                         </TableCell>
                       );

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-const initState = {
-  error: null,
-  loading: false,
-=======
 import {
   ADD_NEW_LESSON_FAILURE,
   ADD_NEW_LESSON_REQUEST,
@@ -10,24 +5,18 @@ import {
   FETCH_LESSONS_FAILURE,
   FETCH_LESSONS_REQUEST,
   FETCH_LESSONS_SUCCESS,
+  DELETE_LESSON_FAILURE,
+  DELETE_LESSON_REQUEST,
+  DELETE_LESSON_SUCCESS,
 } from '../actionTypes';
 const initState = {
   lessons: [],
   loading: false,
   error: null,
->>>>>>> a3244c1ce6d12a2de815ae67c31ad167b5384cf5
 };
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-<<<<<<< HEAD
-    case DELETE_TEACHER_REQUEST:
-      return { ...state, loading: true };
-    case DELETE_TEACHER_SUCCESS:
-      return { ...state, loading: false };
-    case DELETE_TEACHER_FAILURE:
-      return { ...state, error: action.error, loading: false };
-=======
     case FETCH_LESSONS_REQUEST:
       return { ...state, loading: true };
     case FETCH_LESSONS_SUCCESS:
@@ -40,7 +29,12 @@ const reducer = (state = initState, action) => {
       return { ...state, loading: false, error: null };
     case ADD_NEW_LESSON_FAILURE:
       return { ...state, loading: false, error: action.error };
->>>>>>> a3244c1ce6d12a2de815ae67c31ad167b5384cf5
+    case DELETE_LESSON_REQUEST:
+      return { ...state, loading: true };
+    case DELETE_LESSON_SUCCESS:
+      return { ...state, loading: false };
+    case DELETE_LESSON_FAILURE:
+      return { ...state, error: action.error, loading: false };
     default:
       return state;
   }

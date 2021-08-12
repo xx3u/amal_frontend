@@ -1,29 +1,5 @@
 import axios from '../../axiosApi';
-<<<<<<< HEAD
 
-import { DELETE_LESSON_FAILURE, DELETE_LESSON_REQUEST, DELETE_LESSON_SUCCESS } from '../actionTypes';
-
-const deleteLessonRequest = () => {
-  return { type: DELETE_LESSON_REQUEST };
-};
-
-const deleteLessonSuccess = (message) => {
-  return { type: DELETE_LESSON_SUCCESS, message };
-};
-
-const deleteLessonFailure = (error) => {
-  return { type: DELETE_LESSON_FAILURE, error };
-};
-
-export const deleteLesson = (lessonId) => {
-  return async (dispatch) => {
-    try {
-      dispatch(deleteLessonRequest());
-      const resp = await axios.delete(`/lessons/${lessonId}`);
-      dispatch(deleteLessonSuccess(resp.data));
-    } catch (error) {
-      dispatch(deleteLessonFailure(error));
-=======
 import {
   ADD_NEW_LESSON_FAILURE,
   ADD_NEW_LESSON_REQUEST,
@@ -31,6 +7,9 @@ import {
   FETCH_LESSONS_FAILURE,
   FETCH_LESSONS_REQUEST,
   FETCH_LESSONS_SUCCESS,
+  DELETE_LESSON_FAILURE,
+  DELETE_LESSON_REQUEST,
+  DELETE_LESSON_SUCCESS,
 } from '../actionTypes';
 
 const fetchLessonsRequest = () => {
@@ -77,7 +56,30 @@ export const addNewLesson = (lesson) => {
       dispatch(addNewLessonSucces());
     } catch (error) {
       dispatch(addNewLessonFailure(error));
->>>>>>> a3244c1ce6d12a2de815ae67c31ad167b5384cf5
+    }
+  };
+};
+
+const deleteLessonRequest = () => {
+  return { type: DELETE_LESSON_REQUEST };
+};
+
+const deleteLessonSuccess = (message) => {
+  return { type: DELETE_LESSON_SUCCESS, message };
+};
+
+const deleteLessonFailure = (error) => {
+  return { type: DELETE_LESSON_FAILURE, error };
+};
+
+export const deleteLesson = (lessonId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteLessonRequest());
+      const resp = await axios.delete(`/lessons/${lessonId}`);
+      dispatch(deleteLessonSuccess(resp.data));
+    } catch (error) {
+      dispatch(deleteLessonFailure(error));
     }
   };
 };

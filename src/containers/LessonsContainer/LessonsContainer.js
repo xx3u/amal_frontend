@@ -9,7 +9,7 @@ import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
-import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
+import { addNewLesson, fetchLessonsByGroupId, deleteLesson } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
 const useStyles = makeStyles(() => ({
@@ -56,6 +56,11 @@ const LessonsContainer = () => {
       endTime: endTime,
     };
     await dispatch(addNewLesson(newLesson));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  };
+
+  const deleteLessonHandler = (lessonId) => {
+    dispatch(deleteLesson(lessonId));
     dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
@@ -125,7 +130,11 @@ const LessonsContainer = () => {
           />
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} />
+      <ScheduleTable
+        selectedParams={lesson}
+        onClickHandler={onClickHandler}
+        deleteLessonHandler={deleteLessonHandler}
+      />
     </>
   );
 };

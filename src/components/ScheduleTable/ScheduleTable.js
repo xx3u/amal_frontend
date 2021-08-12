@@ -4,9 +4,28 @@ import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubl
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
 import { addDays, getDay } from 'date-fns';
+import DeleteModal from '../UI/DeleteModal/DeleteModal';
 
-const ScheduleTable = ({ selectedParams, onClickHandler }) => {
+const ScheduleTable = ({ selectedParams, onClickHandler, deleteLessonHandler }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
+
+  const [isOpen, setIsOpen] = useState({ status: false });
+  const [currentLessonId, setCurrentLessonId] = useState(null);
+
+  const openDeleteModal = (e, id) => {
+    e.stopPropagation();
+    setIsOpen({ status: true });
+    setCurrentLessonId(id);
+  };
+
+  const closeDeleteModal = () => {
+    setIsOpen({ status: false });
+  };
+
+  const deleteButtonHandler = () => {
+    deleteLessonHandler(currentLessonId);
+    closeDeleteModal();
+  };
 
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -112,7 +131,17 @@ const ScheduleTable = ({ selectedParams, onClickHandler }) => {
     return weekLessons[key];
   });
 
-  return <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} />;
+  return (
+    <>
+      <DeleteModal
+        isOpen={isOpen}
+        deleteLessonHandler={deleteLessonHandler}
+        currentLessonId={currentLessonId}
+        deleteButtonHandler={deleteButtonHandler}
+      />
+      <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} openDeleteModal={openDeleteModal} />
+    </>
+  );
 };
 
 export default ScheduleTable;
