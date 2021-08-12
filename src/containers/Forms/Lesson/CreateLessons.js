@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Dialog, DialogContent, Button, DialogTitle, DialogActions } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { ru } from 'date-fns/locale';
 import { add, compareAsc } from 'date-fns';
 import { useDispatch } from 'react-redux';
 import { createLessons } from './../../../store/actions/lessonsAction';
@@ -27,7 +28,7 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
   };
 
   const submitHandler = () => {
-    const checkOneYear = add(new Date(createDateRange.createStartTime), { years: 1});
+    const checkOneYear = add(new Date(createDateRange.createStartTime), { years: 1 });
     if (compareAsc(new Date(createDateRange.createEndTime), new Date(checkOneYear)) === -1) {
       dispatch(createLessons(groupId, createDateRange));
       handleClose();
@@ -38,7 +39,7 @@ const CreateLessons = ({ isOpen, groupId, startTime, endTime }) => {
     <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
       <DialogTitle id='alert-dialog-title'>{'Выберите период для создания групповых занятий'}</DialogTitle>
       <DialogContent>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ru}>
           <Grid container justifyContent='space-around' spacing={2}>
             <KeyboardDatePicker
               disableToolbar
