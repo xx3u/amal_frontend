@@ -95,6 +95,14 @@ const LessonsContainer = () => {
           />
         </Grid>
         <Grid item xs={3}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Box className={classes.dateBox}>
+              <Typography className={classes.dateText}>Дата</Typography>
+              <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
+            </Box>
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={3}>
           <Autocomplete
             id='subjects-lessons'
             className={classes.autocomplete}
@@ -107,14 +115,6 @@ const LessonsContainer = () => {
               <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />
             )}
           />
-        </Grid>
-        <Grid item xs={3}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Box className={classes.dateBox}>
-              <Typography className={classes.dateText}>Дата</Typography>
-              <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
-            </Box>
-          </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={3}>
           <Autocomplete
