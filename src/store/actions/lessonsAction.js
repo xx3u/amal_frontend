@@ -6,6 +6,9 @@ import {
   FETCH_LESSONS_FAILURE,
   FETCH_LESSONS_REQUEST,
   FETCH_LESSONS_SUCCESS,
+  CREATE_LESSONS_REQUEST,
+  CREATE_LESSONS_SUCCESS,
+  CREATE_LESSONS_FAILURE,
 } from '../actionTypes';
 
 const fetchLessonsRequest = () => {
@@ -54,4 +57,21 @@ export const addNewLesson = (lesson) => {
       dispatch(addNewLessonFailure(error));
     }
   };
+};
+
+const createLessonsRequest = () => ({ type: CREATE_LESSONS_REQUEST });
+const createLessonsSuccess = (data) => ({ type: CREATE_LESSONS_SUCCESS, data });
+const createLessonsFailure = (error) => ({
+  type: CREATE_LESSONS_FAILURE,
+  error,
+});
+
+export const createLessons = (groupId, createDateRange) => async (dispatch) => {
+  try {
+    dispatch(createLessonsRequest());
+    await axios.post(`/groups/${groupId}/lessons/add`, createDateRange);
+    dispatch(createLessonsSuccess());
+  } catch (error) {
+    dispatch(createLessonsFailure(error));
+  }
 };
