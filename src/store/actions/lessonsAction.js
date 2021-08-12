@@ -47,7 +47,6 @@ const addNewLessonFailure = (error) => {
 };
 
 export const addNewLesson = (lesson) => {
-  console.log('lesson: ', lesson);
   return async (dispatch) => {
     try {
       dispatch(addNewLessonRequest());

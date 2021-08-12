@@ -25,19 +25,19 @@ const TableWithCard = ({ rows, columns, onClickHandler }) => {
           {rows
             ? rows.map((row, index) => (
                 <TableRow key={index}>
-                  {columns.map((col) => {
-                    if (typeof row[col.field] === 'string') {
-                      return <TableCell key={`${index}${col.field}`}>{row[col.field]}</TableCell>;
+                  {columns.map(({ field }) => {
+                    if (typeof row[field] === 'string') {
+                      return <TableCell key={`${index}${field}`}>{row[field]}</TableCell>;
                     } else {
                       return (
-                        <TableCell key={`${index}${col.field}`}>
+                        <TableCell key={`${index}${field}`}>
                           <CustomCard
-                            id={row[col.field].id}
-                            subject={row[col.field].subject}
-                            teacher={row[col.field].teacher}
-                            onClickHandler={onClickHandler}
-                            startTime={row[col.field].startTime}
-                            endTime={row[col.field].endTime}
+                            id={row[field] ? row[field].id : ''}
+                            subject={row[field] ? row[field].subject : ''}
+                            teacher={row[field] ? row[field].teacher : ''}
+                            onClickHandler={() => {
+                              onClickHandler(row[field].startTime, row[field].endTime);
+                            }}
                           />
                         </TableCell>
                       );

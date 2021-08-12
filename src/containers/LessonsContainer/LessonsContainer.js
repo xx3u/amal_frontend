@@ -11,39 +11,16 @@ import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
 import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
-import { getDateISOString } from '../../helpers/getDateISOString';
 
 const useStyles = makeStyles(() => ({
-  lessonsData: {
-    margin: 50,
-    paddingLeft: 100,
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  autocomplete: {
-    marginBottom: 25,
-  },
-  dateBox: {
-    textAlign: 'center',
-  },
-  dateText: {
-    marginBottom: 5,
-    textAlign: 'start',
-    marginLeft: 20,
-  },
-  autoComplTeacher: {
-    marginTop: 20,
+  container: {
+    marginBottom: 20,
   },
 }));
 
 const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
-  const [dates, setDates] = useState({
-    startDate: '',
-    endDate: '',
-  });
 
   useEffect(() => {
     dispatch(fetchGroups());
@@ -65,8 +42,10 @@ const LessonsContainer = () => {
   });
 
   useEffect(() => {
-    lesson.startTime && dispatch(fetchLessonsByGroupId(lesson.groupId, dates.startDate, dates.endDate));
-  }, [lesson.groupId, dispatch]);
+    lesson.startTime &&
+      lesson.groupId &&
+      dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  }, [lesson.groupId, lesson.startTime, dispatch]);
 
   const onClickHandler = async (startTime, endTime) => {
     const newLesson = {
@@ -77,22 +56,12 @@ const LessonsContainer = () => {
       endTime: endTime,
     };
     await dispatch(addNewLesson(newLesson));
-    dispatch(fetchLessonsByGroupId(lesson.groupId, dates.startDate, dates.endDate));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
   useEffect(() => {
     lesson.subjectId && dispatch(getTeachersBySubject(lesson.subjectId));
   }, [lesson.subjectId]);
-
-  useEffect(() => {
-    setDates((prev) => {
-      const lessonStartTime = new Date(lesson.startTime);
-      const lessonEndTime = new Date(lesson.endTime);
-      const startTime = lesson.startTime ? getDateISOString(lessonStartTime, 0, 0) : '';
-      const endTime = lesson.endTime ? getDateISOString(lessonEndTime, 23, 59) : '';
-      return { ...prev, startDate: startTime, endDate: endTime };
-    });
-  }, [lesson.startTime]);
 
   useEffect(() => {
     const copyDate = new Date(selectedDate);
@@ -106,8 +75,8 @@ const LessonsContainer = () => {
 
   return (
     <>
-      <Grid item xs={12} className={classes.lessonsData}>
-        <Grid>
+      <Grid container spacing={3} className={classes.container}>
+        <Grid item xs={3}>
           <Autocomplete
             id='groups-lessons'
             className={classes.autocomplete}
@@ -118,6 +87,8 @@ const LessonsContainer = () => {
             style={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
           />
+        </Grid>
+        <Grid item xs={3}>
           <Autocomplete
             id='subjects-lessons'
             className={classes.autocomplete}
@@ -131,13 +102,15 @@ const LessonsContainer = () => {
             )}
           />
         </Grid>
-        <Grid>
+        <Grid item xs={3}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Box className={classes.dateBox}>
               <Typography className={classes.dateText}>Дата</Typography>
               <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
             </Box>
           </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid item xs={3}>
           <Autocomplete
             id='teachers-lessons'
             className={classes.autoComplTeacher}

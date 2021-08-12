@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
-import { addDays } from '../../helpers/addDays';
+import { addDays, getDay } from 'date-fns';
 
 const ScheduleTable = ({ selectedParams, onClickHandler }) => {
   const lessons = useSelector((state) => state.lessons.lessons);
@@ -11,19 +11,27 @@ const ScheduleTable = ({ selectedParams, onClickHandler }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-  let initWeekLessons = {};
-  times.forEach((time, index) => {
-    const startTimeString = getTimeStringInDoubleFigures(time);
-    const endTimeString = getTimeStringInDoubleFigures(time + 1);
-    const lesson = `lesson${index + 1}`;
-    initWeekLessons[lesson] = { slot: `${startTimeString} - ${endTimeString}` };
-    days.forEach((day) => {
-      initWeekLessons[lesson][day] = {
-        startTime: null,
-        endTime: null,
-      };
+  const setCellsTimes = (times, days, lessons, monday, setSlot = false) => {
+    const copyLessons = { ...lessons };
+    times.forEach((time, index) => {
+      const lesson = `lesson${index + 1}`;
+      copyLessons[lesson] = {};
+      if (setSlot) {
+        const startTimeString = getTimeStringInDoubleFigures(time);
+        const endTimeString = getTimeStringInDoubleFigures(time + 1);
+        copyLessons[lesson]['slot'] = `${startTimeString} - ${endTimeString}`;
+      }
+      days.forEach((day, dayIndex) => {
+        copyLessons[lesson][day] = {
+          startTime: monday ? getDateWithTime(addDays(monday, dayIndex), time, 0) : null,
+          endTime: monday ? getDateWithTime(addDays(monday, dayIndex), time + 1, 0) : null,
+        };
+      });
     });
-  });
+    return copyLessons;
+  };
+
+  const initWeekLessons = setCellsTimes(times, days, {}, selectedParams.startTime, true);
 
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
@@ -59,131 +67,43 @@ const ScheduleTable = ({ selectedParams, onClickHandler }) => {
   };
 
   useEffect(() => {
-    const monday = new Date(selectedParams.startTime);
+    const monday = selectedParams.startTime;
     setWeekLessons((prev) => {
       const copyLessons = { ...prev };
-      times.forEach((time, index) => {
-        const lesson = `lesson${index + 1}`;
-        days.forEach((day, dayIndex) => {
-          copyLessons[lesson][day] = {
-            startTime: getDateWithTime(addDays(monday, dayIndex), time, 0),
-            endTime: getDateWithTime(addDays(monday, dayIndex), time + 1, 0),
-          };
-        });
-      });
-      return copyLessons;
+      const resLessons = setCellsTimes(times, days, copyLessons, monday, true);
+
+      return resLessons;
     });
   }, [selectedParams.startTime, selectedParams.groupId]);
 
   useEffect(() => {
-    if (!lessons.length) {
+    if (lessons.length <= 0) {
       setWeekLessons(initWeekLessons);
     } else {
-      lessons.forEach((lesson) => {
-        if (lesson) {
-          const startTime = new Date(lesson.startTime).getHours();
-          const lessonweekDay = new Date(lesson.startTime).getDay();
-
+      days.forEach((day, index) => {
+        lessons.forEach((lesson) => {
+          const lessonStartDate = new Date(lesson.startTime);
+          const startTime = lessonStartDate.getUTCHours();
+          let lessonweekDay = getDay(lessonStartDate);
+          lessonweekDay = lessonweekDay === 0 ? 7 : lessonweekDay;
           const curLesson = getLesson(startTime);
-
-          setWeekLessons((prev) => {
-            switch (lessonweekDay) {
-              case 1:
-                return {
-                  ...prev,
-                  [curLesson]: {
-                    ...prev[curLesson],
-                    mon: {
-                      ...prev[curLesson].mon,
-                      id: lesson.id,
-                      subject: lesson.Subject.subjectName,
-                      teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
-                    },
+          if (index + 1 === lessonweekDay) {
+            setWeekLessons((prev) => {
+              return {
+                ...prev,
+                [curLesson]: {
+                  ...prev[curLesson],
+                  [day]: {
+                    ...prev[curLesson][day],
+                    id: lesson.id,
+                    subject: lesson.Subject.subjectName,
+                    teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
                   },
-                };
-              case 2:
-                return {
-                  ...prev,
-                  [curLesson]: {
-                    ...prev[curLesson],
-                    tue: {
-                      ...prev[curLesson].tue,
-                      id: lesson.id,
-                      subject: lesson.Subject.subjectName,
-                      teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
-                    },
-                  },
-                };
-              case 3:
-                return {
-                  ...prev,
-                  [curLesson]: {
-                    ...prev[curLesson],
-                    wed: {
-                      ...prev[curLesson].wed,
-                      id: lesson.id,
-                      subject: lesson.Subject.subjectName,
-                      teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
-                    },
-                  },
-                };
-              case 4:
-                return {
-                  ...prev,
-                  [curLesson]: {
-                    ...prev[curLesson],
-                    thu: {
-                      ...prev[curLesson].thu,
-                      id: lesson.id,
-                      subject: lesson.Subject.subjectName,
-                      teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
-                    },
-                  },
-                };
-              case 5:
-                return {
-                  ...prev,
-                  [curLesson]: {
-                    ...prev[curLesson],
-                    fri: {
-                      ...prev[curLesson].fri,
-                      id: lesson.id,
-                      subject: lesson.Subject.subjectName,
-                      teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
-                    },
-                  },
-                };
-              case 6:
-                return {
-                  ...prev,
-                  [curLesson]: {
-                    ...prev[curLesson],
-                    sat: {
-                      ...prev[curLesson].sat,
-                      id: lesson.id,
-                      subject: lesson.Subject.subjectName,
-                      teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
-                    },
-                  },
-                };
-              case 7:
-                return {
-                  ...prev,
-                  [curLesson]: {
-                    ...prev[curLesson],
-                    sun: {
-                      ...prev[curLesson].sun,
-                      id: lesson.id,
-                      subject: lesson.Subject.subjectName,
-                      teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
-                    },
-                  },
-                };
-              default:
-                break;
-            }
-          });
-        }
+                },
+              };
+            });
+          }
+        });
       });
     }
   }, [lessons]);
