@@ -5,7 +5,7 @@ import { getDateWithTime } from '../../helpers/getDateWithTime';
 import { addDays, getDay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 
-const ScheduleTable = ({ selectedParams, onClickHandler, lessons }) => {
+const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 

@@ -62,8 +62,8 @@ const LessonsContainer = () => {
   };
 
   const deleteLessonHandler = async (lessonId) => {
-    dispatch(deleteLesson(lessonId));
-    await dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+    await dispatch(deleteLesson(lessonId));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
   useEffect(() => {
