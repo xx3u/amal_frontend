@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, TextField, Typography } from '@material-ui/core';
+import { Box, Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { makeStyles } from '@material-ui/core/styles';
 import { fetchTeachers, getTeachersLessons } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
@@ -39,7 +38,7 @@ const LessonsByTeacher = () => {
   });
 
   useEffect(() => {
-    dispatch(getTeachersLessons(lesson.teacherId, lesson.startTime, lesson.endTime));
+    lesson.teacherId && dispatch(getTeachersLessons(lesson.teacherId, lesson.startTime, lesson.endTime));
   }, [lesson.teacherId, lesson.startTime]);
 
   useEffect(() => {
