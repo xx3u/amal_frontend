@@ -139,7 +139,7 @@ const LessonsContainer = () => {
           </Button>
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} />
+      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} lessons={lessons} />
       <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
     </>
   );
