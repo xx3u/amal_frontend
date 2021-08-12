@@ -5,9 +5,7 @@ import { getDateWithTime } from '../../helpers/getDateWithTime';
 import { addDays, getDay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 
-const ScheduleTable = ({ selectedParams, onClickHandler, deleteLessonHandler }) => {
-  const lessons = useSelector((state) => state.lessons.lessons);
-
+const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler }) => {
   const [isOpen, setIsOpen] = useState({ status: false });
   const [currentLessonId, setCurrentLessonId] = useState(null);
 
