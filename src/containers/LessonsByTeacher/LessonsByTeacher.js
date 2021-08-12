@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
+import { ru } from 'date-fns/locale';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { fetchTeachers, getTeachersLessons } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
@@ -76,7 +77,7 @@ const LessonsByTeacher = () => {
           />
         </Grid>
         <Grid item xs={3}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ru}>
             <Box className={classes.dateBox}>
               <Typography className={classes.dateText}>Дата</Typography>
               <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
