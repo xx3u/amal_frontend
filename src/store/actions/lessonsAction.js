@@ -86,6 +86,7 @@ export const deleteLesson = (lessonId) => {
     }
   };
 };
+
 const createLessonsRequest = () => ({ type: CREATE_LESSONS_REQUEST });
 const createLessonsSuccess = (data) => ({ type: CREATE_LESSONS_SUCCESS, data });
 const createLessonsFailure = (error) => ({

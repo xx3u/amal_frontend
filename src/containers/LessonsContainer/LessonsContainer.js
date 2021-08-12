@@ -61,8 +61,8 @@ const LessonsContainer = () => {
     dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
-  const deleteLessonHandler = (lessonId) => {
-    dispatch(deleteLesson(lessonId));
+  const deleteLessonHandler = async (lessonId) => {
+    await dispatch(deleteLesson(lessonId));
     dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
@@ -147,6 +147,7 @@ const LessonsContainer = () => {
       <ScheduleTable
         selectedParams={lesson}
         onClickHandler={onClickHandler}
+        lessons={lessons}
         deleteLessonHandler={deleteLessonHandler}
         lessons={lessons}
       />

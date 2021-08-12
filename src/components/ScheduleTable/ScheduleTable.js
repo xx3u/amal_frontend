@@ -6,6 +6,9 @@ import { addDays, getDay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 
 const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler }) => {
+  const times = [9, 10, 11, 12, 14, 15, 16, 17];
+  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
   const [isOpen, setIsOpen] = useState({ status: false });
   const [currentLessonId, setCurrentLessonId] = useState(null);
 
@@ -23,9 +26,6 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
     deleteLessonHandler(currentLessonId);
     closeDeleteModal();
   };
-
-  const times = [9, 10, 11, 12, 14, 15, 16, 17];
-  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
   const setCellsTimes = (times, days, lessons, monday, setSlot = false) => {
     const copyLessons = { ...lessons };
