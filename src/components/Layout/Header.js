@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +21,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <AppBar position='static'>
       <Toolbar>
@@ -31,39 +42,29 @@ const Header = () => {
             </Typography>
           </Grid>
           <Grid container item xs={9}>
-            <Button
-              component={Link}
-              to='/admin-app/students'
-              color='inherit'
-              variant='outlined'
-              className={classes.btn}
-            >
-              СТУДЕНТЫ
+            <Button component={Link} to='/admin-app/students' color='inherit' className={classes.btn}>
+              Студенты
             </Button>
-            <Button component={Link} to='/admin-app/groups' color='inherit' variant='outlined' className={classes.btn}>
+            <Button component={Link} to='/admin-app/groups' color='inherit' className={classes.btn}>
               Группы
             </Button>
-            <Button
-              component={Link}
-              to='/admin-app/payments'
-              color='inherit'
-              variant='outlined'
-              className={classes.btn}
-            >
+            <Button component={Link} to='/admin-app/payments' color='inherit' className={classes.btn}>
               Платежи
             </Button>
-            <Button
-              component={Link}
-              to='/admin-app/teachers'
-              color='inherit'
-              variant='outlined'
-              className={classes.btn}
-            >
+            <Button component={Link} to='/admin-app/teachers' color='inherit' className={classes.btn}>
               Учителя
             </Button>
-            <Button component={Link} to='/admin-app/lessons' color='inherit' variant='outlined' className={classes.btn}>
-              Уроки
+            <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick} color='inherit'>
+              Расписание
             </Button>
+            <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+              <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
+                Раписание по Группам
+              </MenuItem>
+              <MenuItem component={Link} to='/admin-app/teachers/lessons' onClick={handleClose}>
+                Расписание по Учителям
+              </MenuItem>
+            </Menu>
           </Grid>
           <Grid item>
             <Button color='inherit' className={classes.menuButton}>

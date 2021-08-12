@@ -18,6 +18,9 @@ import {
   GET_TEACHER_BY_ID_FAILURE,
   GET_TEACHERS_BY_SUBJECT_SUCCESS,
   GET_TEACHERS_BY_SUBJECT_FAILURE,
+  GET_TEACHERS_LESSONS_REQUEST,
+  GET_TEACHERS_LESSONS_SUCCESS,
+  GET_TEACHERS_LESSONS_FAILURE,
 } from '../actionTypes';
 import { NotificationManager } from 'react-notifications';
 const fetchTeachersRequest = () => {
@@ -164,6 +167,22 @@ export const getTeachersBySubject = (id) => {
     } catch (error) {
       dispatch(getTeachersBySubjectFailure(error));
       NotificationManager.error(error.message, 'Fetch error!', 5000);
+    }
+  };
+};
+
+const getTeachersLessonsRequest = () => ({ type: GET_TEACHERS_LESSONS_REQUEST });
+const getTeachersLessonsSuccess = (data) => ({ type: GET_TEACHERS_LESSONS_SUCCESS, data });
+const getTeachersLessonsFailure = (error) => ({ type: GET_TEACHERS_LESSONS_FAILURE, error });
+
+export const getTeachersLessons = (teacherId, startTime, endTime) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getTeachersLessonsRequest());
+      const response = await axios.get(`/teachers/${teacherId}/lessons?startTime=${startTime}&endTime=${endTime}`);
+      dispatch(getTeachersLessonsSuccess(response.data));
+    } catch (error) {
+      dispatch(getTeachersLessonsFailure(error));
     }
   };
 };

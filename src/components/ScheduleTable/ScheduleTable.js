@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
 import { addDays, getDay } from 'date-fns';
 
-const ScheduleTable = ({ selectedParams, onClickHandler }) => {
-  const lessons = useSelector((state) => state.lessons.lessons);
-
+const ScheduleTable = ({ selectedParams, onClickHandler, lessons }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -74,7 +71,7 @@ const ScheduleTable = ({ selectedParams, onClickHandler }) => {
 
       return resLessons;
     });
-  }, [selectedParams.startTime, selectedParams.groupId]);
+  }, [selectedParams.startTime, selectedParams.groupId || selectedParams.teacherId]);
 
   useEffect(() => {
     if (lessons.length <= 0) {
@@ -97,7 +94,8 @@ const ScheduleTable = ({ selectedParams, onClickHandler }) => {
                     ...prev[curLesson][day],
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
-                    teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
+                    teacher: lesson.Teacher ? lesson.Teacher?.firstName + ' ' + lesson.Teacher?.lastName : null,
+                    group: lesson.Group?.groupName,
                   },
                 },
               };
