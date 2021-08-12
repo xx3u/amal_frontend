@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ id = '', subject = '', teacher = '', onClickHandler, openDeleteModal }) => {
+const CustomCard = ({ id = '', subject = '', teacher = '', group = '', onClickHandler, openDeleteModal }) => {
   const classes = useStyles();
 
   let delBtn = null;
@@ -36,6 +36,9 @@ const CustomCard = ({ id = '', subject = '', teacher = '', onClickHandler, openD
         </Typography>
         <Typography variant='body2' component='p'>
           {teacher}
+        </Typography>
+        <Typography variant='body2' component='p'>
+          {group}
         </Typography>
       </CardContent>
     </Card>

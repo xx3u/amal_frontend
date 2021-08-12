@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
@@ -93,7 +92,7 @@ const ScheduleTable = ({ selectedParams, onClickHandler, deleteLessonHandler }) 
 
       return resLessons;
     });
-  }, [selectedParams.startTime, selectedParams.groupId]);
+  }, [selectedParams.startTime, selectedParams.groupId || selectedParams.teacherId]);
 
   useEffect(() => {
     if (lessons.length <= 0) {
@@ -116,7 +115,8 @@ const ScheduleTable = ({ selectedParams, onClickHandler, deleteLessonHandler }) 
                     ...prev[curLesson][day],
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
-                    teacher: lesson.Teacher.firstName + ' ' + lesson.Teacher.lastName,
+                    teacher: lesson.Teacher ? lesson.Teacher?.firstName + ' ' + lesson.Teacher?.lastName : null,
+                    group: lesson.Group?.groupName,
                   },
                 },
               };
