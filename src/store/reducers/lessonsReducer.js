@@ -8,6 +8,9 @@ import {
   DELETE_LESSON_FAILURE,
   DELETE_LESSON_REQUEST,
   DELETE_LESSON_SUCCESS,
+  CREATE_LESSONS_REQUEST,
+  CREATE_LESSONS_SUCCESS,
+  CREATE_LESSONS_FAILURE,
 } from '../actionTypes';
 const initState = {
   lessons: [],
@@ -17,6 +20,12 @@ const initState = {
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    case CREATE_LESSONS_REQUEST:
+      return { ...state, loading: true };
+    case CREATE_LESSONS_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case CREATE_LESSONS_FAILURE:
+      return { ...state, loading: false, error: action.error };
     case FETCH_LESSONS_REQUEST:
       return { ...state, loading: true };
     case FETCH_LESSONS_SUCCESS:
