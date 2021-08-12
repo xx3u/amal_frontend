@@ -149,7 +149,6 @@ const LessonsContainer = () => {
         onClickHandler={onClickHandler}
         lessons={lessons}
         deleteLessonHandler={deleteLessonHandler}
-        lessons={lessons}
       />
       <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
     </>

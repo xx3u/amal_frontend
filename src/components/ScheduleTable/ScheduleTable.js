@@ -93,9 +93,8 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
   }, [selectedParams.startTime, selectedParams.groupId || selectedParams.teacherId]);
 
   useEffect(() => {
-    if (lessons.length <= 0) {
-      setWeekLessons(initWeekLessons);
-    } else {
+    setWeekLessons(initWeekLessons);
+    if (lessons.length > 0) {
       days.forEach((day, index) => {
         lessons.forEach((lesson) => {
           const lessonStartDate = new Date(lesson.startTime);
