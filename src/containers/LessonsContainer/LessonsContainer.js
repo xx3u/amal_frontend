@@ -22,6 +22,7 @@ const useStyles = makeStyles(() => ({
 const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const lessons = useSelector((state) => state.lessons.lessons);
 
   useEffect(() => {
     dispatch(fetchGroups());
@@ -138,7 +139,7 @@ const LessonsContainer = () => {
           </Button>
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} />
+      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} lessons={lessons} />
       <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
     </>
   );

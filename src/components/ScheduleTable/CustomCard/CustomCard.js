@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ subject = '', teacher = '', onClickHandler }) => {
+const CustomCard = ({ subject = '', teacher = '', group = '', onClickHandler }) => {
   const classes = useStyles();
 
   return (
@@ -22,6 +22,9 @@ const CustomCard = ({ subject = '', teacher = '', onClickHandler }) => {
         </Typography>
         <Typography variant='body2' component='p'>
           {teacher}
+        </Typography>
+        <Typography variant='body2' component='p'>
+          {group}
         </Typography>
       </CardContent>
     </Card>

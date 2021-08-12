@@ -6,8 +6,6 @@ import LessonsContainer from '../../containers/LessonsContainer/LessonsContainer
 const useStyles = makeStyles(() => ({
   title: {
     margin: 20,
-    marginLeft: 150,
-    fontWeight: 'bold',
   },
 }));
 
@@ -16,8 +14,8 @@ const LessonsPage = () => {
 
   return (
     <Grid>
-      <Typography variant='h5' className={classes.title}>
-        Групповые занятия
+      <Typography variant='h5' paragraph={true} className={classes.title}>
+        Расписание по Группам
       </Typography>
       <LessonsContainer />
     </Grid>

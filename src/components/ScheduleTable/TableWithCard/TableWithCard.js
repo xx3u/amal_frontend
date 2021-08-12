@@ -35,6 +35,7 @@ const TableWithCard = ({ rows, columns, onClickHandler }) => {
                             id={row[field] ? row[field].id : ''}
                             subject={row[field] ? row[field].subject : ''}
                             teacher={row[field] ? row[field].teacher : ''}
+                            group={row[field] ? row[field].group : ''}
                             onClickHandler={() => {
                               onClickHandler(row[field].startTime, row[field].endTime);
                             }}
