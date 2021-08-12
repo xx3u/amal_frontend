@@ -183,6 +183,7 @@ export const getTeachersLessons = (teacherId, startTime, endTime) => {
       dispatch(getTeachersLessonsSuccess(response.data));
     } catch (error) {
       dispatch(getTeachersLessonsFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };

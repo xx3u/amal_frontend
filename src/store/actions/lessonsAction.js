@@ -76,5 +76,6 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
     dispatch(createLessonsSuccess());
   } catch (error) {
     dispatch(createLessonsFailure(error));
+    NotificationManager.error(error.message, 'Post error!', 5000);
   }
 };
