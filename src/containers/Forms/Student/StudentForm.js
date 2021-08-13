@@ -31,24 +31,23 @@ const languages = [
     label: 'РУС',
   },
 ];
-const studentInit = {
-  firstName: '',
-  lastName: '',
-  middleName: '',
-  grade: '',
-  language: '',
-  school: '',
-  parentsContacts: '',
-  streamId: '',
-  status: 'В ожидании',
-  groupId: null,
-  address: '',
-  telephone: '',
-  email: '',
-};
 
 const StudentForm = ({ title, submitData, selectedStudent, id }) => {
-  const [student, setStudent] = useState(studentInit);
+  const [student, setStudent] = useState({
+    firstName: '',
+    lastName: '',
+    middleName: '',
+    grade: '',
+    language: '',
+    school: '',
+    parentsContacts: '',
+    streamId: '',
+    status: 'В ожидании',
+    groupId: null,
+    address: '',
+    telephone: '',
+    email: '',
+  });
   const { streams } = useSelector((state) => state.streams);
   const { groups } = useSelector((state) => state.groups);
   const dispatch = useDispatch();
