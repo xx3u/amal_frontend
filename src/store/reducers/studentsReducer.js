@@ -37,9 +37,7 @@ const reducer = (state = initialState, action) => {
     case ADD_NEW_STUDENT_REQUEST:
       return { ...state, loading: true };
     case ADD_NEW_STUDENT_SUCCESS: {
-      const updatedStudents = [...state.students];
-      updatedStudents.push(action.data);
-      return { ...state, students: updatedStudents, loading: false };
+      return { ...state, loading: false };
     }
     case ADD_NEW_STUDENT_FAILURE:
       return { ...state, error: action.error, loading: false };
