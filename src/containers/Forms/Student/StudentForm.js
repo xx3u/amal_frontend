@@ -33,7 +33,21 @@ const languages = [
 ];
 
 const StudentForm = ({ title, submitData, selectedStudent, id }) => {
-  const [student, setStudent] = useState(selectedStudent);
+  const [student, setStudent] = useState({
+    firstName: '',
+    lastName: '',
+    middleName: '',
+    grade: '',
+    language: '',
+    school: '',
+    parentsContacts: '',
+    streamId: '',
+    status: 'В ожидании',
+    groupId: null,
+    address: '',
+    telephone: '',
+    email: '',
+  });
   const { streams } = useSelector((state) => state.streams);
   const { groups } = useSelector((state) => state.groups);
   const dispatch = useDispatch();
@@ -44,7 +58,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
   }, []);
 
   useEffect(() => {
-    setStudent(selectedStudent);
+    selectedStudent && setStudent(selectedStudent);
   }, [selectedStudent]);
 
   const inputChangeHandler = (e) => {
@@ -62,7 +76,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={4}>
         <FormItem
           name='firstName'
-          value={student.firstName || ''}
+          value={student.firstName}
           onChange={inputChangeHandler}
           label='Имя'
           type='text'
@@ -72,7 +86,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={4}>
         <FormItem
           name='lastName'
-          value={student.lastName || ''}
+          value={student.lastName}
           onChange={inputChangeHandler}
           label='Фамилия'
           type='text'
@@ -82,7 +96,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={4}>
         <FormItem
           name='middleName'
-          value={student.middleName || ''}
+          value={student.middleName}
           onChange={inputChangeHandler}
           label='Отчество'
           type='text'
@@ -91,7 +105,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={3}>
         <FormItem
           name='grade'
-          value={student.grade || ''}
+          value={student.grade}
           onChange={inputChangeHandler}
           label='Класс'
           type='integer'
@@ -101,7 +115,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={3}>
         <FormItem
           name='language'
-          value={student.language || ''}
+          value={student.language}
           onChange={inputChangeHandler}
           label='Язык обучения'
           type='text'
@@ -116,12 +130,12 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
         </FormItem>
       </Grid>
       <Grid item xs={6}>
-        <FormItem name='school' value={student.school || ''} onChange={inputChangeHandler} label='Школа' type='text' />
+        <FormItem name='school' value={student.school} onChange={inputChangeHandler} label='Школа' type='text' />
       </Grid>
       <Grid item xs={12}>
         <FormItem
           name='parentsContacts'
-          value={student.parentsContacts || ''}
+          value={student.parentsContacts}
           onChange={inputChangeHandler}
           label='Контакты родителей'
           type='text'
@@ -131,7 +145,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={6}>
         <FormItem
           name='streamId'
-          value={student.streamId || ''}
+          value={student.streamId}
           onChange={inputChangeHandler}
           label='Направление'
           type='text'
@@ -148,7 +162,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={3}>
         <FormItem
           name='status'
-          value={student.status || 'В ожидании'}
+          value={student.status}
           onChange={inputChangeHandler}
           label='Статус'
           type='text'
@@ -165,7 +179,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
       <Grid item xs={3}>
         <FormItem
           name='groupId'
-          value={student.groupId || ''}
+          value={student.groupId}
           onChange={inputChangeHandler}
           label='Группа'
           type='text'
@@ -179,25 +193,19 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
         </FormItem>
       </Grid>
       <Grid item xs={12}>
-        <FormItem
-          name='address'
-          value={student.address || ''}
-          onChange={inputChangeHandler}
-          label='Адрес'
-          type='text'
-        />
+        <FormItem name='address' value={student.address} onChange={inputChangeHandler} label='Адрес' type='text' />
       </Grid>
       <Grid item xs={6}>
         <FormItem
           name='telephone'
-          value={student.telephone || ''}
+          value={student.telephone}
           onChange={inputChangeHandler}
           label='Телефон'
           type='text'
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem name='email' value={student.email || ''} onChange={inputChangeHandler} label='Email' type='text' />
+        <FormItem name='email' value={student.email} onChange={inputChangeHandler} label='Email' type='text' />
       </Grid>
     </FormSubmission>
   );
