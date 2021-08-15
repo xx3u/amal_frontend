@@ -23,12 +23,6 @@ const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const lessons = useSelector((state) => state.lessons.lessons);
-
-  useEffect(() => {
-    dispatch(fetchGroups());
-    dispatch(fetchSubjects());
-  }, [dispatch]);
-
   const { groups } = useSelector((state) => state.groups);
   const { subjects } = useSelector((state) => state.subjects);
   const { teachersBySubject } = useSelector((state) => state.teachers);
@@ -43,23 +37,18 @@ const LessonsContainer = () => {
     endTime: '',
   });
 
+  const [isOpen, setIsOpen] = useState({ status: false });
+
+  useEffect(() => {
+    dispatch(fetchGroups());
+    dispatch(fetchSubjects());
+  }, [dispatch]);
+
   useEffect(() => {
     lesson.startTime &&
       lesson.groupId &&
       dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   }, [lesson.groupId, lesson.startTime, dispatch]);
-
-  const onClickHandler = async (startTime, endTime) => {
-    const newLesson = {
-      groupId: lesson.groupId,
-      subjectId: lesson.subjectId,
-      teacherId: lesson.teacherId,
-      startTime: startTime,
-      endTime: endTime,
-    };
-    await dispatch(addNewLesson(newLesson));
-    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
-  };
 
   useEffect(() => {
     lesson.subjectId && dispatch(getTeachersBySubject(lesson.subjectId));
@@ -75,7 +64,17 @@ const LessonsContainer = () => {
     });
   }, [selectedDate]);
 
-  const [isOpen, setIsOpen] = useState({ status: false });
+  const onClickHandler = async (startTime, endTime) => {
+    const newLesson = {
+      groupId: lesson.groupId,
+      subjectId: lesson.subjectId,
+      teacherId: lesson.teacherId,
+      startTime: startTime,
+      endTime: endTime,
+    };
+    await dispatch(addNewLesson(newLesson));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  };
 
   const openPaymentForm = (e) => {
     e.stopPropagation();
