@@ -39,7 +39,7 @@ const TableWithCard = ({ rows, columns, onClickHandler, openDeleteModal }) => {
                             onClickHandler={() => {
                               onClickHandler(row[field].startTime, row[field].endTime);
                             }}
-                            openDeleteModal={openDeleteModal}
+                            openDeleteModal={(e) => openDeleteModal(e, row[field] ? row[field].id : '')}
                           />
                         </TableCell>
                       );

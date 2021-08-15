@@ -21,7 +21,7 @@ const CustomCard = ({ id = '', subject = '', teacher = '', group = '', onClickHa
   if (subject !== '' && teacher !== '') {
     delBtn = (
       <>
-        <IconButton onClick={(e) => openDeleteModal(e, id)}>
+        <IconButton onClick={openDeleteModal}>
           <DeleteForever />
         </IconButton>
       </>
