@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogActions, DialogContentText, DialogTitle, Button } from '@material-ui/core';
 
-const DeleteModal = ({ isOpen, deleteButtonHandler }) => {
-  const [open, setOpen] = useState(isOpen.status);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    setOpen(isOpen.status);
-  }, [isOpen]);
+const DeleteModal = ({ open, deleteButtonHandler, handleClose }) => {
+  
 
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>

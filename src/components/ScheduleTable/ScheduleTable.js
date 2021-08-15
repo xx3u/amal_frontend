@@ -9,17 +9,17 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
-  const [isOpen, setIsOpen] = useState({ status: false });
+  const [open, setOpen] = useState(false);
   const [currentLessonId, setCurrentLessonId] = useState(null);
 
   const openDeleteModal = (e, id) => {
     e.stopPropagation();
-    setIsOpen({ status: true });
+    setOpen(true);
     setCurrentLessonId(id);
   };
 
   const closeDeleteModal = () => {
-    setIsOpen({ status: false });
+    setOpen(false);
   };
 
   const deleteButtonHandler = () => {
@@ -131,10 +131,11 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
   return (
     <>
       <DeleteModal
-        isOpen={isOpen}
+        open={open}
         deleteLessonHandler={deleteLessonHandler}
         currentLessonId={currentLessonId}
         deleteButtonHandler={deleteButtonHandler}
+        handleClose={closeDeleteModal}
       />
       <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} onDeleteHandler={openDeleteModal} />
     </>
