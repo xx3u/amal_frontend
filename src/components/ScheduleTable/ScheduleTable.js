@@ -136,7 +136,7 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
         currentLessonId={currentLessonId}
         deleteButtonHandler={deleteButtonHandler}
       />
-      <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} openDeleteModal={openDeleteModal} />
+      <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} onDeleteHandler={openDeleteModal} />
     </>
   );
 };

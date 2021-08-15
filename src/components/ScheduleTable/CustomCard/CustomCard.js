@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ id = '', subject = '', teacher = '', group = '', onClickHandler, openDeleteModal }) => {
+const CustomCard = ({ subject = '', teacher = '', group = '', onClickHandler, onDeleteHandler }) => {
   const classes = useStyles();
 
   let delBtn = null;
@@ -21,7 +21,7 @@ const CustomCard = ({ id = '', subject = '', teacher = '', group = '', onClickHa
   if (subject !== '' && teacher !== '') {
     delBtn = (
       <>
-        <IconButton onClick={openDeleteModal}>
+        <IconButton onClick={onDeleteHandler}>
           <DeleteForever />
         </IconButton>
       </>
