@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { IconButton } from '@material-ui/core';
 import { DeleteForever } from '@material-ui/icons';
@@ -9,7 +10,7 @@ import { DeleteForever } from '@material-ui/icons';
 const useStyles = makeStyles({
   root: {
     minWidth: 200,
-    minHeight: 86,
+    minHeight: 100,
   },
 });
 
@@ -20,11 +21,9 @@ const CustomCard = ({ subject = '', teacher = '', group = '', onClickHandler, on
 
   if (subject !== '' && teacher !== '') {
     delBtn = (
-      <>
-        <IconButton onClick={onDeleteHandler}>
-          <DeleteForever />
-        </IconButton>
-      </>
+      <IconButton onClick={onDeleteHandler}>
+        <DeleteForever />
+      </IconButton>
     );
   }
 
@@ -32,7 +31,7 @@ const CustomCard = ({ subject = '', teacher = '', group = '', onClickHandler, on
     <Card className={classes.root} variant='outlined' onClick={onClickHandler}>
       <CardContent>
         <Typography variant='body1' component='p'>
-          {subject} {delBtn}
+          {subject}
         </Typography>
         <Typography variant='body2' component='p'>
           {teacher}
@@ -41,6 +40,7 @@ const CustomCard = ({ subject = '', teacher = '', group = '', onClickHandler, on
           {group}
         </Typography>
       </CardContent>
+      <CardActions>{delBtn}</CardActions>
     </Card>
   );
 };
