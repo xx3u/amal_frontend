@@ -46,7 +46,7 @@ const LessonsContainer = () => {
   useEffect(() => {
     lesson.startTime &&
       lesson.groupId &&
-      dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+      dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime.toISOString(), lesson.endTime.toISOString()));
   }, [lesson.groupId, lesson.startTime, dispatch]);
 
   const onClickHandler = async (startTime, endTime) => {
@@ -58,7 +58,7 @@ const LessonsContainer = () => {
       endTime: endTime,
     };
     await dispatch(addNewLesson(newLesson));
-    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime.toISOString(), lesson.endTime.toISOString()));
   };
 
   useEffect(() => {
