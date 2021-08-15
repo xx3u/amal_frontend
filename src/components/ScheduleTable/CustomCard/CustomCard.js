@@ -5,12 +5,19 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import { IconButton } from '@material-ui/core';
-import { DeleteForever } from '@material-ui/icons';
+import { Clear } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 200,
     minHeight: 100,
+    position: 'relative',
+  },
+  deleteBtn: {
+    position: 'absolute',
+    top: 3,
+    right: 3,
+    padding: 0,
   },
 });
 
@@ -21,8 +28,8 @@ const CustomCard = ({ subject = '', teacher = '', group = '', onClickHandler, on
 
   if (subject !== '' && teacher !== '') {
     delBtn = (
-      <IconButton onClick={onDeleteHandler}>
-        <DeleteForever />
+      <IconButton className={classes.deleteBtn} onClick={onDeleteHandler}>
+        <Clear />
       </IconButton>
     );
   }
