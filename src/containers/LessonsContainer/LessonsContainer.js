@@ -76,7 +76,7 @@ const LessonsContainer = () => {
     dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
-  const openPaymentForm = (e) => {
+  const onClickHandlerCreateLessons = (e) => {
     e.stopPropagation();
     setIsOpen({ status: true });
   };
@@ -133,7 +133,7 @@ const LessonsContainer = () => {
           />
         </Grid>
         <Grid item>
-          <Button variant='contained' onClick={(e) => openPaymentForm(e)} disabled={!lesson.groupId}>
+          <Button variant='contained' onClick={(e) => onClickHandlerCreateLessons(e)} disabled={!lesson.groupId}>
             Создать на период
           </Button>
         </Grid>
