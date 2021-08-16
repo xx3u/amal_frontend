@@ -10,6 +10,7 @@ import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject, setTeachersBySubject } from '../../store/actions/teachersActions';
 import { fetchLessonsByGroupId, setLessonsParams } from '../../store/actions/lessonsAction';
+import { getWeekdates } from '../../helpers/helpers';
 
 const LessonsSelectors = () => {
   const dispatch = useDispatch();
@@ -45,8 +46,8 @@ const LessonsSelectors = () => {
       dispatch(
         fetchLessonsByGroupId(
           selectedGroup?.id,
-          startOfWeek(selectedDate, { weekStartsOn: 1 }),
-          lastDayOfWeek(selectedDate, { weekStartsOn: 1 })
+          startOfWeek(selectedDate, { weekStartsOn: 1 }).toISOString(),
+          lastDayOfWeek(selectedDate, { weekStartsOn: 1 }).toISOString()
         )
       );
   }, [selectedGroup, selectedDate, dispatch]);
@@ -57,8 +58,8 @@ const LessonsSelectors = () => {
         groupId: selectedGroup?.id || '',
         subjectId: selectedSubject?.id || '',
         teacherId: selectedTeacher?.id || '',
-        startTime: startOfWeek(selectedDate, { weekStartsOn: 1 }),
-        endTime: lastDayOfWeek(selectedDate, { weekStartsOn: 1 }),
+        startTime: getWeekdates(selectedDate).firstday,
+        endTime: getWeekdates(selectedDate).lastday,
       })
     );
   }, [selectedDate, selectedSubject, selectedTeacher, selectedGroup]);
