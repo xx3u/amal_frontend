@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../store/actions/usersActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useSelector((state) => state.users.user);
@@ -32,6 +34,10 @@ const Header = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const signOut = () => {
+    dispatch(logoutUser());
   };
 
   return (
@@ -74,7 +80,7 @@ const Header = () => {
                 <Button color='inherit' className={classes.menuButton}>
                   Hello, {user.username}
                 </Button>
-                <Button color='inherit' className={classes.menuButton}>
+                <Button color='inherit' onClick={signOut} className={classes.menuButton}>
                   Выйти
                 </Button>
               </>
