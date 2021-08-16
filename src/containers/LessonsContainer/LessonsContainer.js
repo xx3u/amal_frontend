@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
+import { addNewLesson, fetchLessonsByGroupId, deleteLesson } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 import CreateLessons from '../Forms/Lesson/CreateLessons';
 import LessonsSelectors from './LessonsSelectors';
@@ -32,6 +32,10 @@ const LessonsContainer = () => {
     await dispatch(addNewLesson(newLesson));
     dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
   };
+  const deleteLessonHandler = async (lessonId) => {
+    await dispatch(deleteLesson(lessonId));
+    dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
+  };
 
   const onClickHandlerCreateLessons = (e) => {
     e.stopPropagation();
@@ -48,7 +52,12 @@ const LessonsContainer = () => {
           </Button>
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lessonsParams} onClickHandler={onClickHandler} lessons={lessons} />
+      <ScheduleTable
+        selectedParams={lessonsParams}
+        onClickHandler={onClickHandler}
+        lessons={lessons}
+        deleteLessonHandler={deleteLessonHandler}
+      />
       <CreateLessons
         isOpen={isOpen}
         groupId={lessonsParams.groupId}

@@ -1,4 +1,5 @@
 import axios from '../../axiosApi';
+
 import {
   ADD_NEW_LESSON_FAILURE,
   ADD_NEW_LESSON_REQUEST,
@@ -6,6 +7,9 @@ import {
   FETCH_LESSONS_FAILURE,
   FETCH_LESSONS_REQUEST,
   FETCH_LESSONS_SUCCESS,
+  DELETE_LESSON_FAILURE,
+  DELETE_LESSON_REQUEST,
+  DELETE_LESSON_SUCCESS,
   CREATE_LESSONS_REQUEST,
   CREATE_LESSONS_SUCCESS,
   CREATE_LESSONS_FAILURE,
@@ -56,6 +60,30 @@ export const addNewLesson = (lesson) => {
       dispatch(addNewLessonSucces());
     } catch (error) {
       dispatch(addNewLessonFailure(error));
+    }
+  };
+};
+
+const deleteLessonRequest = () => {
+  return { type: DELETE_LESSON_REQUEST };
+};
+
+const deleteLessonSuccess = (message) => {
+  return { type: DELETE_LESSON_SUCCESS, message };
+};
+
+const deleteLessonFailure = (error) => {
+  return { type: DELETE_LESSON_FAILURE, error };
+};
+
+export const deleteLesson = (lessonId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteLessonRequest());
+      const resp = await axios.delete(`/lessons/${lessonId}`);
+      dispatch(deleteLessonSuccess(resp.data));
+    } catch (error) {
+      dispatch(deleteLessonFailure(error));
     }
   };
 };

@@ -3,10 +3,29 @@ import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubl
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
 import { addDays, getDay } from 'date-fns';
+import DeleteModal from '../UI/DeleteModal/DeleteModal';
 
-const ScheduleTable = ({ selectedParams, onClickHandler, lessons }) => {
+const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+  const [open, setOpen] = useState(false);
+  const [currentLessonId, setCurrentLessonId] = useState(null);
+
+  const openDeleteModal = (e, id) => {
+    e.stopPropagation();
+    setOpen(true);
+    setCurrentLessonId(id);
+  };
+
+  const closeDeleteModal = () => {
+    setOpen(false);
+  };
+
+  const deleteButtonHandler = () => {
+    deleteLessonHandler(currentLessonId);
+    closeDeleteModal();
+  };
 
   const setCellsTimes = (times, days, lessons, monday, setSlot = false) => {
     const copyLessons = { ...lessons };
@@ -74,9 +93,8 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons }) => {
   }, [selectedParams.startTime, selectedParams.groupId || selectedParams.teacherId]);
 
   useEffect(() => {
-    if (lessons.length <= 0) {
-      setWeekLessons(initWeekLessons);
-    } else {
+    setWeekLessons(initWeekLessons);
+    if (lessons.length > 0) {
       days.forEach((day, index) => {
         lessons.forEach((lesson) => {
           const lessonStartDate = new Date(lesson.startTime);
@@ -110,7 +128,18 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons }) => {
     return weekLessons[key];
   });
 
-  return <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} />;
+  return (
+    <>
+      <DeleteModal
+        open={open}
+        deleteLessonHandler={deleteLessonHandler}
+        currentLessonId={currentLessonId}
+        deleteButtonHandler={deleteButtonHandler}
+        handleClose={closeDeleteModal}
+      />
+      <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} onDeleteHandler={openDeleteModal} />
+    </>
+  );
 };
 
 export default ScheduleTable;
