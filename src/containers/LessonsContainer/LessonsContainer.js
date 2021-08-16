@@ -30,11 +30,23 @@ const LessonsContainer = () => {
       endTime: endTime,
     };
     await dispatch(addNewLesson(newLesson));
-    dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
+    dispatch(
+      fetchLessonsByGroupId(
+        lessonsParams.groupId,
+        lessonsParams.startTime.toISOString(),
+        lessonsParams.endTime.toISOString()
+      )
+    );
   };
   const deleteLessonHandler = async (lessonId) => {
     await dispatch(deleteLesson(lessonId));
-    dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
+    dispatch(
+      fetchLessonsByGroupId(
+        lessonsParams.groupId,
+        lessonsParams.startTime.toISOString(),
+        lessonsParams.endTime.toISOString()
+      )
+    );
   };
 
   const onClickHandlerCreateLessons = (e) => {
