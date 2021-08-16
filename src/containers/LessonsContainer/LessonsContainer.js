@@ -9,7 +9,7 @@ import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
-import { addNewLesson, fetchLessonsByGroupId } from '../../store/actions/lessonsAction';
+import { addNewLesson, fetchLessonsByGroupId, deleteLesson } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 import CreateLessons from '../Forms/Lesson/CreateLessons';
 
@@ -58,6 +58,11 @@ const LessonsContainer = () => {
       endTime: endTime,
     };
     await dispatch(addNewLesson(newLesson));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  };
+
+  const deleteLessonHandler = async (lessonId) => {
+    await dispatch(deleteLesson(lessonId));
     dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
@@ -139,7 +144,12 @@ const LessonsContainer = () => {
           </Button>
         </Grid>
       </Grid>
-      <ScheduleTable selectedParams={lesson} onClickHandler={onClickHandler} lessons={lessons} />
+      <ScheduleTable
+        selectedParams={lesson}
+        onClickHandler={onClickHandler}
+        lessons={lessons}
+        deleteLessonHandler={deleteLessonHandler}
+      />
       <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
     </>
   );
