@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,7 @@ const Header = () => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const user = useSelector((state) => state.users.user);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -67,12 +69,25 @@ const Header = () => {
             </Menu>
           </Grid>
           <Grid item>
-            <Button component={Link} to='/login' color='inherit' className={classes.menuButton}>
-              Войти
-            </Button>
-            <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
-              Регистрация
-            </Button>
+            {user ? (
+              <>
+                <Button color='inherit' className={classes.menuButton}>
+                  Hello, {user.username}
+                </Button>
+                <Button color='inherit' className={classes.menuButton}>
+                  Выйти
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button component={Link} to='/login' color='inherit' className={classes.menuButton}>
+                  Войти
+                </Button>
+                <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
+                  Регистрация
+                </Button>
+              </>
+            )}
           </Grid>
         </Grid>
       </Toolbar>
