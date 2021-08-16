@@ -4,10 +4,12 @@ import { Grid, TextField, Box, Typography } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import { ru } from 'date-fns/locale';
+import { startOfWeek, lastDayOfWeek } from 'date-fns';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
-import { getTeachersBySubject } from '../../store/actions/teachersActions';
-import { ru } from 'date-fns/locale';
+import { getTeachersBySubject, setTeachersBySubject } from '../../store/actions/teachersActions';
+import { fetchLessonsByGroupId, setLessonsParams } from '../../store/actions/lessonsAction';
 
 const LessonsSelectors = () => {
   const dispatch = useDispatch();
@@ -33,18 +35,33 @@ const LessonsSelectors = () => {
 
   useEffect(() => {
     setSelectedTeacher(null);
+    dispatch(setTeachersBySubject([]));
     selectedSubject && dispatch(getTeachersBySubject(selectedSubject.id));
   }, [selectedSubject]);
 
   useEffect(() => {
-    // const copyDate = new Date(selectedDate);
-    // const newCopyDate = new Date(selectedDate);
-    // setLessonsFilter({
-    //   ...lessonsFilter,
-    //   startTime: getWeekdates(copyDate).firstday,
-    //   endTime: getWeekdates(newCopyDate).lastday,
-    // });
-  }, [selectedDate]);
+    selectedDate &&
+      selectedGroup?.id &&
+      dispatch(
+        fetchLessonsByGroupId(
+          selectedGroup?.id,
+          startOfWeek(selectedDate, { weekStartsOn: 1 }),
+          lastDayOfWeek(selectedDate, { weekStartsOn: 1 })
+        )
+      );
+  }, [selectedGroup, selectedDate, dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      setLessonsParams({
+        groupId: selectedGroup?.id || '',
+        subjectId: selectedSubject?.id || '',
+        teacherId: selectedTeacher?.id || '',
+        startTime: startOfWeek(selectedDate, { weekStartsOn: 1 }),
+        endTime: lastDayOfWeek(selectedDate, { weekStartsOn: 1 }),
+      })
+    );
+  }, [selectedDate, selectedSubject, selectedTeacher, selectedGroup]);
 
   return (
     <>
