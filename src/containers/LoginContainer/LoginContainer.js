@@ -26,7 +26,6 @@ const Login = () => {
     await dispatch(loginUser({ ...state }));
   };
 
-  console.log('error', error);
   return (
     <UserForm
       onSubmit={submitFormHandler}
