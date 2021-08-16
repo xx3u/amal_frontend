@@ -7,7 +7,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,9 +51,9 @@ const UserForm = ({ title, onSubmit, children, buttonText, link, linkText }) => 
           </Button>
           <Grid container justifyContent='flex-end'>
             <Grid item>
-              <Link to={link} href='#' variant='body2'>
+              <NavLink to={link} variant='body2'>
                 {linkText}
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </form>
