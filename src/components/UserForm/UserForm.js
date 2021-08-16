@@ -1,12 +1,13 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserForm = (props) => {
+const UserForm = ({ title, onSubmit, children, buttonText, link, linkText }) => {
   const classes = useStyles();
 
   return (
@@ -39,15 +40,22 @@ const UserForm = (props) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          {props.title}
+          {title}
         </Typography>
-        <form className={classes.form} onSubmit={props.onSubmit}>
+        <form className={classes.form} onSubmit={onSubmit}>
           <Grid container spacing={2}>
-            {props.children}
+            {children}
           </Grid>
           <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
-            {props.title}
+            {buttonText}
           </Button>
+          <Grid container justifyContent='flex-end'>
+            <Grid item>
+              <Link to={link} href='#' variant='body2'>
+                {linkText}
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
     </Container>
