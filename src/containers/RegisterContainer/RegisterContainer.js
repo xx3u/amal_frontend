@@ -33,6 +33,7 @@ const Register = () => {
       buttonText='Зарегистрироваться'
       link='/login'
       linkText='У Вас есть аккаунт? Войти'
+      error={error}
     >
       <Grid item xs={12}>
         <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
