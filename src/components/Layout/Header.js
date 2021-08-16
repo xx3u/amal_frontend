@@ -67,11 +67,11 @@ const Header = () => {
             </Menu>
           </Grid>
           <Grid item>
-            <Button color='inherit' className={classes.menuButton}>
-              LOGIN
+            <Button component={Link} to='/login' color='inherit' className={classes.menuButton}>
+              Войти
             </Button>
-            <Button color='inherit' className={classes.menuButton}>
-              REGISTER
+            <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
+              Регистрация
             </Button>
           </Grid>
         </Grid>
