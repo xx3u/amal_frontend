@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import UserForm from '../../components/UserForm/UserForm';
@@ -26,9 +27,25 @@ const Register = () => {
   };
 
   return (
-    <UserForm onSubmit={submitFormHandler} title='Sign Up'>
-      <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
-      <FormItem name='password' value={state.password} onChange={inputChangeHandler} label='Password' type='password' />
+    <UserForm
+      onSubmit={submitFormHandler}
+      title='Регистрация'
+      buttonText='Зарегистрироваться'
+      link='/login'
+      linkText='У Вас есть аккаунт? Войти'
+    >
+      <Grid item xs={12}>
+        <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
+      </Grid>
+      <Grid item xs={12}>
+        <FormItem
+          name='password'
+          value={state.password}
+          onChange={inputChangeHandler}
+          label='Password'
+          type='password'
+        />
+      </Grid>
     </UserForm>
   );
 };
