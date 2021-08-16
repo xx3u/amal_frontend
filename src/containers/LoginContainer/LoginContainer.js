@@ -35,7 +35,7 @@ const Login = () => {
     await dispatch(loginUser({ ...state }));
   };
   return (
-    <UserForm onSubmit={submitFormHandler} title='Войти' button='Войти'>
+    <UserForm onSubmit={submitFormHandler} title='Войти' button='Войти' buttonText='Войти'>
       {error && (
         <Alert severity='error' className={classes.alert}>
           <AlertTitle>Error</AlertTitle>
