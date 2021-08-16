@@ -8,11 +8,20 @@ import {
   CREATE_LESSONS_REQUEST,
   CREATE_LESSONS_SUCCESS,
   CREATE_LESSONS_FAILURE,
+  SET_LESSON_PARAMS,
 } from '../actionTypes';
+const initlessonsParams = {
+  groupId: '',
+  subjectId: '',
+  teacherId: '',
+  startTime: '',
+  endTime: '',
+};
 const initState = {
   lessons: [],
   loading: false,
   error: null,
+  lessonsParams: initlessonsParams,
 };
 
 const reducer = (state = initState, action) => {
@@ -35,6 +44,8 @@ const reducer = (state = initState, action) => {
       return { ...state, loading: false, error: null };
     case ADD_NEW_LESSON_FAILURE:
       return { ...state, loading: false, error: action.error };
+    case SET_LESSON_PARAMS:
+      return { ...state, lessonsParams: action.payload };
     default:
       return state;
   }
