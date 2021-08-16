@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { Grid, TextField, Box, Typography } from '@material-ui/core';
+import { Grid, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -64,7 +64,7 @@ const LessonsSelectors = () => {
   }, [selectedDate, selectedSubject, selectedTeacher, selectedGroup]);
 
   return (
-    <>
+    <Grid container item spacing={3}>
       <Grid item xs={3}>
         <Autocomplete
           id='groups-lessons'
@@ -75,18 +75,22 @@ const LessonsSelectors = () => {
           options={groups}
           getOptionLabel={(option) => option.groupName}
           noOptionsText={'список пуст'}
-          style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
         />
       </Grid>
-      <Grid item xs={3}>
-        <MuiPickersUtilsProvider locale={ru} utils={DateFnsUtils}>
-          <Box>
-            <Typography>Дата</Typography>
-            <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='dd MMM yyyy' />
-          </Box>
-        </MuiPickersUtilsProvider>
-      </Grid>
+      <MuiPickersUtilsProvider locale={ru} utils={DateFnsUtils}>
+        <Grid item xs={3}>
+          <KeyboardDatePicker
+            label='Дата'
+            variant='inline'
+            inputVariant='outlined'
+            fullWidth
+            value={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            format='dd MMM yyyy'
+          />
+        </Grid>
+      </MuiPickersUtilsProvider>
       <Grid item xs={3}>
         <Autocomplete
           id='subjects-lessons'
@@ -97,7 +101,6 @@ const LessonsSelectors = () => {
           options={subjects}
           getOptionLabel={(option) => option.subjectName || ''}
           noOptionsText={'список пуст'}
-          style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />}
         />
       </Grid>
@@ -111,11 +114,10 @@ const LessonsSelectors = () => {
             setSelectedTeacher(value);
           }}
           noOptionsText={'выберите сначала предмета'}
-          style={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />}
         />
       </Grid>
-    </>
+    </Grid>
   );
 };
 
