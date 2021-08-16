@@ -1,6 +1,8 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
@@ -17,24 +19,101 @@ import LessonsByTeacher from './containers/LessonsByTeacher/LessonsByTeacher';
 import Register from './containers/RegisterContainer/RegisterContainer';
 import Login from './containers/LoginContainer/LoginContainer';
 
+const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
+  return isAllowed ? <Route {...props} /> : <Redirect to={redirectTo} />;
+};
+
 function App() {
+  const user = useSelector((state) => state.users.user);
   return (
     <div className='App'>
       <CssBaseline />
       <Layout>
         <Switch>
-          <Route path='/admin-app/lessons' exact component={LessonsPage} />
-          <Route path='/admin-app/students/:id/edit' exact component={EditStudentForm} />
-          <Route path='/admin-app/students/add' exact component={CreateStudentForm} />
-          <Route path='/admin-app/groups' exact component={GroupsPage} />
-          <Route path='/admin-app/students/:id' exact component={StudentDetailPage} />
-          <Route path={['/admin-app/students', '/']} exact component={StudentsPage} />
-          <Route path='/admin-app/payments' exact component={PaymentsPage} />
-          <Route path='/admin-app/payments/:id' exact component={PaymentsByStudent} />
-          <Route path='/admin-app/teachers/lessons' exact component={LessonsByTeacher} />
-          <Route path='/admin-app/teachers' exact component={TeachersPage} />
-          <Route path='/admin-app/teachers/:id/edit' exact component={EditTeacherForm} />
-          <Route path='/admin-app/teachers/add' exact component={CreateTeacherForm} />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path={['/admin-app/students', '/']}
+            exact
+            component={StudentsPage}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/students/:id/edit'
+            exact
+            component={EditStudentForm}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/students/add'
+            exact
+            component={CreateStudentForm}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/students/:id'
+            exact
+            component={StudentDetailPage}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/lessons'
+            exact
+            component={LessonsPage}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/groups'
+            exact
+            component={GroupsPage}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/payments'
+            exact
+            component={PaymentsPage}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/payments/:id'
+            exact
+            component={PaymentsByStudent}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/teachers'
+            exact
+            component={TeachersPage}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/teachers/lessons'
+            exact
+            component={LessonsByTeacher}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/teachers/:id/edit'
+            exact
+            component={EditTeacherForm}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/teachers/add'
+            exact
+            component={CreateTeacherForm}
+          />
           <Route path='/register' exact component={Register} />
           <Route path='/login' exact component={Login} />
         </Switch>
