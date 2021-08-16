@@ -34,8 +34,17 @@ const Login = () => {
     e.preventDefault();
     await dispatch(loginUser({ ...state }));
   };
+
+  console.log('error', error);
   return (
-    <UserForm onSubmit={submitFormHandler} title='Войти' button='Войти' buttonText='Войти'>
+    <UserForm
+      onSubmit={submitFormHandler}
+      title='Войти'
+      button='Войти'
+      buttonText='Войти'
+      link='/register'
+      linkText='Нет учетной записи? Зарегистрироваться'
+    >
       {error && (
         <Alert severity='error' className={classes.alert}>
           <AlertTitle>Error</AlertTitle>
