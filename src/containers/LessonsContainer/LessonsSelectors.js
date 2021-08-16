@@ -5,7 +5,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { ru } from 'date-fns/locale';
-import { startOfWeek, lastDayOfWeek } from 'date-fns';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject, setTeachersBySubject } from '../../store/actions/teachersActions';
@@ -46,8 +45,8 @@ const LessonsSelectors = () => {
       dispatch(
         fetchLessonsByGroupId(
           selectedGroup?.id,
-          startOfWeek(selectedDate, { weekStartsOn: 1 }).toISOString(),
-          lastDayOfWeek(selectedDate, { weekStartsOn: 1 }).toISOString()
+          getWeekdates(selectedDate).firstday.toISOString(),
+          getWeekdates(selectedDate).lastday.toISOString()
         )
       );
   }, [selectedGroup, selectedDate, dispatch]);
