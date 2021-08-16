@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../../store/actions/usersActions';
-import FormElement from '../../components/UI/Form/FormElement/FormElement';
+import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import UserForm from '../../components/UserForm/UserForm';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
@@ -43,16 +43,10 @@ const Login = () => {
         </Alert>
       )}
       <Grid item xs={12}>
-        <FormElement
-          name='username'
-          value={state.username}
-          onChange={inputChangeHandler}
-          label='Username'
-          type='text'
-        />
+        <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
       </Grid>
       <Grid item xs={12}>
-        <FormElement
+        <FormItem
           name='password'
           value={state.password}
           onChange={inputChangeHandler}
