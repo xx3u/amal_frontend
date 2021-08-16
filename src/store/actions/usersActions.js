@@ -16,11 +16,7 @@ export const createUser = (userData) => {
       dispatch(createUserSuccess(response.data));
       dispatch(push('/'));
     } catch (error) {
-      if (error.response && error.response.data) {
-        dispatch(createUserFailure(error.response.data));
-      } else {
-        dispatch(createUserFailure(error));
-      }
+      dispatch(createUserFailure(error));
     }
   };
 };
