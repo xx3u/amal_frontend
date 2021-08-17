@@ -49,8 +49,7 @@ const LessonsContainer = () => {
     );
   };
 
-  const onClickHandlerCreateLessons = (e) => {
-    e.stopPropagation();
+  const onClickHandlerCreateLessons = () => {
     setIsOpen({ status: true });
   };
 
@@ -59,7 +58,7 @@ const LessonsContainer = () => {
       <Grid container spacing={3} className={classes.container}>
         <LessonsSelectors />
         <Grid item>
-          <Button variant='contained' onClick={(e) => onClickHandlerCreateLessons(e)} disabled={!lessonsParams.groupId}>
+          <Button variant='contained' onClick={onClickHandlerCreateLessons} disabled={!lessonsParams.groupId}>
             Создать на период
           </Button>
         </Grid>
