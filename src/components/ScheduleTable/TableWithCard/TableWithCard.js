@@ -17,7 +17,7 @@ const TableWithCard = ({ rows, columns }) => {
         <TableHead>
           <TableRow>
             {columns.map((col) => {
-              return <TableCell key={col.fieldId}>{col.headerName}</TableCell>;
+              return <TableCell key={col.id}>{col.headerName}</TableCell>;
             })}
           </TableRow>
         </TableHead>
@@ -26,12 +26,12 @@ const TableWithCard = ({ rows, columns }) => {
             ? rows.map((row, index) => (
                 <TableRow key={index}>
                   {columns.map((field) => {
-                    if (typeof row[field.fieldId] === 'string') {
-                      return <TableCell key={`${index}${field.fieldId}`}>{row[field.fieldId]}</TableCell>;
+                    if (typeof row[field.id] === 'string') {
+                      return <TableCell key={`${index}${field.id}`}>{row[field.id]}</TableCell>;
                     } else {
                       return (
-                        <TableCell key={`${index}${field.fieldId}`}>
-                          {field.renderCell && field.renderCell(row[field.fieldId])}
+                        <TableCell key={`${index}${field.id}`}>
+                          {field.renderCell && field.renderCell(row[field.id])}
                         </TableCell>
                       );
                     }

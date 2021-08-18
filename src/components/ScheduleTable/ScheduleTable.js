@@ -6,7 +6,7 @@ import { addDays, getDay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 import CustomCard from './CustomCard/CustomCard';
 
-const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler }) => {
+const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler, teachersLessons }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
@@ -67,14 +67,14 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
   };
 
   const columns = [
-    { fieldId: 'slot', headerName: 'Время', width: 100 },
-    { fieldId: 'mon', headerName: 'Пн', width: 50, renderCell },
-    { fieldId: 'tue', headerName: 'Вт', width: 50, renderCell },
-    { fieldId: 'wed', headerName: 'Ср', width: 50, renderCell },
-    { fieldId: 'thu', headerName: 'Чт', width: 50, renderCell },
-    { fieldId: 'fri', headerName: 'Пт', width: 50, renderCell },
-    { fieldId: 'sat', headerName: 'Сб', width: 50, renderCell },
-    { fieldId: 'sun', headerName: 'Вс', width: 50, renderCell },
+    { id: 'slot', headerName: 'Время', width: 100 },
+    { id: 'mon', headerName: 'Пн', width: 50, renderCell },
+    { id: 'tue', headerName: 'Вт', width: 50, renderCell },
+    { id: 'wed', headerName: 'Ср', width: 50, renderCell },
+    { id: 'thu', headerName: 'Чт', width: 50, renderCell },
+    { id: 'fri', headerName: 'Пт', width: 50, renderCell },
+    { id: 'sat', headerName: 'Сб', width: 50, renderCell },
+    { id: 'sun', headerName: 'Вс', width: 50, renderCell },
   ];
 
   const getLesson = (startTime) => {
