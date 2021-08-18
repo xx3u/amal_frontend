@@ -2,6 +2,7 @@ import {
   ADD_NEW_GROUP_FAILURE,
   ADD_NEW_GROUP_REQUEST,
   ADD_NEW_GROUP_SUCCESS,
+  CLEAR_UPDATE_TEACHER_ERROR,
   FETCH_GROUPS_FAILURE,
   FETCH_GROUPS_REQUEST,
   FETCH_GROUPS_SUCCESS,
@@ -16,6 +17,7 @@ import {
 const initialState = {
   groups: [],
   error: null,
+  updateTeacherError: null,
   loading: false,
 };
 
@@ -51,9 +53,11 @@ const reducer = (state = initialState, action) => {
     case UPDATE_TEACHER_IN_LESSONS_REQUEST:
       return { ...state, loading: true };
     case UPDATE_TEACHER_IN_LESSONS_SUCCESS:
-      return { ...state, loading: false, error: null };
+      return { ...state, loading: false, updateTeacherError: null };
     case UPDATE_TEACHER_IN_LESSONS_FAILURE:
-      return { ...state, loading: false, error: action.error };
+      return { ...state, loading: false, updateTeacherError: action.error };
+    case CLEAR_UPDATE_TEACHER_ERROR:
+      return { ...state, updateTeacherError: null };
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import {
   ADD_NEW_GROUP_FAILURE,
   ADD_NEW_GROUP_REQUEST,
   ADD_NEW_GROUP_SUCCESS,
+  CLEAR_UPDATE_TEACHER_ERROR,
   FETCH_GROUPS_FAILURE,
   FETCH_GROUPS_REQUEST,
   FETCH_GROUPS_SUCCESS,
@@ -94,7 +95,13 @@ export const fetchUpdateTeacherInLessons = (groupId, data) => {
       await axios.put(`/groups/${groupId}/lessons/edit`, data);
       dispatch(updateTeacherInLessonsSuccess());
     } catch (error) {
-      dispatch(updateTeacherInLessonsFailure(error));
+      if (error.response) {
+        dispatch(updateTeacherInLessonsFailure(error.response.data));
+      } else dispatch(updateTeacherInLessonsFailure(error));
     }
   };
+};
+
+export const clearUpdateTeacherError = () => {
+  return { type: CLEAR_UPDATE_TEACHER_ERROR };
 };

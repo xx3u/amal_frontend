@@ -5,13 +5,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
-import { fetchGroups, fetchUpdateTeacherInLessons } from '../../store/actions/groupsAction';
+import { clearUpdateTeacherError, fetchGroups, fetchUpdateTeacherInLessons } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
 import { addNewLesson, fetchLessonsByGroupId, deleteLesson } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 import CreateLessons from '../Forms/Lesson/CreateLessons';
+import InfoModal from '../../components/UI/InfoModal/InfoModal';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -23,6 +24,7 @@ const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const lessons = useSelector((state) => state.lessons.lessons);
+  const updateTeacherError = useSelector((state) => state.groups.updateTeacherError);
 
   useEffect(() => {
     dispatch(fetchGroups());
@@ -69,6 +71,10 @@ const LessonsContainer = () => {
   const updateTeacherHandler = async (data) => {
     await dispatch(fetchUpdateTeacherInLessons(lesson.groupId, data));
     dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  };
+
+  const closeInfoModalHandler = () => {
+    dispatch(clearUpdateTeacherError());
   };
 
   useEffect(() => {
@@ -156,6 +162,12 @@ const LessonsContainer = () => {
         deleteLessonHandler={deleteLessonHandler}
         updateTeacherHandler={updateTeacherHandler}
         isVisibleButtons={true}
+      />
+      <InfoModal
+        open={!!updateTeacherError}
+        title='Error'
+        content={updateTeacherError ? updateTeacherError.error : ''}
+        handleClose={closeInfoModalHandler}
       />
       <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
     </>
