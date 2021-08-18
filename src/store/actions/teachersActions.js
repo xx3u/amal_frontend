@@ -21,6 +21,7 @@ import {
   GET_TEACHERS_LESSONS_REQUEST,
   GET_TEACHERS_LESSONS_SUCCESS,
   GET_TEACHERS_LESSONS_FAILURE,
+  SET_TEACHERS_BY_SUBJECT,
 } from '../actionTypes';
 
 const fetchTeachersRequest = () => {
@@ -163,6 +164,9 @@ export const getTeachersBySubject = (id) => {
       dispatch(getTeachersBySubjectFailure(error));
     }
   };
+};
+export const setTeachersBySubject = (payload) => {
+  return { type: SET_TEACHERS_BY_SUBJECT, payload };
 };
 
 const getTeachersLessonsRequest = () => ({ type: GET_TEACHERS_LESSONS_REQUEST });
