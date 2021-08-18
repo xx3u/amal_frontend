@@ -4,6 +4,7 @@ import CustomCard from '../CustomCard/CustomCard';
 
 const useStyles = makeStyles({
   table: {
+    height: '100%',
     minWidth: 650,
   },
 });
