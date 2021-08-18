@@ -14,6 +14,7 @@ import {
   CREATE_LESSONS_SUCCESS,
   CREATE_LESSONS_FAILURE,
   SET_LESSON_PARAMS,
+  SET_INIT_LESSONS,
 } from '../actionTypes';
 
 const fetchLessonsRequest = () => {
@@ -107,4 +108,8 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
 
 export const setLessonsParams = (payload) => {
   return { type: SET_LESSON_PARAMS, payload };
+};
+
+export const setInitLessons = () => {
+  return { type: SET_INIT_LESSONS };
 };
