@@ -4,6 +4,7 @@ import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
 import { addDays, getDay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
+import CustomCard from './CustomCard/CustomCard';
 
 const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
@@ -51,15 +52,29 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
 
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
+  const renderCell = (row) => {
+    return (
+      <CustomCard
+        id={row.id || ''}
+        title={row.group || row.subject}
+        subheader={row.teacher || row.subject}
+        onClickHandler={() => {
+          onClickHandler(row.startTime, row.endTime);
+        }}
+        onDeleteHandler={row.id && ((e) => openDeleteModal(e, row.id))}
+      />
+    );
+  };
+
   const columns = [
-    { field: 'slot', headerName: 'Время', width: 100 },
-    { field: 'mon', headerName: 'Пн', width: 50 },
-    { field: 'tue', headerName: 'Вт', width: 50 },
-    { field: 'wed', headerName: 'Ср', width: 50 },
-    { field: 'thu', headerName: 'Чт', width: 50 },
-    { field: 'fri', headerName: 'Пт', width: 50 },
-    { field: 'sat', headerName: 'Сб', width: 50 },
-    { field: 'sun', headerName: 'Вс', width: 50 },
+    { fieldId: 'slot', headerName: 'Время', width: 100 },
+    { fieldId: 'mon', headerName: 'Пн', width: 50, renderCell },
+    { fieldId: 'tue', headerName: 'Вт', width: 50, renderCell },
+    { fieldId: 'wed', headerName: 'Ср', width: 50, renderCell },
+    { fieldId: 'thu', headerName: 'Чт', width: 50, renderCell },
+    { fieldId: 'fri', headerName: 'Пт', width: 50, renderCell },
+    { fieldId: 'sat', headerName: 'Сб', width: 50, renderCell },
+    { fieldId: 'sun', headerName: 'Вс', width: 50, renderCell },
   ];
 
   const getLesson = (startTime) => {
@@ -137,7 +152,7 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
         deleteButtonHandler={deleteButtonHandler}
         handleClose={closeDeleteModal}
       />
-      <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} onDeleteHandler={openDeleteModal} />
+      <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} />
     </>
   );
 };

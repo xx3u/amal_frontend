@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
-import CustomCard from '../CustomCard/CustomCard';
 
 const useStyles = makeStyles({
   table: {
@@ -9,7 +8,7 @@ const useStyles = makeStyles({
   },
 });
 
-const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler }) => {
+const TableWithCard = ({ rows, columns }) => {
   const classes = useStyles();
 
   return (
@@ -18,7 +17,7 @@ const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler }) => {
         <TableHead>
           <TableRow>
             {columns.map((col) => {
-              return <TableCell key={col.field}>{col.headerName}</TableCell>;
+              return <TableCell key={col.fieldId}>{col.headerName}</TableCell>;
             })}
           </TableRow>
         </TableHead>
@@ -26,22 +25,13 @@ const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler }) => {
           {rows
             ? rows.map((row, index) => (
                 <TableRow key={index}>
-                  {columns.map(({ field }) => {
-                    if (typeof row[field] === 'string') {
-                      return <TableCell key={`${index}${field}`}>{row[field]}</TableCell>;
+                  {columns.map((field) => {
+                    if (typeof row[field.fieldId] === 'string') {
+                      return <TableCell key={`${index}${field.fieldId}`}>{row[field.fieldId]}</TableCell>;
                     } else {
                       return (
-                        <TableCell key={`${index}${field}`}>
-                          <CustomCard
-                            id={row[field] ? row[field].id : ''}
-                            subject={row[field] ? row[field].subject : ''}
-                            teacher={row[field] ? row[field].teacher : ''}
-                            group={row[field] ? row[field].group : ''}
-                            onClickHandler={() => {
-                              onClickHandler(row[field].startTime, row[field].endTime);
-                            }}
-                            onDeleteHandler={(e) => onDeleteHandler(e, row[field] ? row[field].id : '')}
-                          />
+                        <TableCell key={`${index}${field.fieldId}`}>
+                          {field.renderCell && field.renderCell(row[field.fieldId])}
                         </TableCell>
                       );
                     }
