@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { clearUpdateTeacherError, fetchUpdateTeacherInLessons } from '../../store/actions/groupsAction';
 import { addNewLesson, fetchLessonsByGroupId, deleteLesson } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 import CreateLessons from '../Forms/Lesson/CreateLessons';
+import InfoModal from '../../components/UI/InfoModal/InfoModal';
 import LessonsSelectors from './LessonsSelectors';
 
 const useStyles = makeStyles(() => ({
@@ -16,6 +18,7 @@ const useStyles = makeStyles(() => ({
 const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const updateTeacherError = useSelector((state) => state.groups.updateTeacherError);
 
   const { lessons, lessonsParams } = useSelector((state) => state.lessons);
 
@@ -49,6 +52,21 @@ const LessonsContainer = () => {
     );
   };
 
+  const updateTeacherHandler = async (data) => {
+    await dispatch(fetchUpdateTeacherInLessons(lessonsParams.groupId, data));
+    dispatch(
+      fetchLessonsByGroupId(
+        lessonsParams.groupId,
+        lessonsParams.startTime.toISOString(),
+        lessonsParams.endTime.toISOString()
+      )
+    );
+  };
+
+  const closeInfoModalHandler = () => {
+    dispatch(clearUpdateTeacherError());
+  };
+
   const onClickHandlerCreateLessons = () => {
     setIsOpen({ status: true });
   };
@@ -68,6 +86,14 @@ const LessonsContainer = () => {
         onClickHandler={onClickHandler}
         lessons={lessons}
         deleteLessonHandler={deleteLessonHandler}
+        updateTeacherHandler={updateTeacherHandler}
+        isVisibleButtons={true}
+      />
+      <InfoModal
+        open={!!updateTeacherError}
+        title='Error'
+        content={updateTeacherError ? updateTeacherError.error : ''}
+        handleClose={closeInfoModalHandler}
       />
       <CreateLessons
         isOpen={isOpen}
