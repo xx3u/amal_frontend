@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, TextField, Typography, Button } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import DateFnsUtils from '@date-io/date-fns';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { clearUpdateTeacherError, fetchGroups, fetchUpdateTeacherInLessons } from '../../store/actions/groupsAction';
-import { fetchSubjects } from '../../store/actions/subjectsAction';
-import { getTeachersBySubject } from '../../store/actions/teachersActions';
-import { getWeekdates } from '../../helpers/helpers';
+import { clearUpdateTeacherError, fetchUpdateTeacherInLessons } from '../../store/actions/groupsAction';
 import { addNewLesson, fetchLessonsByGroupId, deleteLesson } from '../../store/actions/lessonsAction';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 import CreateLessons from '../Forms/Lesson/CreateLessons';
 import InfoModal from '../../components/UI/InfoModal/InfoModal';
+import LessonsSelectors from './LessonsSelectors';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -23,140 +18,71 @@ const useStyles = makeStyles(() => ({
 const LessonsContainer = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const lessons = useSelector((state) => state.lessons.lessons);
   const updateTeacherError = useSelector((state) => state.groups.updateTeacherError);
 
-  useEffect(() => {
-    dispatch(fetchGroups());
-    dispatch(fetchSubjects());
-  }, [dispatch]);
+  const { lessons, lessonsParams } = useSelector((state) => state.lessons);
 
-  const { groups } = useSelector((state) => state.groups);
-  const { subjects } = useSelector((state) => state.subjects);
-  const { teachersBySubject } = useSelector((state) => state.teachers);
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
-  const [lesson, setLesson] = useState({
-    groupId: '',
-    subjectId: '',
-    teacherId: '',
-    startTime: '',
-    endTime: '',
-  });
-
-  useEffect(() => {
-    lesson.startTime &&
-      lesson.groupId &&
-      dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime.toISOString(), lesson.endTime.toISOString()));
-  }, [lesson.groupId, lesson.startTime, dispatch]);
+  const [isOpen, setIsOpen] = useState({ status: false });
 
   const onClickHandler = async (startTime, endTime) => {
     const newLesson = {
-      groupId: lesson.groupId,
-      subjectId: lesson.subjectId,
-      teacherId: lesson.teacherId,
+      groupId: lessonsParams.groupId,
+      subjectId: lessonsParams.subjectId,
+      teacherId: lessonsParams.teacherId,
       startTime: startTime,
       endTime: endTime,
     };
     await dispatch(addNewLesson(newLesson));
-    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime.toISOString(), lesson.endTime.toISOString()));
+    dispatch(
+      fetchLessonsByGroupId(
+        lessonsParams.groupId,
+        lessonsParams.startTime.toISOString(),
+        lessonsParams.endTime.toISOString()
+      )
+    );
   };
-
   const deleteLessonHandler = async (lessonId) => {
     await dispatch(deleteLesson(lessonId));
-    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+    dispatch(
+      fetchLessonsByGroupId(
+        lessonsParams.groupId,
+        lessonsParams.startTime.toISOString(),
+        lessonsParams.endTime.toISOString()
+      )
+    );
   };
 
   const updateTeacherHandler = async (data) => {
-    await dispatch(fetchUpdateTeacherInLessons(lesson.groupId, data));
-    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+    await dispatch(fetchUpdateTeacherInLessons(lessonsParams.groupId, data));
+    dispatch(
+      fetchLessonsByGroupId(
+        lessonsParams.groupId,
+        lessonsParams.startTime.toISOString(),
+        lessonsParams.endTime.toISOString()
+      )
+    );
   };
 
   const closeInfoModalHandler = () => {
     dispatch(clearUpdateTeacherError());
   };
 
-  useEffect(() => {
-    lesson.subjectId && dispatch(getTeachersBySubject(lesson.subjectId));
-  }, [lesson.subjectId]);
-
-  useEffect(() => {
-    const copyDate = new Date(selectedDate);
-    const newCopyDate = new Date(selectedDate);
-    setLesson({
-      ...lesson,
-      startTime: getWeekdates(copyDate).firstday,
-      endTime: getWeekdates(newCopyDate).lastday,
-    });
-  }, [selectedDate]);
-
-  const [isOpen, setIsOpen] = useState({ status: false });
-
-  const openPaymentForm = (e) => {
-    e.stopPropagation();
+  const onClickHandlerCreateLessons = () => {
     setIsOpen({ status: true });
   };
 
   return (
     <>
       <Grid container spacing={3} className={classes.container}>
-        <Grid item xs={3}>
-          <Autocomplete
-            id='groups-lessons'
-            className={classes.autocomplete}
-            onChange={(event, value) => setLesson((state) => ({ ...state, groupId: value?.id }))}
-            options={groups}
-            getOptionLabel={(option) => option.groupName}
-            noOptionsText={'список пуст'}
-            style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Box className={classes.dateBox}>
-              <Typography className={classes.dateText}>Дата</Typography>
-              <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
-            </Box>
-          </MuiPickersUtilsProvider>
-        </Grid>
-        <Grid item xs={3}>
-          <Autocomplete
-            id='subjects-lessons'
-            className={classes.autocomplete}
-            onChange={(event, value) => setLesson((state) => ({ ...state, subjectId: value?.id }))}
-            options={subjects}
-            getOptionLabel={(option) => option.subjectName || ''}
-            noOptionsText={'список пуст'}
-            style={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label='Предмет' variant='outlined' placeholder='Выберите' />
-            )}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <Autocomplete
-            id='teachers-lessons'
-            className={classes.autoComplTeacher}
-            options={teachersBySubject}
-            getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
-            onChange={(event, value) => setLesson((state) => ({ ...state, teacherId: value?.id }))}
-            noOptionsText={'выберите сначала предмета'}
-            style={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
-            )}
-          />
-        </Grid>
+        <LessonsSelectors />
         <Grid item>
-          <Button variant='contained' onClick={(e) => openPaymentForm(e)} disabled={!lesson.groupId}>
+          <Button variant='contained' onClick={onClickHandlerCreateLessons} disabled={!lessonsParams.groupId}>
             Создать на период
           </Button>
         </Grid>
       </Grid>
       <ScheduleTable
-        selectedParams={lesson}
+        selectedParams={lessonsParams}
         onClickHandler={onClickHandler}
         lessons={lessons}
         deleteLessonHandler={deleteLessonHandler}
@@ -169,7 +95,12 @@ const LessonsContainer = () => {
         content={updateTeacherError ? updateTeacherError.error : ''}
         handleClose={closeInfoModalHandler}
       />
-      <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
+      <CreateLessons
+        isOpen={isOpen}
+        groupId={lessonsParams.groupId}
+        startTime={lessonsParams.startTime}
+        endTime={lessonsParams.endTime}
+      />
     </>
   );
 };

@@ -19,6 +19,7 @@ import {
   GET_TEACHERS_LESSONS_REQUEST,
   GET_TEACHERS_LESSONS_FAILURE,
   GET_TEACHERS_LESSONS_SUCCESS,
+  SET_TEACHERS_BY_SUBJECT,
 } from '../actionTypes';
 
 const initState = {
@@ -66,6 +67,8 @@ const reducer = (state = initState, action) => {
       return { ...state, teachersBySubject: action.teachers, error: null };
     case GET_TEACHERS_BY_SUBJECT_FAILURE:
       return { ...state, error: action.error };
+    case SET_TEACHERS_BY_SUBJECT:
+      return { ...state, teachersBySubject: action.payload };
     case GET_TEACHERS_LESSONS_REQUEST:
       return { ...state, loading: true };
     case GET_TEACHERS_LESSONS_SUCCESS:
