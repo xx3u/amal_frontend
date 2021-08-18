@@ -63,5 +63,13 @@
   },
   "engines": {
     "node": "16.x"
+  },
+  "proxy": {
+    "/api": {
+      "target": "https://amal-backend.herokuapp.com",
+      "pathRewrite": {
+        "^/api": "/"
+      }
+    }
   }
 }
