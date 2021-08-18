@@ -1,5 +1,5 @@
 const config = {
-  BACKEND_BASE_URL: 'amal-backend.herokuapp.com',
+  BACKEND_BASE_URL: 'https://amal-backend.herokuapp.com',
 };
 
 export default config;
