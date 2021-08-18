@@ -83,16 +83,6 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
   };
 
   useEffect(() => {
-    const monday = selectedParams.startTime;
-    setWeekLessons((prev) => {
-      const copyLessons = { ...prev };
-      const resLessons = setCellsTimes(times, days, copyLessons, monday, true);
-
-      return resLessons;
-    });
-  }, [selectedParams.startTime, selectedParams.groupId || selectedParams.teacherId]);
-
-  useEffect(() => {
     setWeekLessons(initWeekLessons);
     if (lessons.length > 0) {
       days.forEach((day, index) => {
