@@ -5,7 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { makeStyles } from '@material-ui/core/styles';
-import { fetchGroups } from '../../store/actions/groupsAction';
+import { fetchGroups, fetchUpdateTeacherInLessons } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject } from '../../store/actions/teachersActions';
 import { getWeekdates } from '../../helpers/helpers';
@@ -63,6 +63,11 @@ const LessonsContainer = () => {
 
   const deleteLessonHandler = async (lessonId) => {
     await dispatch(deleteLesson(lessonId));
+    dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
+  };
+
+  const updateTeacherHandler = async (data) => {
+    await dispatch(fetchUpdateTeacherInLessons(lesson.groupId, data));
     dispatch(fetchLessonsByGroupId(lesson.groupId, lesson.startTime, lesson.endTime));
   };
 
@@ -149,6 +154,8 @@ const LessonsContainer = () => {
         onClickHandler={onClickHandler}
         lessons={lessons}
         deleteLessonHandler={deleteLessonHandler}
+        updateTeacherHandler={updateTeacherHandler}
+        isVisibleButtons={true}
       />
       <CreateLessons isOpen={isOpen} groupId={lesson.groupId} startTime={lesson.startTime} endTime={lesson.endTime} />
     </>

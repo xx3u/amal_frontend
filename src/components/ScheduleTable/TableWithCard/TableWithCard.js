@@ -8,9 +8,8 @@ const useStyles = makeStyles({
   },
 });
 
-const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler }) => {
+const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler, onEditHandler, isVisibleButtons }) => {
   const classes = useStyles();
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} size='small' aria-label='a dense table'>
@@ -32,6 +31,7 @@ const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler }) => {
                       return (
                         <TableCell key={`${index}${field}`}>
                           <CustomCard
+                            isVisibleButtons={isVisibleButtons}
                             id={row[field] ? row[field].id : ''}
                             subject={row[field] ? row[field].subject : ''}
                             teacher={row[field] ? row[field].teacher : ''}
@@ -40,6 +40,15 @@ const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler }) => {
                               onClickHandler(row[field].startTime, row[field].endTime);
                             }}
                             onDeleteHandler={(e) => onDeleteHandler(e, row[field] ? row[field].id : '')}
+                            onEditHandler={(e) =>
+                              onEditHandler(
+                                e,
+                                row[field].teacherId,
+                                row[field].teacher,
+                                row[field].startTime,
+                                row[field].subjectId
+                              )
+                            }
                           />
                         </TableCell>
                       );

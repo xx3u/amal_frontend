@@ -22,27 +22,23 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ subject = '', teacher = '', group = '', onClickHandler, onDeleteHandler }) => {
+const CustomCard = ({
+  isVisibleButtons,
+  subject = '',
+  teacher = '',
+  group = '',
+  onClickHandler,
+  onDeleteHandler,
+  onEditHandler,
+}) => {
   const classes = useStyles();
 
-  // let delBtn = null;
-  // let editBtn = null;
   let actionButtons = null;
 
-  if (subject !== '' && teacher !== '') {
-    // delBtn = (
-    //   <IconButton className={classes.deleteBtn} onClick={onDeleteHandler}>
-    //     <Clear />
-    //   </IconButton>
-    // );
-    // editBtn = (
-    //   <IconButton>
-    //     <Edit />
-    //   </IconButton>
-    // );
+  if (isVisibleButtons && subject !== '' && teacher !== '') {
     actionButtons = (
       <Paper className={classes.actionButtons} elevation={0}>
-        <IconButton className={classes.editBtn}>
+        <IconButton className={classes.editBtn} onClick={onEditHandler}>
           <Edit fontSize='small' />
         </IconButton>
         <IconButton className={classes.deleteBtn} onClick={onDeleteHandler}>

@@ -4,18 +4,59 @@ import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
 import { addDays, getDay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
+import UpdateTeacher from '../../containers/Forms/Lesson/UpdateTeacher';
 
-const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler }) => {
+const ScheduleTable = ({
+  selectedParams,
+  onClickHandler,
+  lessons,
+  deleteLessonHandler,
+  updateTeacherHandler,
+  isVisibleButtons,
+}) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
   const [open, setOpen] = useState(false);
+  const [isOpenEditForm, setOpenEditForm] = useState(false);
   const [currentLessonId, setCurrentLessonId] = useState(null);
+  const [lessonData, setLessonData] = useState({
+    startTime: null,
+    oldTeacherId: null,
+    oldTeacherName: '',
+    subjectId: null,
+  });
 
   const openDeleteModal = (e, id) => {
     e.stopPropagation();
     setOpen(true);
     setCurrentLessonId(id);
+  };
+
+  const openEditFormHandler = (e, teacherId, teacher, startTime, subjectId) => {
+    e.stopPropagation();
+    setOpenEditForm(true);
+    setLessonData({
+      startTime,
+      oldTeacherId: teacherId,
+      oldTeacherName: teacher,
+      subjectId,
+    });
+  };
+
+  const closeEditFormHandler = () => {
+    setOpenEditForm(false);
+  };
+
+  const updateTeacherSubmit = (e, newTeacherId) => {
+    e.preventDefault();
+    const data = {
+      startTime: lessonData.startTime,
+      oldTeacherId: lessonData.oldTeacherId,
+      newTeacherId,
+    };
+    updateTeacherHandler(data);
+    closeEditFormHandler();
   };
 
   const closeDeleteModal = () => {
@@ -102,7 +143,9 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
                     ...prev[curLesson][day],
                     id: lesson.id,
                     subject: lesson.Subject.subjectName,
+                    subjectId: lesson.subjectId,
                     teacher: lesson.Teacher ? lesson.Teacher?.firstName + ' ' + lesson.Teacher?.lastName : null,
+                    teacherId: lesson.teacherId,
                     group: lesson.Group?.groupName,
                   },
                 },
@@ -127,7 +170,22 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
         deleteButtonHandler={deleteButtonHandler}
         handleClose={closeDeleteModal}
       />
-      <TableWithCard columns={columns} rows={rows} onClickHandler={onClickHandler} onDeleteHandler={openDeleteModal} />
+      <UpdateTeacher
+        isOpen={isOpenEditForm}
+        handleClose={closeEditFormHandler}
+        oldTeacherName={lessonData.oldTeacherName}
+        startTime={lessonData.startTime}
+        subjectId={lessonData.subjectId}
+        updateTeacherSubmit={updateTeacherSubmit}
+      />
+      <TableWithCard
+        columns={columns}
+        rows={rows}
+        onClickHandler={onClickHandler}
+        onDeleteHandler={openDeleteModal}
+        onEditHandler={openEditFormHandler}
+        isVisibleButtons={isVisibleButtons}
+      />
     </>
   );
 };

@@ -9,6 +9,9 @@ import {
   UPDATE_GROUP_FAILURE,
   UPDATE_GROUP_REQUEST,
   UPDATE_GROUP_SUCCESS,
+  UPDATE_TEACHER_IN_LESSONS_FAILURE,
+  UPDATE_TEACHER_IN_LESSONS_REQUEST,
+  UPDATE_TEACHER_IN_LESSONS_SUCCESS,
 } from '../actionTypes';
 import { fetchStudents } from './studentsAction';
 
@@ -72,4 +75,26 @@ export const fetchUpdateGroup = (payload) => async (dispatch) => {
   } catch (error) {
     dispatch(updateGroupFailure(error));
   }
+};
+
+const updateTeacherInLessonsRequest = () => {
+  return { type: UPDATE_TEACHER_IN_LESSONS_REQUEST };
+};
+const updateTeacherInLessonsSuccess = () => {
+  return { type: UPDATE_TEACHER_IN_LESSONS_SUCCESS };
+};
+const updateTeacherInLessonsFailure = (error) => {
+  return { type: UPDATE_TEACHER_IN_LESSONS_FAILURE, error };
+};
+
+export const fetchUpdateTeacherInLessons = (groupId, data) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateTeacherInLessonsRequest());
+      await axios.put(`/groups/${groupId}/lessons/edit`, data);
+      dispatch(updateTeacherInLessonsSuccess());
+    } catch (error) {
+      dispatch(updateTeacherInLessonsFailure(error));
+    }
+  };
 };

@@ -8,6 +8,9 @@ import {
   UPDATE_GROUP_FAILURE,
   UPDATE_GROUP_REQUEST,
   UPDATE_GROUP_SUCCESS,
+  UPDATE_TEACHER_IN_LESSONS_FAILURE,
+  UPDATE_TEACHER_IN_LESSONS_REQUEST,
+  UPDATE_TEACHER_IN_LESSONS_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -45,6 +48,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, loading: false, error: null };
     case UPDATE_GROUP_FAILURE:
       return { ...state, error: action.error, loading: false };
+    case UPDATE_TEACHER_IN_LESSONS_REQUEST:
+      return { ...state, loading: true };
+    case UPDATE_TEACHER_IN_LESSONS_SUCCESS:
+      return { ...state, loading: false, error: null };
+    case UPDATE_TEACHER_IN_LESSONS_FAILURE:
+      return { ...state, loading: false, error: action.error };
     default:
       return state;
   }
