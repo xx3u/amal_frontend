@@ -8,7 +8,7 @@ import { ru } from 'date-fns/locale';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import { getTeachersBySubject, setTeachersBySubject } from '../../store/actions/teachersActions';
-import { fetchLessonsByGroupId, setLessonsParams } from '../../store/actions/lessonsAction';
+import { fetchLessonsByGroupId, setInitLessons, setLessonsParams } from '../../store/actions/lessonsAction';
 import { getWeekdates } from '../../helpers/helpers';
 
 const LessonsSelectors = () => {
@@ -40,6 +40,7 @@ const LessonsSelectors = () => {
   }, [selectedSubject]);
 
   useEffect(() => {
+    dispatch(setInitLessons());
     selectedDate &&
       selectedGroup?.id &&
       dispatch(
