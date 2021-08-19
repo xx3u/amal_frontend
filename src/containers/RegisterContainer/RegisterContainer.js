@@ -64,8 +64,6 @@ const Register = () => {
     dispatch(fetchTeachers());
   }, [dispatch]);
 
-  console.log('state', state);
-
   useEffect(() => {
     state.role && state.role === 'teacher' ? setChecked(true) : setChecked(false);
   }, [state.role]);
