@@ -84,9 +84,11 @@ const Header = () => {
                 <Button color='inherit' onClick={signOut} className={classes.menuButton}>
                   Выйти
                 </Button>
-                <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
-                  Регистрация
-                </Button>
+                {user && user.role === 'admin' ? (
+                  <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
+                    Регистрация
+                  </Button>
+                ) : null}
               </>
             ) : (
               <>
