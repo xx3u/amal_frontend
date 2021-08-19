@@ -8,6 +8,8 @@ import ActionsArea from '../../components/Students/ActionsArea/ActionsArea';
 import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import StatusIconText from '../../components/UI/StatusIconText/StatusIconText';
+import { getUnauthorizedError } from '../../helpers/helpers';
+import { logoutUser } from '../../store/actions/usersActions';
 
 const useStyles = makeStyles(() => ({
   StudentsContainer: {
@@ -108,6 +110,11 @@ const StudentsContainer = () => {
   useEffect(() => {
     dispatch(fetchStudents());
   }, [dispatch]);
+
+  const unAuthorizedError = getUnauthorizedError();
+  if (unAuthorizedError) {
+    dispatch(logoutUser());
+  }
 
   return (
     <div className={classes.StudentsContainer}>
