@@ -21,7 +21,7 @@ export const createUser = (userData) => {
     try {
       const response = await axios.post('/users/register', userData);
       dispatch(createUserSuccess(response.data));
-      dispatch(push('/'));
+      dispatch(push('/login'));
     } catch (error) {
       dispatch(createUserFailure(error));
     }
