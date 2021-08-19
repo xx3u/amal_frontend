@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 import { useSelector } from 'react-redux';
-
-export const getWeekdates = (date) => {
-  const first = date.getDate() - date.getDay() + 1;
-  const last = first + 6;
-=======
 import { startOfWeek, lastDayOfWeek } from 'date-fns';
->>>>>>> 48d42ff2abdeeecaefcea721e71501cc6e91ae7a
 
 export const getWeekdates = (date) => {
   const firstDate = startOfWeek(date, { weekStartsOn: 1 });
