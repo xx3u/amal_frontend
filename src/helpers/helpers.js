@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 export const getWeekdates = (date) => {
   const first = date.getDate() - date.getDay() + 1;
   const last = first + 6;
@@ -13,4 +15,16 @@ export const getWeekdates = (date) => {
     firstday,
     lastday,
   };
+};
+
+export const getUnauthorizedError = () => {
+  return useSelector(
+    (state) =>
+      state.students.error === 'Unauthorized' ||
+      state.groups.error === 'Unauthorized' ||
+      state.lessons.error === 'Unauthorized' ||
+      state.streams.error === 'Unauthorized' ||
+      state.subjects.error === 'Unauthorized' ||
+      state.teachers.error === 'Unauthorized'
+  );
 };
