@@ -26,7 +26,6 @@ const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
 function App() {
   const user = useSelector((state) => state.users.user);
   const isAdminRole = user && user.role === 'admin';
-  console.log('role', isAdminRole);
   return (
     <div className='App'>
       <CssBaseline />
