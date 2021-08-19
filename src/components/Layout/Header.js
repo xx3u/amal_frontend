@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions/usersActions';
@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     flexGrow: 1,
+    marginRight: theme.spacing(3),
   },
   btn: {
     marginRight: 10,
@@ -44,12 +45,12 @@ const Header = () => {
     <AppBar position='static'>
       <Toolbar>
         <Grid container justifyContent='space-between' direction='row'>
-          <Grid item>
+          <Box item>
             <Typography variant='h6' className={classes.logo}>
               AMAL LOGO
             </Typography>
-          </Grid>
-          <Grid container item xs={9}>
+          </Box>
+          <Box flexGrow={1}>
             <Button component={Link} to='/admin-app/students' color='inherit' className={classes.btn}>
               Студенты
             </Button>
@@ -73,8 +74,8 @@ const Header = () => {
                 Расписание по Учителям
               </MenuItem>
             </Menu>
-          </Grid>
-          <Grid item>
+          </Box>
+          <Box>
             {user ? (
               <>
                 <Button color='inherit' className={classes.menuButton}>
@@ -83,18 +84,18 @@ const Header = () => {
                 <Button color='inherit' onClick={signOut} className={classes.menuButton}>
                   Выйти
                 </Button>
+                <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
+                  Регистрация
+                </Button>
               </>
             ) : (
               <>
                 <Button component={Link} to='/login' color='inherit' className={classes.menuButton}>
                   Войти
                 </Button>
-                <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
-                  Регистрация
-                </Button>
               </>
             )}
-          </Grid>
+          </Box>
         </Grid>
       </Toolbar>
     </AppBar>
