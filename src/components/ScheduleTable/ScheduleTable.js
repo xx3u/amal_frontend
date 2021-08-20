@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
-import { addDays, getDay } from 'date-fns';
+import { addDays, eachDayOfInterval, getDay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
-import CustomCard from './CustomCard/CustomCard';
+import LessonCard from './LessonCard/LessonCard';
+import AddCard from './AddCard/AddCard';
 
-const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler, teachersLessons }) => {
+const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHandler, teachersLessons = [] }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-
+  console.log(teachersLessons);
   const [open, setOpen] = useState(false);
   const [currentLessonId, setCurrentLessonId] = useState(null);
+  console.log(teachersLessons);
 
   const openDeleteModal = (e, id) => {
     e.stopPropagation();
@@ -42,6 +44,7 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
         copyLessons[lesson][day] = {
           startTime: monday ? getDateWithTime(addDays(monday, dayIndex), time, 0) : null,
           endTime: monday ? getDateWithTime(addDays(monday, dayIndex), time + 1, 0) : null,
+          teacherBussy: false,
         };
       });
     });
@@ -53,15 +56,19 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
   const renderCell = (row) => {
-    return (
-      <CustomCard
+    return row.id ? (
+      <LessonCard
         id={row.id || ''}
         title={row.group || row.subject}
         subheader={row.teacher || row.subject}
+        onDeleteHandler={row.id && ((e) => openDeleteModal(e, row.id))}
+      />
+    ) : (
+      <AddCard
+        allowed={!row.teacherBussy}
         onClickHandler={() => {
           onClickHandler(row.startTime, row.endTime);
         }}
-        onDeleteHandler={row.id && ((e) => openDeleteModal(e, row.id))}
       />
     );
   };
@@ -99,36 +106,55 @@ const ScheduleTable = ({ selectedParams, onClickHandler, lessons, deleteLessonHa
 
   useEffect(() => {
     setWeekLessons(initWeekLessons);
-    if (lessons.length > 0) {
-      days.forEach((day, index) => {
-        lessons.forEach((lesson) => {
-          const lessonStartDate = new Date(lesson.startTime);
-          const startTime = lessonStartDate.getUTCHours();
-          let lessonweekDay = getDay(lessonStartDate);
-          lessonweekDay = lessonweekDay === 0 ? 7 : lessonweekDay;
-          const curLesson = getLesson(startTime);
-          if (index + 1 === lessonweekDay) {
-            setWeekLessons((prev) => {
-              return {
-                ...prev,
-                [curLesson]: {
-                  ...prev[curLesson],
-                  [day]: {
-                    ...prev[curLesson][day],
-                    id: lesson.id,
-                    subject: lesson.Subject.subjectName,
-                    teacher: lesson.Teacher ? lesson.Teacher?.firstName + ' ' + lesson.Teacher?.lastName : null,
-                    group: lesson.Group?.groupName,
-                  },
+    // if (lessons.length > 0) {
+    days.forEach((day, index) => {
+      lessons.forEach((lesson) => {
+        const lessonStartDate = new Date(lesson.startTime);
+        const startTime = lessonStartDate.getUTCHours();
+        const lessonweekDay = getDay(lessonStartDate, { weekStartsOn: 1 });
+        const curLesson = getLesson(startTime);
+        if (index + 1 === lessonweekDay) {
+          setWeekLessons((prev) => {
+            return {
+              ...prev,
+              [curLesson]: {
+                ...prev[curLesson],
+                [day]: {
+                  ...prev[curLesson][day],
+                  id: lesson.id,
+                  subject: lesson.Subject.subjectName,
+                  teacher: lesson.Teacher ? lesson.Teacher?.firstName + ' ' + lesson.Teacher?.lastName : null,
+                  group: lesson.Group?.groupName,
                 },
-              };
-            });
-          }
-        });
+              },
+            };
+          });
+        }
       });
-    }
-  }, [lessons]);
-
+      teachersLessons.forEach((lesson) => {
+        const lessonStartDate = new Date(lesson.startTime);
+        const startTime = lessonStartDate.getUTCHours();
+        const lessonweekDay = getDay(lessonStartDate, { weekStartsOn: 1 });
+        const curLesson = getLesson(startTime);
+        if (index + 1 === lessonweekDay) {
+          setWeekLessons((prev) => {
+            return {
+              ...prev,
+              [curLesson]: {
+                ...prev[curLesson],
+                [day]: {
+                  ...prev[curLesson][day],
+                  teacherBussy: !!lesson.id,
+                },
+              },
+            };
+          });
+        }
+      });
+    });
+    // }
+  }, [lessons, teachersLessons]);
+  console.log(weekLessons);
   const rows = Object.keys(weekLessons).map((key) => {
     return weekLessons[key];
   });
