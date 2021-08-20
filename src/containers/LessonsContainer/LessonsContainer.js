@@ -18,7 +18,7 @@ const LessonsContainer = () => {
   const dispatch = useDispatch();
 
   const { lessons, lessonsParams } = useSelector((state) => state.lessons);
-
+  const teachersLessons = useSelector((state) => state.teachers.teachersLessons);
   const [isOpen, setIsOpen] = useState({ status: false });
 
   const onClickHandler = async (startTime, endTime) => {
@@ -64,6 +64,7 @@ const LessonsContainer = () => {
         </Grid>
       </Grid>
       <ScheduleTable
+        teachersLessons={teachersLessons}
         selectedParams={lessonsParams}
         onClickHandler={onClickHandler}
         lessons={lessons}
