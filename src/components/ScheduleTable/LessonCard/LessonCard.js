@@ -12,11 +12,11 @@ const useStyles = makeStyles({
   },
 });
 
-const CustomCard = ({ title, subheader, onClickHandler, onDeleteHandler, onEditHandler }) => {
+const CustomCard = ({ title, subheader, onDeleteHandler, onEditHandler }) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} variant='outlined' onClick={onClickHandler}>
+    <Card className={classes.root} variant='outlined'>
       <CardHeader
         action={
           <>
