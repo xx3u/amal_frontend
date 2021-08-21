@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { CardActions, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
@@ -27,7 +27,7 @@ const EmptyCard = ({ disabled = true, onClickHandler }) => {
         <CardActions className={classes.cardActions}>
           <>
             <IconButton onClick={onClickHandler}>
-              <AddCircleIcon fontSize='large' color='disabled' />
+              <AddCircleOutlineIcon fontSize='large' color='disabled' />
             </IconButton>
           </>
         </CardActions>
