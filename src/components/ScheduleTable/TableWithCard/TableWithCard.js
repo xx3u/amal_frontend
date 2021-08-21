@@ -27,10 +27,9 @@ const TableWithCard = ({ rows, columns }) => {
                   {columns.map((field) => {
                     return (
                       <TableCell key={`${index}${field.id}`}>
-                        {field.renderCell ? field.renderCell(row[field.id]) : row[field.id]}
+                        {field.renderCell ? field.renderCell(row[field.id]) : row[field.id].toString()}
                       </TableCell>
                     );
-                    // }
                   })}
                 </TableRow>
               ))
