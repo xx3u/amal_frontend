@@ -24,7 +24,7 @@ const LessonsContainer = () => {
   const teachersLessons = useSelector((state) => state.teachers.teachersLessons);
   const [isOpen, setIsOpen] = useState({ status: false });
 
-  const onClickHandler = async (startTime, endTime) => {
+  const addLessonHandler = async (startTime, endTime) => {
     const newLesson = {
       groupId: lessonsParams.groupId,
       subjectId: lessonsParams.subjectId,
@@ -83,8 +83,8 @@ const LessonsContainer = () => {
       </Grid>
       <ScheduleTable
         bussyLessons={teachersLessons}
-        startTime={lessonsParams.startTime}
-        onClickHandler={onClickHandler}
+        lessonsParams={lessonsParams}
+        addLessonHandler={lessonsParams.groupId && lessonsParams.teacherId && addLessonHandler}
         lessons={lessons}
         deleteLessonHandler={deleteLessonHandler}
         updateTeacherHandler={updateTeacherHandler}
