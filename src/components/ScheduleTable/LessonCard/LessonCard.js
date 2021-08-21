@@ -36,6 +36,8 @@ const CustomCard = ({ title, subheader, onDeleteHandler, onEditHandler }) => {
         }
         title={title}
         subheader={subheader}
+        titleTypographyProps={{ variant: 'h6' }}
+        subheaderTypographyProps={{ variant: 'body2' }}
       />
     </Card>
   );
