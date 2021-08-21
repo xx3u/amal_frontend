@@ -25,15 +25,12 @@ const TableWithCard = ({ rows, columns }) => {
             ? rows.map((row, index) => (
                 <TableRow key={index}>
                   {columns.map((field) => {
-                    if (typeof row[field.id] === 'string') {
-                      return <TableCell key={`${index}${field.id}`}>{row[field.id]}</TableCell>;
-                    } else {
-                      return (
-                        <TableCell key={`${index}${field.id}`}>
-                          {field.renderCell && field.renderCell(row[field.id])}
-                        </TableCell>
-                      );
-                    }
+                    return (
+                      <TableCell key={`${index}${field.id}`}>
+                        {field.renderCell ? field.renderCell(row[field.id]) : row[field.id]}
+                      </TableCell>
+                    );
+                    // }
                   })}
                 </TableRow>
               ))
