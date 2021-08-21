@@ -35,7 +35,6 @@ const ScheduleTable = ({
   };
 
   const openEditFormHandler = (e, teacherId, teacher, startTime, subjectId) => {
-    console.log(teacherId, teacher, startTime, subjectId);
     e.stopPropagation();
     setOpenEditForm(true);
     setLessonData({
@@ -184,7 +183,12 @@ const ScheduleTable = ({
           });
         }
       });
-      bussyLessons &&
+    });
+  }, [lessons]);
+
+  useEffect(() => {
+    bussyLessons &&
+      days.forEach((day, index) => {
         bussyLessons.forEach((lesson) => {
           const lessonStartDate = new Date(lesson.startTime);
           const startTime = lessonStartDate.getUTCHours();
@@ -205,7 +209,7 @@ const ScheduleTable = ({
             });
           }
         });
-    });
+      });
   }, [lessons, bussyLessons]);
 
   const rows = useMemo(
