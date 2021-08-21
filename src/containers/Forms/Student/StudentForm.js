@@ -30,6 +30,10 @@ const languages = [
     value: 'RU',
     label: 'РУС',
   },
+  {
+    value: 'ENG',
+    label: 'АНГ',
+  },
 ];
 
 const StudentForm = ({ title, submitData, selectedStudent, id }) => {
