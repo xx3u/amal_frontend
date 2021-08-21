@@ -58,10 +58,6 @@ const LessonsByTeacher = () => {
     });
   }, [selectedDate]);
 
-  const onClickHandler = () => {
-    console.log('');
-  };
-
   return (
     <>
       <Typography variant='h5' paragraph={true} className={classes.title}>
@@ -91,12 +87,7 @@ const LessonsByTeacher = () => {
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>
-      <ScheduleTable
-        selectedParams={lesson}
-        lessons={teachersLessons}
-        // onClickHandler={onClickHandler}
-        // deleteLessonHandler={deleteLessonHandler}
-      />
+      <ScheduleTable deleteLessonHandler={deleteLessonHandler} startTime={lesson.startTime} lessons={teachersLessons} />
     </>
   );
 };
