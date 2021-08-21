@@ -7,7 +7,12 @@ import DateFnsUtils from '@date-io/date-fns';
 import { ru } from 'date-fns/locale';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
-import { getTeachersBySubject, getTeachersLessons, setTeachersBySubject } from '../../store/actions/teachersActions';
+import {
+  getTeachersBySubject,
+  getTeachersLessons,
+  setInitTeacherLesson,
+  setTeachersBySubject,
+} from '../../store/actions/teachersActions';
 import { fetchLessonsByGroupId, setInitLessons, setLessonsParams } from '../../store/actions/lessonsAction';
 import { getWeekdates } from '../../helpers/helpers';
 
@@ -52,6 +57,7 @@ const LessonsSelectors = () => {
       );
   }, [selectedGroup, selectedDate, dispatch]);
   useEffect(() => {
+    dispatch(setInitTeacherLesson());
     selectedTeacher &&
       dispatch(
         getTeachersLessons(
@@ -60,6 +66,9 @@ const LessonsSelectors = () => {
           getWeekdates(selectedDate).lastday.toISOString()
         )
       );
+    return () => {
+      dispatch(setInitTeacherLesson());
+    };
   }, [selectedTeacher, selectedDate]);
 
   useEffect(() => {
