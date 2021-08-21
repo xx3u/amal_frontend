@@ -94,8 +94,8 @@ const LessonsByTeacher = () => {
       <ScheduleTable
         selectedParams={lesson}
         lessons={teachersLessons}
-        onClickHandler={onClickHandler}
-        deleteLessonHandler={deleteLessonHandler}
+        // onClickHandler={onClickHandler}
+        // deleteLessonHandler={deleteLessonHandler}
       />
     </>
   );

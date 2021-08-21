@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import { CardHeader, IconButton } from '@material-ui/core';
+import { CardHeader, Grid, IconButton } from '@material-ui/core';
 import { Clear, Edit } from '@material-ui/icons';
 
 const useStyles = makeStyles({
@@ -20,16 +20,18 @@ const CustomCard = ({ title, subheader, onClickHandler, onDeleteHandler, onEditH
       <CardHeader
         action={
           <>
-            {onDeleteHandler && (
-              <IconButton onClick={onDeleteHandler}>
-                <Clear />
-              </IconButton>
-            )}
-            {onEditHandler && (
-              <IconButton onClick={onEditHandler}>
-                <Edit />
-              </IconButton>
-            )}
+            <Grid container direction='column-reverse'>
+              {onEditHandler && (
+                <IconButton onClick={onEditHandler}>
+                  <Edit fontSize='small' />
+                </IconButton>
+              )}
+              {onDeleteHandler && (
+                <IconButton onClick={onDeleteHandler}>
+                  <Clear fontSize='small' />
+                </IconButton>
+              )}
+            </Grid>
           </>
         }
         title={title}
