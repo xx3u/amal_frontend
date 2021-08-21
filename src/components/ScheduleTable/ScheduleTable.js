@@ -8,8 +8,8 @@ import LessonCard from './LessonCard/LessonCard';
 import AddCard from './AddCard/AddCard';
 import UpdateTeacher from '../../containers/Forms/Lesson/UpdateTeacher';
 const ScheduleTable = ({
-  startTime,
-  onClickHandler,
+  lessonsParams,
+  addLessonHandler,
   lessons,
   deleteLessonHandler,
   updateTeacherHandler,
@@ -91,7 +91,7 @@ const ScheduleTable = ({
     return copyLessons;
   };
 
-  const initWeekLessons = setCellsTimes(times, days, {}, startTime, true);
+  const initWeekLessons = setCellsTimes(times, days, {}, lessonsParams.startTime, true);
 
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
@@ -111,17 +111,14 @@ const ScheduleTable = ({
         />
       ) : (
         <AddCard
-          allowed={!row.teacherBussy}
-          onClickHandler={
-            onClickHandler &&
-            (() => {
-              onClickHandler(row.startTime, row.endTime);
-            })
-          }
+          disabled={row.teacherBussy || !addLessonHandler}
+          onClickHandler={() => {
+            addLessonHandler(row.startTime, row.endTime);
+          }}
         />
       );
     },
-    [weekLessons]
+    [addLessonHandler, weekLessons]
   );
 
   const columns = useMemo(
