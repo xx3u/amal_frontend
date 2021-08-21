@@ -82,13 +82,12 @@ const LessonsContainer = () => {
         </Grid>
       </Grid>
       <ScheduleTable
-        teachersLessons={teachersLessons}
-        selectedParams={lessonsParams}
+        bussyLessons={teachersLessons}
+        startTime={lessonsParams.startTime}
         onClickHandler={onClickHandler}
         lessons={lessons}
         deleteLessonHandler={deleteLessonHandler}
         updateTeacherHandler={updateTeacherHandler}
-        isVisibleButtons={true}
       />
       <InfoModal
         open={!!updateTeacherError}
