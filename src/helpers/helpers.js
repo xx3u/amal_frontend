@@ -1,9 +1,8 @@
-export const getWeekdates = (date) => {
-  const first = date.getDate() - date.getDay() + 1;
-  const last = first + 6;
+import { startOfWeek, lastDayOfWeek } from 'date-fns';
 
-  const firstDate = new Date(date.setDate(first));
-  const lastDate = new Date(date.setDate(last));
+export const getWeekdates = (date) => {
+  const firstDate = startOfWeek(date, { weekStartsOn: 1 });
+  const lastDate = lastDayOfWeek(date, { weekStartsOn: 1 });
 
   const firstday = new Date(Date.UTC(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate(), 0, 0, 0));
 

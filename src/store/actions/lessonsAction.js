@@ -1,4 +1,5 @@
 import axios from '../../axiosApi';
+
 import {
   ADD_NEW_LESSON_FAILURE,
   ADD_NEW_LESSON_REQUEST,
@@ -6,9 +7,14 @@ import {
   FETCH_LESSONS_FAILURE,
   FETCH_LESSONS_REQUEST,
   FETCH_LESSONS_SUCCESS,
+  DELETE_LESSON_FAILURE,
+  DELETE_LESSON_REQUEST,
+  DELETE_LESSON_SUCCESS,
   CREATE_LESSONS_REQUEST,
   CREATE_LESSONS_SUCCESS,
   CREATE_LESSONS_FAILURE,
+  SET_LESSON_PARAMS,
+  SET_INIT_LESSONS,
 } from '../actionTypes';
 
 const fetchLessonsRequest = () => {
@@ -59,6 +65,30 @@ export const addNewLesson = (lesson) => {
   };
 };
 
+const deleteLessonRequest = () => {
+  return { type: DELETE_LESSON_REQUEST };
+};
+
+const deleteLessonSuccess = (message) => {
+  return { type: DELETE_LESSON_SUCCESS, message };
+};
+
+const deleteLessonFailure = (error) => {
+  return { type: DELETE_LESSON_FAILURE, error };
+};
+
+export const deleteLesson = (lessonId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(deleteLessonRequest());
+      const resp = await axios.delete(`/lessons/${lessonId}`);
+      dispatch(deleteLessonSuccess(resp.data));
+    } catch (error) {
+      dispatch(deleteLessonFailure(error));
+    }
+  };
+};
+
 const createLessonsRequest = () => ({ type: CREATE_LESSONS_REQUEST });
 const createLessonsSuccess = (data) => ({ type: CREATE_LESSONS_SUCCESS, data });
 const createLessonsFailure = (error) => ({
@@ -74,4 +104,12 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
   } catch (error) {
     dispatch(createLessonsFailure(error));
   }
+};
+
+export const setLessonsParams = (payload) => {
+  return { type: SET_LESSON_PARAMS, payload };
+};
+
+export const setInitLessons = () => {
+  return { type: SET_INIT_LESSONS };
 };
