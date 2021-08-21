@@ -18,12 +18,12 @@ const useStyles = makeStyles(() => ({
     width: '100%',
   },
 }));
-const EmptyCard = ({ allowed, onClickHandler }) => {
+const EmptyCard = ({ disabled = true, onClickHandler }) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.root} variant='outlined'>
-      {allowed && (
+      {!disabled && (
         <CardActions className={classes.cardActions}>
           <>
             <IconButton onClick={onClickHandler}>
