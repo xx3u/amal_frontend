@@ -4,13 +4,16 @@ import Card from '@material-ui/core/Card';
 import { CardHeader, Grid, IconButton } from '@material-ui/core';
 import { Clear, Edit } from '@material-ui/icons';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
   root: {
     minWidth: 200,
     minHeight: 100,
     height: '100%',
   },
-});
+  card: {
+    alignItems: 'stretch',
+  },
+}));
 
 const CustomCard = ({ title, subheader, onDeleteHandler, onEditHandler }) => {
   const classes = useStyles();
@@ -18,6 +21,7 @@ const CustomCard = ({ title, subheader, onDeleteHandler, onEditHandler }) => {
   return (
     <Card className={classes.root} variant='outlined'>
       <CardHeader
+        className={classes.card}
         action={
           <>
             <Grid container direction='column-reverse'>
