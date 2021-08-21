@@ -184,7 +184,7 @@ const ScheduleTable = ({
         }
       });
     });
-  }, [lessons]);
+  }, [lessons, bussyLessons]);
 
   useEffect(() => {
     bussyLessons &&
