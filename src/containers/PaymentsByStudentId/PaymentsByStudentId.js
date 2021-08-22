@@ -33,13 +33,15 @@ const PaymentsByStudentId = ({ id }) => {
   ];
 
   return (
-    <Grid item xs={12}>
-      <Typography
-        variant='h5'
-        paragraph={true}
-      >{`Детализация оплат по студенту: ${student.firstName} ${student.lastName}`}</Typography>
-      <SimpleTable columns={columns} rows={changedPayments} />
-    </Grid>
+    student && (
+      <Grid item xs={12}>
+        <Typography
+          variant='h5'
+          paragraph={true}
+        >{`Детализация оплат по студенту: ${student.firstName} ${student.lastName}`}</Typography>
+        <SimpleTable columns={columns} rows={changedPayments} />
+      </Grid>
+    )
   );
 };
 
