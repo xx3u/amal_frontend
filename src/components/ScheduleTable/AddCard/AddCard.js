@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     width: '100%',
   },
 }));
-const EmptyCard = ({ disabled = true, onClickHandler }) => {
+const AddCard = ({ disabled = true, onClickHandler }) => {
   const classes = useStyles();
 
   return (
@@ -36,4 +36,4 @@ const EmptyCard = ({ disabled = true, onClickHandler }) => {
   );
 };
 
-export default EmptyCard;
+export default AddCard;
