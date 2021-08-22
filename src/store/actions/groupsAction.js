@@ -3,12 +3,16 @@ import {
   ADD_NEW_GROUP_FAILURE,
   ADD_NEW_GROUP_REQUEST,
   ADD_NEW_GROUP_SUCCESS,
+  CLEAR_UPDATE_TEACHER_ERROR,
   FETCH_GROUPS_FAILURE,
   FETCH_GROUPS_REQUEST,
   FETCH_GROUPS_SUCCESS,
   UPDATE_GROUP_FAILURE,
   UPDATE_GROUP_REQUEST,
   UPDATE_GROUP_SUCCESS,
+  UPDATE_TEACHER_IN_LESSONS_FAILURE,
+  UPDATE_TEACHER_IN_LESSONS_REQUEST,
+  UPDATE_TEACHER_IN_LESSONS_SUCCESS,
 } from '../actionTypes';
 import { fetchStudents } from './studentsAction';
 import { NotificationManager } from 'react-notifications';
@@ -77,4 +81,32 @@ export const fetchUpdateGroup = (payload) => async (dispatch) => {
     dispatch(updateGroupFailure(error));
     NotificationManager.error(error.message, 'Put error!', 5000);
   }
+};
+
+const updateTeacherInLessonsRequest = () => {
+  return { type: UPDATE_TEACHER_IN_LESSONS_REQUEST };
+};
+const updateTeacherInLessonsSuccess = () => {
+  return { type: UPDATE_TEACHER_IN_LESSONS_SUCCESS };
+};
+const updateTeacherInLessonsFailure = (error) => {
+  return { type: UPDATE_TEACHER_IN_LESSONS_FAILURE, error };
+};
+
+export const fetchUpdateTeacherInLessons = (groupId, data) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateTeacherInLessonsRequest());
+      await axios.put(`/groups/${groupId}/lessons/edit`, data);
+      dispatch(updateTeacherInLessonsSuccess());
+    } catch (error) {
+      if (error.response) {
+        dispatch(updateTeacherInLessonsFailure(error.response.data));
+      } else dispatch(updateTeacherInLessonsFailure(error));
+    }
+  };
+};
+
+export const clearUpdateTeacherError = () => {
+  return { type: CLEAR_UPDATE_TEACHER_ERROR };
 };

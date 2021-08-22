@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import StudentForm from './StudentForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentById, updateStudent } from '../../../store/actions/studentsAction';
+import { useParams } from 'react-router';
 
-const EditStudentForm = (props) => {
+const EditStudentForm = () => {
   const dispatch = useDispatch();
-  const id = props.match.url.split('/')[3];
+  const { id } = useParams();
   const studentById = useSelector((state) => state.students.student);
 
   useEffect(() => {
@@ -15,7 +16,6 @@ const EditStudentForm = (props) => {
   const editStudent = (id, student) => {
     dispatch(updateStudent(id, student));
   };
-
   return <StudentForm title={'Редактировать ученика'} selectedStudent={studentById} id={id} submitData={editStudent} />;
 };
 
