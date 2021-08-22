@@ -2,9 +2,16 @@ import axios from 'axios';
 import config from './config';
 import store from './store/configureStore';
 
-const instance = axios.create({
-  baseURL: config.BACKEND_BASE_URL || 'http://localhost:8080',
-});
+let instance;
+if (config.NODE_ENV === 'production') {
+  instance = axios.create({
+    baseURL: config.BACKEND_BASE_URL,
+  });
+} else {
+  instance = axios.create({
+    baseURL: 'http://localhost:8080',
+  });
+}
 
 instance.interceptors.request.use((req) => {
   const users = store.getState().users;
