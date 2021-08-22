@@ -79,7 +79,7 @@ const Header = () => {
                 </Menu>
               </>
             ) : (
-              <Button component={Link} to='/admin-app/teachers/lessons' onClick={handleClick} color='inherit'>
+              <Button component={Link} to='/admin-app/teachers/lessons' color='inherit'>
                 Расписание
               </Button>
             )}
