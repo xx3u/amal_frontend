@@ -28,6 +28,7 @@ const Header = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useSelector((state) => state.users.user);
+  const isAdminRole = user && user.role === 'admin';
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,30 +51,38 @@ const Header = () => {
               AMAL LOGO
             </Typography>
           </Box>
-          <Box flexGrow={1}>
-            <Button component={Link} to='/admin-app/students' color='inherit' className={classes.btn}>
-              Студенты
-            </Button>
-            <Button component={Link} to='/admin-app/groups' color='inherit' className={classes.btn}>
-              Группы
-            </Button>
-            <Button component={Link} to='/admin-app/payments' color='inherit' className={classes.btn}>
-              Платежи
-            </Button>
-            <Button component={Link} to='/admin-app/teachers' color='inherit' className={classes.btn}>
-              Учителя
-            </Button>
-            <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick} color='inherit'>
-              Расписание
-            </Button>
-            <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-              <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
-                Раписание по Группам
-              </MenuItem>
-              <MenuItem component={Link} to='/admin-app/teachers/lessons' onClick={handleClose}>
-                Расписание по Учителям
-              </MenuItem>
-            </Menu>
+          <Box flexGrow={1} display={user ? 'block' : 'none'}>
+            {isAdminRole ? (
+              <>
+                <Button component={Link} to='/admin-app/students' color='inherit' className={classes.btn}>
+                  Студенты
+                </Button>
+                <Button component={Link} to='/admin-app/groups' color='inherit' className={classes.btn}>
+                  Группы
+                </Button>
+                <Button component={Link} to='/admin-app/payments' color='inherit' className={classes.btn}>
+                  Платежи
+                </Button>
+                <Button component={Link} to='/admin-app/teachers' color='inherit' className={classes.btn}>
+                  Учителя
+                </Button>
+                <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick} color='inherit'>
+                  Расписание
+                </Button>
+                <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                  <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
+                    Раписание по Группам
+                  </MenuItem>
+                  <MenuItem component={Link} to='/admin-app/teachers/lessons' onClick={handleClose}>
+                    Расписание по Учителям
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <Button component={Link} to='/admin-app/teachers/lessons' onClick={handleClick} color='inherit'>
+                Расписание
+              </Button>
+            )}
           </Box>
           <Box>
             {user ? (
