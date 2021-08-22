@@ -47,7 +47,7 @@ const UserForm = ({ title, onSubmit, children, buttonText, link, linkText, error
         <Typography component='h1' variant='h5'>
           {title}
         </Typography>
-        {error && (
+        {error?.response && (
           <Alert severity='error' className={classes.alert}>
             <AlertTitle>Error</AlertTitle>
             {error.response.data.details ? error.response.data.details[0].message : error.response.data.error}
