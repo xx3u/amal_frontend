@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { startOfWeek, lastDayOfWeek } from 'date-fns';
 
 export const getWeekdates = (date) => {
@@ -13,16 +12,4 @@ export const getWeekdates = (date) => {
     firstday,
     lastday,
   };
-};
-
-export const getUnauthorizedError = () => {
-  return useSelector(
-    (state) =>
-      state.students.error === 'Unauthorized' ||
-      state.groups.error === 'Unauthorized' ||
-      state.lessons.error === 'Unauthorized' ||
-      state.streams.error === 'Unauthorized' ||
-      state.subjects.error === 'Unauthorized' ||
-      state.teachers.error === 'Unauthorized'
-  );
 };
