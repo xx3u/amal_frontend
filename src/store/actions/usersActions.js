@@ -39,7 +39,7 @@ export const loginUser = (userData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post('/users/login', userData);
-      const user = response.data;
+      const user = response?.data;
       dispatch(loginUserSuccess(user));
       if (user && user.role === 'teacher') {
         dispatch(push('/admin-app/teachers/lessons'));
