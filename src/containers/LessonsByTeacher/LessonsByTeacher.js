@@ -96,6 +96,7 @@ const LessonsByTeacher = () => {
         lessons={teachersLessons}
         onClickHandler={onClickHandler}
         deleteLessonHandler={deleteLessonHandler}
+        isVisibleButtons={false}
       />
     </>
   );
