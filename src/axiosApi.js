@@ -1,8 +1,9 @@
 import axios from 'axios';
+import config from './config';
 import store from './store/configureStore';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: config.BACKEND_BASE_URL || 'http://localhost:8080',
 });
 
 instance.interceptors.request.use((req) => {
