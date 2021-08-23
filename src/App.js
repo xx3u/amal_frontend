@@ -2,11 +2,8 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
-<<<<<<< HEAD
 import { NotificationContainer } from 'react-notifications';
-=======
 import { Redirect } from 'react-router-dom';
->>>>>>> 206bfd7b93eb6826727bc7443b566f8b5ba30cab
 import Layout from './components/Layout/Layout';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
 import GroupsPage from './pages/GroupsPage/GroupsPage';
