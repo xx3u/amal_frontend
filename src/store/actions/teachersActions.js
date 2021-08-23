@@ -22,6 +22,7 @@ import {
   GET_TEACHERS_LESSONS_SUCCESS,
   GET_TEACHERS_LESSONS_FAILURE,
   SET_TEACHERS_BY_SUBJECT,
+  SET_INIT_TEACHER_LESSONS,
 } from '../actionTypes';
 
 const fetchTeachersRequest = () => {
@@ -184,3 +185,7 @@ export const getTeachersLessons = (teacherId, startTime, endTime) => {
     }
   };
 };
+
+export const setInitTeacherLesson = () => ({
+  type: SET_INIT_TEACHER_LESSONS,
+});
