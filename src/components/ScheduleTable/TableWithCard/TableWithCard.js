@@ -1,12 +1,25 @@
 import React from 'react';
-import { makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
+import {
+  makeStyles,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TableFooter,
+} from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
     height: '100%',
     minWidth: 650,
   },
-});
+  tableFooter: {
+    height: theme.spacing(3),
+  },
+}));
 
 const TableWithCard = ({ rows, columns }) => {
   const classes = useStyles();
@@ -35,6 +48,7 @@ const TableWithCard = ({ rows, columns }) => {
               ))
             : null}
         </TableBody>
+        <TableFooter className={classes.tableFooter} />
       </Table>
     </TableContainer>
   );
