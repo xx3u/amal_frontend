@@ -8,6 +8,7 @@ import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 import CreateLessons from '../Forms/Lesson/CreateLessons';
 import InfoModal from '../../components/UI/InfoModal/InfoModal';
 import LessonsSelectors from './LessonsSelectors';
+import { getTeachersLessons } from '../../store/actions/teachersActions';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -40,6 +41,14 @@ const LessonsContainer = () => {
         lessonsParams.endTime.toISOString()
       )
     );
+    lessonsParams.teacherId &&
+      dispatch(
+        getTeachersLessons(
+          lessonsParams.teacherId,
+          lessonsParams.startTime.toISOString(),
+          lessonsParams.endTime.toISOString()
+        )
+      );
   };
   const deleteLessonHandler = async (lessonId) => {
     await dispatch(deleteLesson(lessonId));
@@ -50,6 +59,14 @@ const LessonsContainer = () => {
         lessonsParams.endTime.toISOString()
       )
     );
+    lessonsParams.teacherId &&
+      dispatch(
+        getTeachersLessons(
+          lessonsParams.teacherId,
+          lessonsParams.startTime.toISOString(),
+          lessonsParams.endTime.toISOString()
+        )
+      );
   };
 
   const updateTeacherHandler = async (data) => {
@@ -61,6 +78,14 @@ const LessonsContainer = () => {
         lessonsParams.endTime.toISOString()
       )
     );
+    lessonsParams.teacherId &&
+      dispatch(
+        getTeachersLessons(
+          lessonsParams.teacherId,
+          lessonsParams.startTime.toISOString(),
+          lessonsParams.endTime.toISOString()
+        )
+      );
   };
 
   const closeInfoModalHandler = () => {

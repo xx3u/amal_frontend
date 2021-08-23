@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
@@ -94,45 +94,39 @@ const ScheduleTable = ({
 
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
-  const renderCell = useCallback(
-    (row) => {
-      return row.id ? (
-        <LessonCard
-          id={row.id || ''}
-          title={row.group || row.subject}
-          subheader={row.teacher || row.subject}
-          onDeleteHandler={deleteLessonHandler && row.id && ((e) => openDeleteModal(e, row.id))}
-          onEditHandler={
-            updateTeacherHandler &&
-            row.id &&
-            ((e) => openEditFormHandler(e, row.teacherId, row.teacher, row.startTime, row.subjectId))
-          }
-        />
-      ) : (
-        <AddCard
-          disabled={row.teacherBussy || !addLessonHandler}
-          onClickHandler={() => {
-            addLessonHandler(row.startTime, row.endTime);
-          }}
-        />
-      );
-    },
-    [addLessonHandler, weekLessons]
-  );
+  const renderCell = (row) => {
+    return row.id ? (
+      <LessonCard
+        id={row.id || ''}
+        title={row.group || row.subject}
+        subheader={row.teacher || row.subject}
+        onDeleteHandler={deleteLessonHandler && row.id && ((e) => openDeleteModal(e, row.id))}
+        onEditHandler={
+          updateTeacherHandler &&
+          row.id &&
+          ((e) => openEditFormHandler(e, row.teacherId, row.teacher, row.startTime, row.subjectId))
+        }
+      />
+    ) : (
+      <AddCard
+        disabled={row.teacherBussy || !addLessonHandler}
+        onClickHandler={() => {
+          addLessonHandler(row.startTime, row.endTime);
+        }}
+      />
+    );
+  };
 
-  const columns = useMemo(
-    () => [
-      { id: 'slot', headerName: 'Время', width: 100 },
-      { id: 'mon', headerName: 'Пн', width: 50, renderCell },
-      { id: 'tue', headerName: 'Вт', width: 50, renderCell },
-      { id: 'wed', headerName: 'Ср', width: 50, renderCell },
-      { id: 'thu', headerName: 'Чт', width: 50, renderCell },
-      { id: 'fri', headerName: 'Пт', width: 50, renderCell },
-      { id: 'sat', headerName: 'Сб', width: 50, renderCell },
-      { id: 'sun', headerName: 'Вс', width: 50, renderCell },
-    ],
-    [renderCell]
-  );
+  const columns = [
+    { id: 'slot', headerName: 'Время', width: 100 },
+    { id: 'mon', headerName: 'Пн', width: 50, renderCell },
+    { id: 'tue', headerName: 'Вт', width: 50, renderCell },
+    { id: 'wed', headerName: 'Ср', width: 50, renderCell },
+    { id: 'thu', headerName: 'Чт', width: 50, renderCell },
+    { id: 'fri', headerName: 'Пт', width: 50, renderCell },
+    { id: 'sat', headerName: 'Сб', width: 50, renderCell },
+    { id: 'sun', headerName: 'Вс', width: 50, renderCell },
+  ];
 
   const getLesson = (startTime) => {
     if (startTime >= 9 && startTime < 10) {
@@ -212,13 +206,9 @@ const ScheduleTable = ({
       });
   }, [lessons, bussyLessons]);
 
-  const rows = useMemo(
-    () =>
-      Object.keys(weekLessons).map((key) => {
-        return weekLessons[key];
-      }),
-    [weekLessons]
-  );
+  const rows = Object.keys(weekLessons).map((key) => {
+    return weekLessons[key];
+  });
 
   return (
     <>
