@@ -65,6 +65,9 @@ const Header = () => {
             <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick} color='inherit'>
               Расписание
             </Button>
+            <Button component={Link} to='/admin-app/groups/attendance' color='inherit' className={classes.btn}>
+              Журнал посещений
+            </Button>
             <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
               <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
                 Раписание по Группам
