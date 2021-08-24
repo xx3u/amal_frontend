@@ -5,8 +5,7 @@ const InfoModal = ({ open, handleClose, title, content }) => {
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
       <DialogTitle style={{ cursor: 'move' }} id='draggable-dialog-title'>
-        {' '}
-        {title}{' '}
+        {title}
       </DialogTitle>
       <DialogContent>
         <DialogContentText>{content}</DialogContentText>

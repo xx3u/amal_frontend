@@ -20,6 +20,7 @@ import {
   GET_TEACHERS_LESSONS_FAILURE,
   GET_TEACHERS_LESSONS_SUCCESS,
   SET_TEACHERS_BY_SUBJECT,
+  SET_INIT_TEACHER_LESSONS,
 } from '../actionTypes';
 
 const initState = {
@@ -75,6 +76,8 @@ const reducer = (state = initState, action) => {
       return { ...state, loading: false, teachersLessons: action.data, error: null };
     case GET_TEACHERS_LESSONS_FAILURE:
       return { ...state, loading: false, error: action.error };
+    case SET_INIT_TEACHER_LESSONS:
+      return { ...state, teachersLessons: [] };
     default:
       return state;
   }

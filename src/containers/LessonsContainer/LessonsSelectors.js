@@ -7,7 +7,12 @@ import DateFnsUtils from '@date-io/date-fns';
 import { ru } from 'date-fns/locale';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
-import { getTeachersBySubject, setTeachersBySubject } from '../../store/actions/teachersActions';
+import {
+  getTeachersBySubject,
+  getTeachersLessons,
+  setInitTeacherLesson,
+  setTeachersBySubject,
+} from '../../store/actions/teachersActions';
 import { fetchLessonsByGroupId, setInitLessons, setLessonsParams } from '../../store/actions/lessonsAction';
 import { getWeekdates } from '../../helpers/helpers';
 
@@ -45,12 +50,26 @@ const LessonsSelectors = () => {
       selectedGroup?.id &&
       dispatch(
         fetchLessonsByGroupId(
-          selectedGroup?.id,
+          selectedGroup.id,
           getWeekdates(selectedDate).firstday.toISOString(),
           getWeekdates(selectedDate).lastday.toISOString()
         )
       );
   }, [selectedGroup, selectedDate, dispatch]);
+  useEffect(() => {
+    dispatch(setInitTeacherLesson());
+    selectedTeacher &&
+      dispatch(
+        getTeachersLessons(
+          selectedTeacher.id,
+          getWeekdates(selectedDate).firstday.toISOString(),
+          getWeekdates(selectedDate).lastday.toISOString()
+        )
+      );
+    return () => {
+      dispatch(setInitTeacherLesson());
+    };
+  }, [selectedTeacher, selectedDate]);
 
   useEffect(() => {
     dispatch(

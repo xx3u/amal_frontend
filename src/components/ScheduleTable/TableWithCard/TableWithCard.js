@@ -1,14 +1,27 @@
 import React from 'react';
-import { makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
-import CustomCard from '../CustomCard/CustomCard';
+import {
+  makeStyles,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TableFooter,
+} from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   table: {
+    height: '100%',
     minWidth: 650,
   },
-});
+  tableFooter: {
+    height: theme.spacing(3),
+  },
+}));
 
-const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler, onEditHandler, isVisibleButtons }) => {
+const TableWithCard = ({ rows, columns }) => {
   const classes = useStyles();
   return (
     <TableContainer component={Paper}>
@@ -16,7 +29,7 @@ const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler, onEditH
         <TableHead>
           <TableRow>
             {columns.map((col) => {
-              return <TableCell key={col.field}>{col.headerName}</TableCell>;
+              return <TableCell key={col.id}>{col.headerName}</TableCell>;
             })}
           </TableRow>
         </TableHead>
@@ -24,40 +37,18 @@ const TableWithCard = ({ rows, columns, onClickHandler, onDeleteHandler, onEditH
           {rows
             ? rows.map((row, index) => (
                 <TableRow key={index}>
-                  {columns.map(({ field }) => {
-                    if (typeof row[field] === 'string') {
-                      return <TableCell key={`${index}${field}`}>{row[field]}</TableCell>;
-                    } else {
-                      return (
-                        <TableCell key={`${index}${field}`}>
-                          <CustomCard
-                            isVisibleButtons={isVisibleButtons}
-                            id={row[field] ? row[field].id : ''}
-                            subject={row[field] ? row[field].subject : ''}
-                            teacher={row[field] ? row[field].teacher : ''}
-                            group={row[field] ? row[field].group : ''}
-                            onClickHandler={() => {
-                              onClickHandler(row[field].startTime, row[field].endTime);
-                            }}
-                            onDeleteHandler={(e) => onDeleteHandler(e, row[field] ? row[field].id : '')}
-                            onEditHandler={(e) =>
-                              onEditHandler(
-                                e,
-                                row[field].teacherId,
-                                row[field].teacher,
-                                row[field].startTime,
-                                row[field].subjectId
-                              )
-                            }
-                          />
-                        </TableCell>
-                      );
-                    }
+                  {columns.map((field) => {
+                    return (
+                      <TableCell key={`${index}${field.id}`}>
+                        {field.renderCell ? field.renderCell(row[field.id]) : row[field.id].toString()}
+                      </TableCell>
+                    );
                   })}
                 </TableRow>
               ))
             : null}
         </TableBody>
+        <TableFooter className={classes.tableFooter} />
       </Table>
     </TableContainer>
   );
