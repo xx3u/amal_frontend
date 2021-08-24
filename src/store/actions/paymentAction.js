@@ -54,8 +54,13 @@ export const addNewPayment = (newPayment) => async (dispatch) => {
     dispatch(addNewPaymentSuccess(response.data));
     dispatch(fetchStudents());
   } catch (error) {
-    dispatch(addNewPaymentFailure(error));
-    NotificationManager.error(error.message, 'Post error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(addNewPaymentFailure(error.response));
+      NotificationManager.error(error.response.data, 'Post error!', 5000);
+    } else {
+      dispatch(addNewPaymentFailure(error));
+      NotificationManager.error(error.message, 'Post error!', 5000);
+    }
   }
 };
 
@@ -69,8 +74,13 @@ export const getPaymentById = (id) => async (dispatch) => {
     const response = await axios.get(`/payments/${id}`);
     dispatch(getPaymentByIdSuccess(response.data));
   } catch (error) {
-    dispatch(getPaymentByIdFailure(error));
-    NotificationManager.error(error.message, 'Fetch error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(getPaymentByIdFailure(error.response));
+      NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
+    } else {
+      dispatch(getPaymentByIdFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
+    }
   }
 };
 
@@ -86,8 +96,13 @@ export const updatePayment = (id, payment) => async (dispatch) => {
     dispatch(fetchStudents());
     dispatch(push('/admin-app/payments'));
   } catch (error) {
-    dispatch(updatePaymentFailure(error));
-    NotificationManager.error(error.message, 'Put error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(updatePaymentFailure(error.response));
+      NotificationManager.error(error.response.data, 'Put error!', 5000);
+    } else {
+      dispatch(updatePaymentFailure(error));
+      NotificationManager.error(error.message, 'Put error!', 5000);
+    }
   }
 };
 
