@@ -23,6 +23,8 @@ const LessonsByTeacher = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const teachersLessons = useSelector((state) => state.teachers.teachersLessons);
+  const user = useSelector((state) => state.users.user);
+  const teacherId = user?.teacher && user.teacher.id;
 
   useEffect(() => {
     dispatch(fetchTeachers());
@@ -33,7 +35,7 @@ const LessonsByTeacher = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [lesson, setLesson] = useState({
-    teacherId: '',
+    teacherId: user?.role === 'teacher' ? teacherId : '',
     startTime: '',
     endTime: '',
   });
