@@ -70,8 +70,13 @@ export const addNewStudent = (newStudent) => async (dispatch) => {
     await axios.post('/students', newStudent).then((response) => dispatch(addNewStudentSuccess(response.data)));
     dispatch(push('/admin-app/students'));
   } catch (error) {
-    dispatch(addNewStudentFailure(error));
-    NotificationManager.error(error.message, 'Post error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(addNewStudentFailure(error.response));
+      NotificationManager.error(error.response.data, 'Post error!', 5000);
+    } else {
+      dispatch(addNewStudentFailure(error));
+      NotificationManager.error(error.message, 'Post error!', 5000);
+    }
   }
 };
 
@@ -84,8 +89,13 @@ export const getStudentById = (id) => async (dispatch) => {
   try {
     await axios.get(`/students/${id}`).then((response) => dispatch(getStudentByIdSuccess(response.data)));
   } catch (error) {
-    dispatch(getStudentByIdFailure(error));
-    NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(getStudentByIdFailure(error.response.data));
+      NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
+    } else {
+      dispatch(getStudentByIdFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
+    }
   }
 };
 
@@ -101,7 +111,12 @@ export const updateStudent = (id, updatedStudent) => async (dispatch) => {
       .then((response) => dispatch(updateStudentSuccess(response.data)));
     dispatch(push('/admin-app/students'));
   } catch (error) {
-    dispatch(updateStudentFailure(error));
-    NotificationManager.error(error.response.data.message, 'Put error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(updateStudentFailure(error));
+      NotificationManager.error(error.response.data, 'Edit error!', 5000);
+    } else {
+      dispatch(updateStudentFailure(error));
+      NotificationManager.error(error.message, 'Edit error!', 5000);
+    }
   }
 };

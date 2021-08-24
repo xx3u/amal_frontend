@@ -36,8 +36,8 @@ export const fetchGroups = () => async (dispatch) => {
     dispatch(fetchGroupsSuccess(response.data));
   } catch (error) {
     if (error.response && error.response.data) {
-      dispatch(fetchGroupsFailure(error.response.data));
-      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
+      dispatch(fetchGroupsFailure(error.response));
+      NotificationManager.error(error.response.data, 'Fetch error!', 5000);
     } else {
       dispatch(fetchGroupsFailure(error));
       NotificationManager.error(error.message, 'Fetch error!', 5000);
@@ -62,8 +62,13 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
     }
     dispatch(addNewGroupSuccess(response.data));
   } catch (error) {
-    dispatch(addNewGroupFailure(error));
-    NotificationManager.error(error.message, 'Post error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(addNewGroupFailure(error.response));
+      NotificationManager.error(error.response.data, 'Post error!', 5000);
+    } else {
+      dispatch(addNewGroupFailure(error));
+      NotificationManager.error(error.message, 'Post error!', 5000);
+    }
   }
 };
 
@@ -78,8 +83,13 @@ export const fetchUpdateGroup = (payload) => async (dispatch) => {
     dispatch(updateGroupSuccess(response.data));
     dispatch(fetchGroups());
   } catch (error) {
-    dispatch(updateGroupFailure(error));
-    NotificationManager.error(error.message, 'Put error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(updateGroupFailure(error.response));
+      NotificationManager.error(error.response.data, 'Edit error!', 5000);
+    } else {
+      dispatch(updateGroupFailure(error));
+      NotificationManager.error(error.message, 'Edit error!', 5000);
+    }
   }
 };
 
