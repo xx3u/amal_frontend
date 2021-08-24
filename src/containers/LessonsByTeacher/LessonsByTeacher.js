@@ -33,7 +33,6 @@ const LessonsByTeacher = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [lesson, setLesson] = useState({
-    subjectId: '',
     teacherId: '',
     startTime: '',
     endTime: '',
