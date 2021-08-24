@@ -65,9 +65,15 @@ const LessonsByTeacher = () => {
 
   return (
     <>
-      <Typography variant='h5' paragraph={true} className={classes.title}>
-        Расписание по Учителям
-      </Typography>
+      {user?.role === 'admin' ? (
+        <Typography variant='h5' paragraph={true} className={classes.title}>
+          Расписание по Учителям
+        </Typography>
+      ) : (
+        <Typography variant='h5' paragraph={true} className={classes.title}>
+          {user?.teacher && `${user.teacher.firstName} ${user.teacher.lastName}`}, ваше расписание:
+        </Typography>
+      )}
       <Grid container spacing={3} className={classes.container}>
         {user?.role === 'admin' ? (
           <Grid item xs={3}>
