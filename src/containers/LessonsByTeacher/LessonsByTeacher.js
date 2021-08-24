@@ -36,8 +36,8 @@ const LessonsByTeacher = () => {
 
   const [lesson, setLesson] = useState({
     teacherId: user?.role === 'teacher' ? teacherId : '',
-    startTime: '',
-    endTime: '',
+    startTime: getWeekdates(new Date()).firstday,
+    endTime: getWeekdates(new Date()).lastday,
   });
 
   const deleteLessonHandler = async (lessonId) => {
