@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
   },
   title: {
-    margin: 20,
+    marginTop: 20,
   },
 }));
 
