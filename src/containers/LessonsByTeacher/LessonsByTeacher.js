@@ -69,20 +69,22 @@ const LessonsByTeacher = () => {
         Расписание по Учителям
       </Typography>
       <Grid container spacing={3} className={classes.container}>
-        <Grid item xs={3}>
-          <Autocomplete
-            id='teachers-lessons'
-            className={classes.autoComplTeacher}
-            options={teachers}
-            getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
-            onChange={(event, value) => setLesson((state) => ({ ...state, teacherId: value?.id }))}
-            noOptionsText={'выберите сначала предмета'}
-            style={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
-            )}
-          />
-        </Grid>
+        {user?.role === 'admin' ? (
+          <Grid item xs={3}>
+            <Autocomplete
+              id='teachers-lessons'
+              className={classes.autoComplTeacher}
+              options={teachers}
+              getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
+              onChange={(event, value) => setLesson((state) => ({ ...state, teacherId: value?.id }))}
+              noOptionsText={'выберите сначала предмета'}
+              style={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
+              )}
+            />
+          </Grid>
+        ) : null}
         <Grid item xs={3}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ru}>
             <Box className={classes.dateBox}>
