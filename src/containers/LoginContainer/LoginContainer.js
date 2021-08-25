@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser } from '../../store/actions/usersActions';
+import { loginUser, logoutUser } from '../../store/actions/usersActions';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import UserForm from '../../components/UserForm/UserForm';
 
@@ -25,6 +25,10 @@ const Login = () => {
     e.preventDefault();
     await dispatch(loginUser({ ...state }));
   };
+
+  useEffect(() => {
+    dispatch(logoutUser());
+  }, [dispatch]);
 
   return (
     <UserForm
