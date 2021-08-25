@@ -46,11 +46,11 @@ const Header = () => {
     <AppBar position='static'>
       <Toolbar>
         <Grid container justifyContent='space-between' direction='row'>
-          <Box>
+          <Grid item>
             <Typography variant='h6' className={classes.logo}>
               AMAL LOGO
             </Typography>
-          </Box>
+          </Grid>
           <Box flexGrow={1} display={user ? 'block' : 'none'}>
             {isAdminRole ? (
               <>
@@ -85,7 +85,7 @@ const Header = () => {
             )}
           </Box>
           <Box>
-            {user ? (
+            {user && (
               <>
                 <Button color='inherit' className={classes.menuButton}>
                   Hello, {user.username}
@@ -98,12 +98,6 @@ const Header = () => {
                     Регистрация
                   </Button>
                 ) : null}
-              </>
-            ) : (
-              <>
-                <Button component={Link} to='/login' color='inherit' className={classes.menuButton}>
-                  Войти
-                </Button>
               </>
             )}
           </Box>
