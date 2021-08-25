@@ -31,7 +31,7 @@ const SimpleTable = ({ rows, columns }) => {
                   {columns.map((col) => {
                     return (
                       <TableCell align='center' key={`${row.id}${col.field}`}>
-                        {col.renderCell ? col.renderCell(row[col.field]) : row[col.field]?.toString()}
+                        {col.renderCell ? col.renderCell(row[col.field], row) : row[col.field]?.toString()}
                       </TableCell>
                     );
                   })}
