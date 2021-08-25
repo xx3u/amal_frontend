@@ -37,7 +37,6 @@ const Login = () => {
       button='Войти'
       buttonText='Войти'
       link='/register'
-      linkText='Нет учетной записи? Зарегистрироваться'
       error={error}
     >
       <Grid item xs={12}>
