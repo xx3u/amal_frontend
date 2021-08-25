@@ -74,7 +74,6 @@ const Register = () => {
       title='Регистрация'
       buttonText='Зарегистрироваться'
       link='/login'
-      linkText='У Вас есть аккаунт? Войти'
       error={error}
     >
       <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
