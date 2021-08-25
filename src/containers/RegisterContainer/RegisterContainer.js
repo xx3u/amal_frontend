@@ -69,13 +69,7 @@ const Register = () => {
   }, [state.role]);
 
   return (
-    <UserForm
-      onSubmit={submitFormHandler}
-      title='Регистрация'
-      buttonText='Зарегистрироваться'
-      link='/login'
-      error={error}
-    >
+    <UserForm onSubmit={submitFormHandler} title='Регистрация' buttonText='Зарегистрироваться' error={error}>
       <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
         <Grid item xs={12} className={classes.formItem}>
           <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
