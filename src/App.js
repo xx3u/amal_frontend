@@ -96,7 +96,7 @@ function App() {
           <ProtectedRoute
             isAllowed={user}
             redirectTo={'/login'}
-            path='/admin-app/teachers/lessons'
+            path='/admin-app/lessons/teachers'
             exact
             component={LessonsByTeacher}
           />
