@@ -7,7 +7,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { NavLink } from 'react-router-dom';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserForm = ({ title, onSubmit, children, buttonText, link, linkText, error }) => {
+const UserForm = ({ title, onSubmit, children, buttonText, error }) => {
   const classes = useStyles();
 
   return (
@@ -60,13 +59,6 @@ const UserForm = ({ title, onSubmit, children, buttonText, link, linkText, error
           <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
             {buttonText}
           </Button>
-          <Grid container justifyContent='flex-end'>
-            <Grid item>
-              <NavLink to={link} variant='body2'>
-                {linkText}
-              </NavLink>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>
