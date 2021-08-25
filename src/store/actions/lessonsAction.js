@@ -15,6 +15,9 @@ import {
   CREATE_LESSONS_FAILURE,
   SET_LESSON_PARAMS,
   SET_INIT_LESSONS,
+  ADD_ATTENDANCE_REQUEST,
+  ADD_ATTENDANCE_SUCCESS,
+  ADD_ATTENDANCE_FAILURE,
 } from '../actionTypes';
 
 const fetchLessonsRequest = () => {
@@ -112,4 +115,21 @@ export const setLessonsParams = (payload) => {
 
 export const setInitLessons = () => {
   return { type: SET_INIT_LESSONS };
+};
+
+const addAttendanceRequest = () => ({ type: ADD_ATTENDANCE_REQUEST });
+const addAttendanceSuccess = (data) => ({ type: ADD_ATTENDANCE_SUCCESS, data });
+const addAttendanceFailure = (error) => ({
+  type: ADD_ATTENDANCE_FAILURE,
+  error,
+});
+
+export const addAttendance = (lessonId, studentId) => async (dispatch) => {
+  try {
+    dispatch(addAttendanceRequest());
+    await axios.post(`/lessons/${lessonId}/add-student`, { studentId });
+    dispatch(addAttendanceSuccess());
+  } catch (error) {
+    dispatch(addAttendanceFailure(error));
+  }
 };
