@@ -61,10 +61,9 @@ const LessonsByTeacher = () => {
 
   useEffect(() => {
     return () => {
-      console.log('unmount');
       dispatch(setInitTeacherLesson());
     };
-  }, []);
+  }, [dispatch]);
 
   const autocompleteChangeHandler = (value) => {
     setTeacher(value);
