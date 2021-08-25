@@ -1,22 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import DateFnsUtils from '@date-io/date-fns';
 import { Grid, TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import { useSelector, useDispatch } from 'react-redux';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { endOfMonth, startOfMonth } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import DateFnsUtils from '@date-io/date-fns';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { transformToUTC } from '../../helpers/helpers';
 import { fetchGroups } from '../../store/actions/groupsAction';
+import { fetchLessonsByGroupId, setInitLessons } from '../../store/actions/lessonsAction';
 
 const StudentAttendanceContainer = () => {
   const dispatch = useDispatch();
-  const [selectedGroup, setSelectedGroup] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(transformToUTC(new Date()));
+  const [monthInterval, setMonthInterval] = useState({
+    start: null,
+    end: null,
+  });
 
   const groups = useSelector((state) => state.groups.groups);
+  const students = useSelector((state) => state.groups.groups.students);
+  const lessons = useSelector((state) => state.lessons.lessons);
 
   useEffect(() => {
     dispatch(fetchGroups());
   }, [dispatch]);
+
+  useEffect(() => {
+    setMonthInterval({
+      start: transformToUTC(startOfMonth(selectedDate)),
+      end: transformToUTC(endOfMonth(selectedDate)),
+    });
+  }, [selectedDate]);
+
+  useEffect(() => {
+    dispatch(setInitLessons());
+    selectedDate &&
+      selectedGroup?.id &&
+      dispatch(
+        fetchLessonsByGroupId(selectedGroup.id, monthInterval.start.toISOString(), monthInterval.end.toISOString())
+      );
+  }, [selectedGroup, monthInterval, dispatch]);
 
   return (
     <Grid container item spacing={3}>
@@ -41,7 +66,7 @@ const StudentAttendanceContainer = () => {
             inputVariant='outlined'
             fullWidth
             value={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
+            onChange={(date) => setSelectedDate(transformToUTC(date))}
             format='dd MMM yyyy'
           />
         </Grid>
