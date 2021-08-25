@@ -39,7 +39,7 @@ const Register = () => {
     teacherId: '',
   });
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
 
   const teachers = useSelector((state) => state.teachers.teachers);
   const roles = [
