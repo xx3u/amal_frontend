@@ -26,62 +26,63 @@ const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
 
 function App() {
   const user = useSelector((state) => state.users.user);
+  const isAdminRole = user && user.role === 'admin';
   return (
     <div className='App'>
       <CssBaseline />
       <Layout>
         <Switch>
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path={['/admin-app/students', '/']}
             exact
             component={StudentsPage}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/students/:id/edit'
             exact
             component={EditStudentForm}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/students/add'
             exact
             component={CreateStudentForm}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/students/:id'
             exact
             component={StudentDetailPage}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/lessons'
             exact
             component={LessonsPage}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/groups'
             exact
             component={GroupsPage}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/payments'
             exact
             component={PaymentsPage}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/payments/:id'
             exact
@@ -97,19 +98,19 @@ function App() {
           <ProtectedRoute
             isAllowed={user}
             redirectTo={'/login'}
-            path='/admin-app/teachers/lessons'
+            path='/admin-app/lessons/teachers'
             exact
             component={LessonsByTeacher}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/teachers/:id/edit'
             exact
             component={EditTeacherForm}
           />
           <ProtectedRoute
-            isAllowed={user}
+            isAllowed={user && isAdminRole}
             redirectTo={'/login'}
             path='/admin-app/teachers/add'
             exact
@@ -118,11 +119,11 @@ function App() {
           <ProtectedRoute
             isAllowed={user}
             redirectTo={'/login'}
-            path='/admin-app/groups/attendance'
+            path='/admin-app/attendance'
             exact
             component={studentAttendancePage}
           />
-          <Route path='/register' exact component={Register} />
+          <Route isAllowed={user && isAdminRole} redirectTo={'/login'} path='/register' exact component={Register} />
           <Route path='/login' exact component={Login} />
         </Switch>
       </Layout>
