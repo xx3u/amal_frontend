@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SimpleTable from '../../components/UI/SimpleTable/SimpleTable';
 import { transformToUTC } from '../../helpers/helpers';
 import StudentAttendanceSelects from './StudentAttendanceSelects';
-import { addAttendance } from '../../store/actions/lessonsAction';
+import { addAttendance, removeAttendance } from '../../store/actions/lessonsAction';
 
 const StudentAttendanceContainer = () => {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const StudentAttendanceContainer = () => {
     return (e) => {
       if (e.target.checked) {
         dispatch(addAttendance(lessonId, studentId));
-      }
+      } else dispatch(removeAttendance(lessonId, studentId));
     };
   };
 

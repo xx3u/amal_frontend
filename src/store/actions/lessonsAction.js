@@ -18,6 +18,9 @@ import {
   ADD_ATTENDANCE_REQUEST,
   ADD_ATTENDANCE_SUCCESS,
   ADD_ATTENDANCE_FAILURE,
+  REMOVE_ATTENDANCE_REQUEST,
+  REMOVE_ATTENDANCE_SUCCESS,
+  REMOVE_ATTENDANCE_FAILURE,
 } from '../actionTypes';
 
 const fetchLessonsRequest = () => {
@@ -118,7 +121,7 @@ export const setInitLessons = () => {
 };
 
 const addAttendanceRequest = () => ({ type: ADD_ATTENDANCE_REQUEST });
-const addAttendanceSuccess = (data) => ({ type: ADD_ATTENDANCE_SUCCESS, data });
+const addAttendanceSuccess = (payload) => ({ type: ADD_ATTENDANCE_SUCCESS, payload });
 const addAttendanceFailure = (error) => ({
   type: ADD_ATTENDANCE_FAILURE,
   error,
@@ -131,5 +134,22 @@ export const addAttendance = (lessonId, studentId) => async (dispatch) => {
     dispatch(addAttendanceSuccess());
   } catch (error) {
     dispatch(addAttendanceFailure(error));
+  }
+};
+
+const removeAttendanceRequest = () => ({ type: REMOVE_ATTENDANCE_REQUEST });
+const removeAttendanceSuccess = (payload) => ({ type: REMOVE_ATTENDANCE_SUCCESS, payload });
+const removeAttendanceFailure = (error) => ({
+  type: REMOVE_ATTENDANCE_FAILURE,
+  error,
+});
+
+export const removeAttendance = (lessonId, studentId) => async (dispatch) => {
+  try {
+    dispatch(removeAttendanceRequest());
+    await axios.delete(`/lessons/${lessonId}/remove-student`, { data: { studentId } });
+    dispatch(removeAttendanceSuccess());
+  } catch (error) {
+    dispatch(removeAttendanceFailure(error));
   }
 };

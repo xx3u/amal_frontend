@@ -16,6 +16,9 @@ import {
   ADD_ATTENDANCE_REQUEST,
   ADD_ATTENDANCE_SUCCESS,
   ADD_ATTENDANCE_FAILURE,
+  REMOVE_ATTENDANCE_REQUEST,
+  REMOVE_ATTENDANCE_SUCCESS,
+  REMOVE_ATTENDANCE_FAILURE,
 } from '../actionTypes';
 
 const initlessonsParams = {
@@ -67,6 +70,12 @@ const reducer = (state = initState, action) => {
     case ADD_ATTENDANCE_SUCCESS:
       return { ...state, loading: false };
     case ADD_ATTENDANCE_FAILURE:
+      return { ...state, error: action.error, loading: false };
+    case REMOVE_ATTENDANCE_REQUEST:
+      return { ...state, loading: true };
+    case REMOVE_ATTENDANCE_SUCCESS:
+      return { ...state, loading: false };
+    case REMOVE_ATTENDANCE_FAILURE:
       return { ...state, error: action.error, loading: false };
     default:
       return state;
