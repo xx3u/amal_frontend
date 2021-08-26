@@ -63,7 +63,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
       {error && (
         <Alert severity='error' className={classes.alert}>
           <AlertTitle>Error</AlertTitle>
-          {error.response ? error.response.data : error.message}
+          {error ? error.data : error.message}
         </Alert>
       )}
       <Grid item xs={6}>
