@@ -21,6 +21,8 @@ const CreatePaymentForm = ({ isOpen, title }) => {
     comment: '',
   });
 
+  const [student, setStudent] = useState(null);
+
   const [open, setOpen] = useState(isOpen.status);
 
   const handleClose = () => {
@@ -45,6 +47,7 @@ const CreatePaymentForm = ({ isOpen, title }) => {
 
   const autocompleteChangeHandler = (value) => {
     value && setPayment({ ...payment, studentId: value.id });
+    setStudent(value);
   };
 
   const submitFormHandler = (e) => {
@@ -66,6 +69,8 @@ const CreatePaymentForm = ({ isOpen, title }) => {
             <Autocomplete
               id='combo-box-demo'
               options={students}
+              value={student}
+              getOptionSelected={(option, value) => option.id === value.id}
               getOptionLabel={(option) => `${option.lastName} ${option.firstName}`}
               onChange={(e, value) => autocompleteChangeHandler(value)}
               renderInput={(params) => (
