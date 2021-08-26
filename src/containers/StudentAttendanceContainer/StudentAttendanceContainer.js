@@ -11,15 +11,20 @@ import { addAttendance } from '../../store/actions/lessonsAction';
 const StudentAttendanceContainer = () => {
   const dispatch = useDispatch();
   const [students, setStudents] = useState([]);
+  const [selectedTeacher, setSelectedTeacher] = useState('');
   const lessons = useSelector((state) => state.lessons.lessons);
 
-  const lessonsByDate = lessons.reduce((acc, lesson) => {
+  const lesssonByTeacher = lessons.filter(({ teacherId }) => selectedTeacher?.id === teacherId);
+
+  const lessonsByDate = lesssonByTeacher.reduce((acc, lesson) => {
     return { ...acc, [lesson.startTime]: lesson };
   }, {});
 
   const onSelectedGroupHandler = (selectedGroup) => {
-    console.log(selectedGroup);
     setStudents(selectedGroup?.Students || []);
+  };
+  const onSelectedTeacherHandler = (selectedTeacher) => {
+    setSelectedTeacher(selectedTeacher);
   };
   console.log('groupByDate:', lessonsByDate);
   const rows = students.map((student) => {
@@ -50,13 +55,11 @@ const StudentAttendanceContainer = () => {
         headerName: format(transformToUTC(new Date(lesson.startTime)), 'dd MMM hh:mm', { locale: ru }),
         width: 100,
         renderCell(cell, row) {
-          // console.log(cell);
-          // console.log(row);
           return (
             <Checkbox
-              onChange={createChangeHandler(cell.id, row.id)}
+              onChange={createChangeHandler(cell?.id, row.id)}
               color='primary'
-              checked={cell.Students.map(({ id }) => id).includes(row.id)}
+              checked={cell?.Students.map(({ id }) => id).includes(row.id)}
             />
           );
         },
@@ -75,7 +78,10 @@ const StudentAttendanceContainer = () => {
   return (
     <>
       <Grid container item spacing={3}>
-        <StudentAttendanceSelects onSelectedGroupHandler={onSelectedGroupHandler} />
+        <StudentAttendanceSelects
+          onSelectedTeacherHandler={onSelectedTeacherHandler}
+          onSelectedGroupHandler={onSelectedGroupHandler}
+        />
 
         <Grid item xs={12}>
           <SimpleTable rows={rows} columns={columns} />

@@ -5,24 +5,28 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import { endOfMonth, startOfMonth } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { transformToUTC } from '../../helpers/helpers';
 import { fetchGroups } from '../../store/actions/groupsAction';
 import { fetchLessonsByGroupId, setInitLessons } from '../../store/actions/lessonsAction';
+import { getTeachersfromLessons } from '../../store/selectors/attendanceSelectors';
 
-const StudentAttendanceSelects = ({ onSelectedGroupHandler }) => {
+const StudentAttendanceSelects = ({ onSelectedTeacherHandler, onSelectedGroupHandler }) => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups.groups);
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const teachers = useSelector(getTeachersfromLessons, shallowEqual);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [selectedDate, setSelectedDate] = useState(transformToUTC(new Date()));
   const [monthInterval, setMonthInterval] = useState({
     start: null,
     end: null,
   });
+  console.log('selectedTeacher', selectedTeacher);
   useEffect(() => {
     dispatch(fetchGroups());
   }, [dispatch]);
-
+  console.log('teachers', teachers);
   useEffect(() => {
     onSelectedGroupHandler && onSelectedGroupHandler(selectedGroup);
   }, [selectedGroup, dispatch]);
@@ -43,12 +47,20 @@ const StudentAttendanceSelects = ({ onSelectedGroupHandler }) => {
       );
   }, [selectedGroup, monthInterval, dispatch]);
 
+  useEffect(() => {
+    setSelectedTeacher(null);
+  }, [selectedGroup]);
+
+  useEffect(() => {
+    onSelectedTeacherHandler(selectedTeacher);
+  }, [selectedTeacher]);
   return (
     <>
       <Grid item xs={3}>
         <Autocomplete
           id='groups-lessons'
           value={selectedGroup}
+          getOptionSelected={(options, value) => options.id === value.id}
           onChange={(event, value) => {
             setSelectedGroup(value);
           }}
@@ -57,6 +69,22 @@ const StudentAttendanceSelects = ({ onSelectedGroupHandler }) => {
           noOptionsText={'список пуст'}
           renderInput={(params) => (
             <TextField {...params} label='Выберите Группу' variant='outlined' placeholder='Выберите' />
+          )}
+        />
+      </Grid>
+
+      <Grid item xs={3}>
+        <Autocomplete
+          id='teacher-select'
+          value={selectedTeacher}
+          onChange={(event, value) => {
+            setSelectedTeacher(value);
+          }}
+          options={teachers}
+          getOptionLabel={(option) => option?.fullName || ''}
+          noOptionsText={'список пуст'}
+          renderInput={(params) => (
+            <TextField {...params} label='Выберите учителя' variant='outlined' placeholder='Выберите' />
           )}
         />
       </Grid>
