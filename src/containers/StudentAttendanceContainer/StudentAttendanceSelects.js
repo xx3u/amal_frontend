@@ -77,11 +77,12 @@ const StudentAttendanceSelects = ({ onSelectedTeacherHandler, onSelectedGroupHan
         <Autocomplete
           id='teacher-select'
           value={selectedTeacher}
+          getOptionSelected={(options, value) => options.id === value.id}
           onChange={(event, value) => {
             setSelectedTeacher(value);
           }}
           options={teachers}
-          getOptionLabel={(option) => option?.fullName || ''}
+          getOptionLabel={(option) => option?.fullName}
           noOptionsText={'список пуст'}
           renderInput={(params) => (
             <TextField {...params} label='Выберите учителя' variant='outlined' placeholder='Выберите' />
