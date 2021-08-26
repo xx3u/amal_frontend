@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
     flexGrow: 1,
+    '&.active': {
+      background: 'rgba(0,0,0,0.3)',
+    },
   },
   logo: {
     flexGrow: 1,
