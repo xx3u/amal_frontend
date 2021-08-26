@@ -30,7 +30,7 @@ const SimpleTable = ({ rows, columns }) => {
                 <TableRow hover key={row.id}>
                   {columns.map((col) => {
                     return (
-                      <TableCell align='center' key={`${row.id}${col.field}`}>
+                      <TableCell align={col.align || 'center'} key={`${row.id}${col.field}`}>
                         {col.renderCell ? col.renderCell(row[col.field], row) : row[col.field]?.toString()}
                       </TableCell>
                     );

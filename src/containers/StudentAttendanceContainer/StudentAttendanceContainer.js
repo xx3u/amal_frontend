@@ -71,6 +71,7 @@ const StudentAttendanceContainer = () => {
       field: 'studentName',
       headerName: rows.length ? 'ФИО' : 'Нет данных',
       width: 100,
+      align: 'left',
     },
     ...LessonColumns,
   ];
