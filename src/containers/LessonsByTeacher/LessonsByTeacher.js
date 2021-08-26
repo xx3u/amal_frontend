@@ -5,7 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import DateFnsUtils from '@date-io/date-fns';
 import { ru } from 'date-fns/locale';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { fetchTeachers, getTeachersLessons } from '../../store/actions/teachersActions';
+import { fetchTeachers, getTeachersLessons, setInitTeacherLesson } from '../../store/actions/teachersActions';
 import { deleteLesson } from '../../store/actions/lessonsAction';
 import { getWeekdates } from '../../helpers/helpers';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
@@ -33,6 +33,7 @@ const LessonsByTeacher = () => {
   const { teachers } = useSelector((state) => state.teachers);
 
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [teacher, setTeacher] = useState(null);
 
   const [lesson, setLesson] = useState({
     teacherId: user?.role === 'teacher' ? teacherId : '',
@@ -59,8 +60,15 @@ const LessonsByTeacher = () => {
     });
   }, [selectedDate]);
 
-  const onClickHandler = () => {
-    console.log('');
+  useEffect(() => {
+    return () => {
+      dispatch(setInitTeacherLesson());
+    };
+  }, [dispatch]);
+
+  const autocompleteChangeHandler = (value) => {
+    setTeacher(value);
+    setLesson((state) => ({ ...state, teacherId: value?.id }));
   };
 
   return (
@@ -81,8 +89,10 @@ const LessonsByTeacher = () => {
               id='teachers-lessons'
               className={classes.autoComplTeacher}
               options={teachers}
+              getOptionSelected={(option, value) => option.id === value.id}
               getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
-              onChange={(event, value) => setLesson((state) => ({ ...state, teacherId: value?.id }))}
+              onChange={(event, value) => autocompleteChangeHandler(value)}
+              value={teacher}
               noOptionsText={'выберите сначала предмета'}
               style={{ width: 300 }}
               renderInput={(params) => (
@@ -100,13 +110,7 @@ const LessonsByTeacher = () => {
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>
-      <ScheduleTable
-        selectedParams={lesson}
-        lessons={teachersLessons}
-        onClickHandler={onClickHandler}
-        deleteLessonHandler={deleteLessonHandler}
-        isVisibleButtons={false}
-      />
+      <ScheduleTable deleteLessonHandler={deleteLessonHandler} lessonsParams={lesson} lessons={teachersLessons} />
     </>
   );
 };

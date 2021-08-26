@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem, Box } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions/usersActions';
 
@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
     flexGrow: 1,
+    '&.active': {
+      background: 'rgba(0,0,0,0.2)',
+      border: '1px solid white',
+    },
   },
   logo: {
     flexGrow: 1,
@@ -19,6 +23,14 @@ const useStyles = makeStyles((theme) => ({
   },
   btn: {
     marginRight: 10,
+    '&.active': {
+      background: 'rgba(0,0,0,0.2)',
+      border: '1px solid white',
+    },
+  },
+  checked: {
+    background: 'rgba(0,0,0,0.2)',
+    border: '1px solid white',
   },
 }));
 
@@ -30,12 +42,25 @@ const Header = () => {
   const user = useSelector((state) => state.users.user);
   const isAdminRole = user && user.role === 'admin';
 
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (window.location.toString().includes('lessons')) {
+      setChecked(true);
+    }
+  }, [window.location]);
+
+  const changeStyle = async () => {
+    setChecked(false);
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClose = async () => {
+    await setAnchorEl(null);
+    setChecked(true);
   };
 
   const signOut = () => {
@@ -46,46 +71,76 @@ const Header = () => {
     <AppBar position='static'>
       <Toolbar>
         <Grid container justifyContent='space-between' direction='row'>
-          <Box>
+          <Grid item>
             <Typography variant='h6' className={classes.logo}>
               AMAL LOGO
             </Typography>
-          </Box>
+          </Grid>
           <Box flexGrow={1} display={user ? 'block' : 'none'}>
             {isAdminRole ? (
               <>
-                <Button component={Link} to='/admin-app/students' color='inherit' className={classes.btn}>
+                <Button
+                  component={NavLink}
+                  to='/admin-app/students'
+                  color='inherit'
+                  className={classes.btn}
+                  onClick={changeStyle}
+                >
                   Студенты
                 </Button>
-                <Button component={Link} to='/admin-app/groups' color='inherit' className={classes.btn}>
+                <Button
+                  component={NavLink}
+                  to='/admin-app/groups'
+                  color='inherit'
+                  className={classes.btn}
+                  onClick={changeStyle}
+                >
                   Группы
                 </Button>
-                <Button component={Link} to='/admin-app/payments' color='inherit' className={classes.btn}>
+                <Button
+                  component={NavLink}
+                  to='/admin-app/payments'
+                  color='inherit'
+                  className={classes.btn}
+                  onClick={changeStyle}
+                >
                   Платежи
                 </Button>
-                <Button component={Link} to='/admin-app/teachers' color='inherit' className={classes.btn}>
+                <Button
+                  component={NavLink}
+                  to='/admin-app/teachers'
+                  color='inherit'
+                  className={classes.btn}
+                  onClick={changeStyle}
+                >
                   Учителя
                 </Button>
-                <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick} color='inherit'>
+                <Button
+                  aria-controls='simple-menu'
+                  aria-haspopup='true'
+                  onClick={handleClick}
+                  color='inherit'
+                  className={checked ? classes.checked : classes.btn}
+                >
                   Расписание
                 </Button>
                 <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                  <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
+                  <MenuItem component={NavLink} to='/admin-app/lessons' onClick={handleClose}>
                     Раписание по Группам
                   </MenuItem>
-                  <MenuItem component={Link} to='/admin-app/teachers/lessons' onClick={handleClose}>
+                  <MenuItem component={NavLink} to='/admin-app/lessons/teachers' onClick={handleClose}>
                     Расписание по Учителям
                   </MenuItem>
                 </Menu>
               </>
             ) : (
-              <Button component={Link} to='/admin-app/teachers/lessons' color='inherit'>
+              <Button component={NavLink} to='/admin-app/lessons/teachers' color='inherit' className={classes.btn}>
                 Расписание
               </Button>
             )}
           </Box>
           <Box>
-            {user ? (
+            {user && (
               <>
                 <Button color='inherit' className={classes.menuButton}>
                   Hello, {user.username}
@@ -93,17 +148,11 @@ const Header = () => {
                 <Button color='inherit' onClick={signOut} className={classes.menuButton}>
                   Выйти
                 </Button>
-                {user && user.role === 'admin' ? (
-                  <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
+                {isAdminRole ? (
+                  <Button component={NavLink} to='/register' color='inherit' className={classes.menuButton}>
                     Регистрация
                   </Button>
                 ) : null}
-              </>
-            ) : (
-              <>
-                <Button component={Link} to='/login' color='inherit' className={classes.menuButton}>
-                  Войти
-                </Button>
               </>
             )}
           </Box>

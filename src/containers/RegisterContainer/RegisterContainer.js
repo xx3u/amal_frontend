@@ -39,7 +39,7 @@ const Register = () => {
     teacherId: '',
   });
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
 
   const teachers = useSelector((state) => state.teachers.teachers);
   const roles = [
@@ -65,18 +65,11 @@ const Register = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    state.role && state.role === 'teacher' ? setChecked(true) : setChecked(false);
+    setChecked(state?.role === 'teacher');
   }, [state.role]);
 
   return (
-    <UserForm
-      onSubmit={submitFormHandler}
-      title='Регистрация'
-      buttonText='Зарегистрироваться'
-      link='/login'
-      linkText='У Вас есть аккаунт? Войти'
-      error={error}
-    >
+    <UserForm onSubmit={submitFormHandler} title='Регистрация' buttonText='Зарегистрироваться' error={error}>
       <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
         <Grid item xs={12} className={classes.formItem}>
           <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
