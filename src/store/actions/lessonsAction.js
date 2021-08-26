@@ -127,11 +127,15 @@ const addAttendanceFailure = (error) => ({
   error,
 });
 
-export const addAttendance = (lessonId, studentId) => async (dispatch) => {
+export const addAttendance = (lessonId, studentId) => async (dispatch, getState) => {
+  const { lessons } = getState();
+  const { lessonsParams } = lessons;
+
   try {
     dispatch(addAttendanceRequest());
     await axios.post(`/lessons/${lessonId}/add-student`, { studentId });
     dispatch(addAttendanceSuccess());
+    dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
   } catch (error) {
     dispatch(addAttendanceFailure(error));
   }
@@ -144,11 +148,14 @@ const removeAttendanceFailure = (error) => ({
   error,
 });
 
-export const removeAttendance = (lessonId, studentId) => async (dispatch) => {
+export const removeAttendance = (lessonId, studentId) => async (dispatch, getState) => {
+  const { lessons } = getState();
+  const { lessonsParams } = lessons;
   try {
     dispatch(removeAttendanceRequest());
     await axios.delete(`/lessons/${lessonId}/remove-student`, { data: { studentId } });
     dispatch(removeAttendanceSuccess());
+    dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
   } catch (error) {
     dispatch(removeAttendanceFailure(error));
   }

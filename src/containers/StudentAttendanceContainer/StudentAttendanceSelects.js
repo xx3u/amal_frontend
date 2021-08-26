@@ -8,10 +8,10 @@ import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { transformToUTC } from '../../helpers/helpers';
 import { fetchGroups } from '../../store/actions/groupsAction';
-import { fetchLessonsByGroupId, setInitLessons } from '../../store/actions/lessonsAction';
+import { fetchLessonsByGroupId, setInitLessons, setLessonsParams } from '../../store/actions/lessonsAction';
 import { getTeachersfromLessons } from '../../store/selectors/attendanceSelectors';
 
-const StudentAttendanceSelects = ({ onSelectedTeacherHandler, onSelectedGroupHandler }) => {
+const StudentAttendanceSelects = () => {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups.groups);
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -28,8 +28,24 @@ const StudentAttendanceSelects = ({ onSelectedTeacherHandler, onSelectedGroupHan
   }, [dispatch]);
 
   useEffect(() => {
-    onSelectedGroupHandler && onSelectedGroupHandler(selectedGroup);
-  }, [selectedGroup, dispatch]);
+    dispatch(
+      setLessonsParams({
+        groupId: selectedGroup?.id,
+        startTime: monthInterval.start,
+        endTime: monthInterval.end,
+        teacherId: selectedTeacher?.id,
+        selectedGroup: selectedGroup,
+      })
+    );
+    return () => {
+      setLessonsParams({
+        groupId: '',
+        startTime: '',
+        endTime: '',
+        teacherId: '',
+      });
+    };
+  }, [selectedGroup, monthInterval, selectedTeacher, dispatch]);
 
   useEffect(() => {
     setMonthInterval({
@@ -51,9 +67,6 @@ const StudentAttendanceSelects = ({ onSelectedTeacherHandler, onSelectedGroupHan
     setSelectedTeacher(null);
   }, [selectedGroup]);
 
-  useEffect(() => {
-    onSelectedTeacherHandler(selectedTeacher);
-  }, [selectedTeacher]);
   return (
     <>
       <Grid item xs={3}>

@@ -1,7 +1,7 @@
 import { Grid, Checkbox } from '@material-ui/core';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SimpleTable from '../../components/UI/SimpleTable/SimpleTable';
 import { transformToUTC } from '../../helpers/helpers';
@@ -10,11 +10,11 @@ import { addAttendance, removeAttendance } from '../../store/actions/lessonsActi
 
 const StudentAttendanceContainer = () => {
   const dispatch = useDispatch();
-  const [students, setStudents] = useState([]);
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const lessons = useSelector((state) => state.lessons.lessons);
 
-  const lesssonByTeacher = lessons.filter(({ teacherId }) => selectedTeacher?.id === teacherId);
+  const lessons = useSelector((state) => state.lessons.lessons);
+  const params = useSelector((state) => state.lessons.lessonsParams);
+  const students = useSelector((state) => state.lessons.lessonsParams.selectedGroup?.Students || []);
+  const lesssonByTeacher = lessons.filter(({ teacherId }) => params?.teacherId === teacherId);
 
   const lessonsByDate = lesssonByTeacher.reduce((acc, lesson) => {
     return { ...acc, [lesson.startTime]: lesson };
@@ -22,9 +22,6 @@ const StudentAttendanceContainer = () => {
 
   const onSelectedGroupHandler = (selectedGroup) => {
     setStudents(selectedGroup?.Students || []);
-  };
-  const onSelectedTeacherHandler = (selectedTeacher) => {
-    setSelectedTeacher(selectedTeacher);
   };
 
   const rows = students.map((student) => {
@@ -73,10 +70,7 @@ const StudentAttendanceContainer = () => {
   return (
     <>
       <Grid container item spacing={3}>
-        <StudentAttendanceSelects
-          onSelectedTeacherHandler={onSelectedTeacherHandler}
-          onSelectedGroupHandler={onSelectedGroupHandler}
-        />
+        <StudentAttendanceSelects onSelectedGroupHandler={onSelectedGroupHandler} />
 
         <Grid item xs={12}>
           <SimpleTable rows={rows} columns={columns} />
