@@ -11,7 +11,7 @@ import { addAttendance } from '../../store/actions/lessonsAction';
 const StudentAttendanceContainer = () => {
   const dispatch = useDispatch();
   const [students, setStudents] = useState([]);
-  const [selectedTeacher, setSelectedTeacher] = useState('');
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
   const lessons = useSelector((state) => state.lessons.lessons);
 
   const lesssonByTeacher = lessons.filter(({ teacherId }) => selectedTeacher?.id === teacherId);
@@ -45,7 +45,7 @@ const StudentAttendanceContainer = () => {
     };
   };
 
-  const LessonColumns = lessons
+  const LessonColumns = lesssonByTeacher
     .sort((a, b) => {
       return new Date(a.startTime) - new Date(b.startTime);
     })
@@ -69,7 +69,7 @@ const StudentAttendanceContainer = () => {
   const columns = [
     {
       field: 'studentName',
-      headerName: (LessonColumns.length && 'ФИО') || 'Нет данных',
+      headerName: rows.length ? 'ФИО' : 'Нет данных',
       width: 100,
     },
     ...LessonColumns,
