@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser } from '../../store/actions/usersActions';
+import { loginUser, logoutUser } from '../../store/actions/usersActions';
 import FormItem from '../../components/UI/Form/FormItem/FormItem';
 import UserForm from '../../components/UserForm/UserForm';
 
@@ -26,16 +26,12 @@ const Login = () => {
     await dispatch(loginUser({ ...state }));
   };
 
+  useEffect(() => {
+    dispatch(logoutUser());
+  }, [dispatch]);
+
   return (
-    <UserForm
-      onSubmit={submitFormHandler}
-      title='Войти'
-      button='Войти'
-      buttonText='Войти'
-      link='/register'
-      linkText='Нет учетной записи? Зарегистрироваться'
-      error={error}
-    >
+    <UserForm onSubmit={submitFormHandler} title='Войти' button='Войти' buttonText='Войти' error={error}>
       <Grid item xs={12}>
         <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
       </Grid>

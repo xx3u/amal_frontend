@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions/usersActions';
@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     flexGrow: 1,
+    marginRight: theme.spacing(3),
   },
   btn: {
     marginRight: 10,
@@ -27,6 +28,7 @@ const Header = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const user = useSelector((state) => state.users.user);
+  const isAdminRole = user && user.role === 'admin';
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -49,33 +51,41 @@ const Header = () => {
               AMAL LOGO
             </Typography>
           </Grid>
-          <Grid container item xs={9}>
-            <Button component={Link} to='/admin-app/students' color='inherit' className={classes.btn}>
-              Студенты
-            </Button>
-            <Button component={Link} to='/admin-app/groups' color='inherit' className={classes.btn}>
-              Группы
-            </Button>
-            <Button component={Link} to='/admin-app/payments' color='inherit' className={classes.btn}>
-              Платежи
-            </Button>
-            <Button component={Link} to='/admin-app/teachers' color='inherit' className={classes.btn}>
-              Учителя
-            </Button>
-            <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick} color='inherit'>
-              Расписание
-            </Button>
-            <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-              <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
-                Раписание по Группам
-              </MenuItem>
-              <MenuItem component={Link} to='/admin-app/teachers/lessons' onClick={handleClose}>
-                Расписание по Учителям
-              </MenuItem>
-            </Menu>
-          </Grid>
-          <Grid item>
-            {user ? (
+          <Box flexGrow={1} display={user ? 'block' : 'none'}>
+            {isAdminRole ? (
+              <>
+                <Button component={Link} to='/admin-app/students' color='inherit' className={classes.btn}>
+                  Студенты
+                </Button>
+                <Button component={Link} to='/admin-app/groups' color='inherit' className={classes.btn}>
+                  Группы
+                </Button>
+                <Button component={Link} to='/admin-app/payments' color='inherit' className={classes.btn}>
+                  Платежи
+                </Button>
+                <Button component={Link} to='/admin-app/teachers' color='inherit' className={classes.btn}>
+                  Учителя
+                </Button>
+                <Button aria-controls='simple-menu' aria-haspopup='true' onClick={handleClick} color='inherit'>
+                  Расписание
+                </Button>
+                <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                  <MenuItem component={Link} to='/admin-app/lessons' onClick={handleClose}>
+                    Раписание по Группам
+                  </MenuItem>
+                  <MenuItem component={Link} to='/admin-app/teachers/lessons' onClick={handleClose}>
+                    Расписание по Учителям
+                  </MenuItem>
+                </Menu>
+              </>
+            ) : (
+              <Button component={Link} to='/admin-app/teachers/lessons' color='inherit'>
+                Расписание
+              </Button>
+            )}
+          </Box>
+          <Box>
+            {user && (
               <>
                 <Button color='inherit' className={classes.menuButton}>
                   Hello, {user.username}
@@ -83,18 +93,14 @@ const Header = () => {
                 <Button color='inherit' onClick={signOut} className={classes.menuButton}>
                   Выйти
                 </Button>
-              </>
-            ) : (
-              <>
-                <Button component={Link} to='/login' color='inherit' className={classes.menuButton}>
-                  Войти
-                </Button>
-                <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
-                  Регистрация
-                </Button>
+                {isAdminRole ? (
+                  <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
+                    Регистрация
+                  </Button>
+                ) : null}
               </>
             )}
-          </Grid>
+          </Box>
         </Grid>
       </Toolbar>
     </AppBar>

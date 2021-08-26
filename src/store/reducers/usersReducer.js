@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
     case CREATE_USER_FAILURE:
       return { ...state, registerError: action.error };
     case CREATE_USER_SUCCESS:
-      return { ...state, user: action.user, registerError: null };
+      return { ...state, registerError: null };
     case LOGIN_USER_SUCCESS:
       return { ...state, user: action.user, loginError: null };
     case LOGIN_USER_FAILURE:
