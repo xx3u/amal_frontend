@@ -98,10 +98,8 @@ export const addTeacher = (teacher) => {
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch(addTeacherFailure(error.response));
-        NotificationManager.error(error.response.data, 'Post error!', 5000);
       } else {
         dispatch(addTeacherFailure(error));
-        NotificationManager.error(error.message, 'Post error!', 5000);
       }
     }
   };
@@ -129,10 +127,8 @@ export const editTeacher = (teacher, id) => {
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch(editTeacherFailure(error.response));
-        NotificationManager.error(error.response.data, 'Edit error!', 5000);
       } else {
         dispatch(editTeacherFailure(error));
-        NotificationManager.error(error.message, 'Edit error!', 5000);
       }
     }
   };
