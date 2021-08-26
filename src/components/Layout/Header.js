@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     flexGrow: 1,
     '&.active': {
-      background: 'rgba(0,0,0,0.3)',
+      background: 'rgba(0,0,0,0.2)',
+      border: '1px solid white',
     },
   },
   logo: {
@@ -23,11 +24,13 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     marginRight: 10,
     '&.active': {
-      background: 'rgba(0,0,0,0.3)',
+      background: 'rgba(0,0,0,0.2)',
+      border: '1px solid white',
     },
   },
   checked: {
-    background: 'rgba(0,0,0,0.3)',
+    background: 'rgba(0,0,0,0.2)',
+    border: '1px solid white',
   },
 }));
 
