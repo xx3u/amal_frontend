@@ -143,7 +143,7 @@ const Header = () => {
                   Выйти
                 </Button>
                 {isAdminRole ? (
-                  <Button component={Link} to='/register' color='inherit' className={classes.menuButton}>
+                  <Button component={NavLink} to='/register' color='inherit' className={classes.menuButton}>
                     Регистрация
                   </Button>
                 ) : null}
