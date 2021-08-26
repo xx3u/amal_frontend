@@ -72,10 +72,8 @@ export const addNewStudent = (newStudent) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewStudentFailure(error.response));
-      NotificationManager.error(error.response.data, 'Post error!', 5000);
     } else {
       dispatch(addNewStudentFailure(error));
-      NotificationManager.error(error.message, 'Post error!', 5000);
     }
   }
 };
@@ -113,10 +111,8 @@ export const updateStudent = (id, updatedStudent) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(updateStudentFailure(error));
-      NotificationManager.error(error.response.data, 'Edit error!', 5000);
     } else {
       dispatch(updateStudentFailure(error));
-      NotificationManager.error(error.message, 'Edit error!', 5000);
     }
   }
 };

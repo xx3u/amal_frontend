@@ -64,10 +64,8 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewGroupFailure(error.response));
-      NotificationManager.error(error.response.data, 'Post error!', 5000);
     } else {
       dispatch(addNewGroupFailure(error));
-      NotificationManager.error(error.message, 'Post error!', 5000);
     }
   }
 };

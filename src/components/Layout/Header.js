@@ -60,7 +60,11 @@ const Header = () => {
 
   const handleClose = async () => {
     await setAnchorEl(null);
-    setChecked(true);
+    if (window.location.toString().includes('lessons')) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
   };
 
   const signOut = () => {
@@ -149,7 +153,13 @@ const Header = () => {
                   Выйти
                 </Button>
                 {isAdminRole ? (
-                  <Button component={NavLink} to='/register' color='inherit' className={classes.menuButton}>
+                  <Button
+                    component={NavLink}
+                    to='/register'
+                    color='inherit'
+                    className={classes.menuButton}
+                    onClick={changeStyle}
+                  >
                     Регистрация
                   </Button>
                 ) : null}
