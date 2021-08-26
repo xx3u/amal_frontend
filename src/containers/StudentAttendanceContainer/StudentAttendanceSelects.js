@@ -22,11 +22,11 @@ const StudentAttendanceSelects = ({ onSelectedTeacherHandler, onSelectedGroupHan
     start: null,
     end: null,
   });
-  console.log('selectedTeacher', selectedTeacher);
+
   useEffect(() => {
     dispatch(fetchGroups());
   }, [dispatch]);
-  console.log('teachers', teachers);
+
   useEffect(() => {
     onSelectedGroupHandler && onSelectedGroupHandler(selectedGroup);
   }, [selectedGroup, dispatch]);

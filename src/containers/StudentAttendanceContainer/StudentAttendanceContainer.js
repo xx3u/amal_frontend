@@ -26,19 +26,13 @@ const StudentAttendanceContainer = () => {
   const onSelectedTeacherHandler = (selectedTeacher) => {
     setSelectedTeacher(selectedTeacher);
   };
-  console.log('groupByDate:', lessonsByDate);
+
   const rows = students.map((student) => {
     return { id: student.id, studentName: `${student.lastName} ${student.firstName} `, ...lessonsByDate };
   });
 
-  console.log('rows:', rows);
-  console.log('students:', students);
-
-  console.log(lessons);
-
   const createChangeHandler = (lessonId, studentId) => {
     return (e) => {
-      console.log(e.target.checked);
       if (e.target.checked) {
         dispatch(addAttendance(lessonId, studentId));
       }
