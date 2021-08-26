@@ -7,6 +7,7 @@ import { editTeacher, getTeacherById } from '../../../store/actions/teachersActi
 const EditTeacherForm = () => {
   const dispatch = useDispatch();
   const teacher = useSelector((state) => state.teachers.teacher);
+  const error = useSelector((state) => state.teachers.error);
   const params = useParams();
   const paramsId = params.id;
 
@@ -24,6 +25,7 @@ const EditTeacherForm = () => {
       submitData={updateTeacherHandler}
       selectedTeacher={teacher}
       id={paramsId}
+      error={error}
     />
   );
 };

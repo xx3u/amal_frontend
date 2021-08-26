@@ -6,8 +6,18 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import { fetchSubjects } from '../../../store/actions/subjectsAction';
 import CreateSubjectForm from '../../../containers/Forms/Subject/CreateSubjectForm';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/core/styles';
 
-const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
+const useStyles = makeStyles(() => ({
+  alert: {
+    width: '100%',
+    marginTop: '10px',
+  },
+}));
+
+const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const [teacher, setTeacher] = useState(selectedTeacher);
   const subjects = useSelector((state) => state.subjects.subjects);
@@ -50,6 +60,12 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id }) => {
 
   return (
     <FormSubmission title={title} maxWidth='md' onSubmit={submitFormHandler}>
+      {error && (
+        <Alert severity='error' className={classes.alert}>
+          <AlertTitle>Error</AlertTitle>
+          {error.response ? error.response.data : error.message}
+        </Alert>
+      )}
       <Grid item xs={6}>
         <FormItem
           name='firstName'
