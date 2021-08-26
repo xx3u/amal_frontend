@@ -49,8 +49,13 @@ export const addNewSubject = (newSubj) => async (dispatch) => {
     await axios.post('/subjects', newSubj).then((response) => dispatch(addNewSubjectSuccess(response.data)));
     dispatch(push('/'));
   } catch (error) {
-    dispatch(addNewSubjectFailure(error));
-    NotificationManager.error(error.response.data.message, 'Post error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(addNewSubjectFailure(error.response));
+      NotificationManager.error(error.response.data, 'Post error!', 5000);
+    } else {
+      dispatch(addNewSubjectFailure(error));
+      NotificationManager.error(error.message, 'Post error!', 5000);
+    }
   }
 };
 
@@ -58,14 +63,19 @@ const updateSubjectRequest = () => ({ type: UPDATE_SUBJECT_REQUEST });
 const updateSubjectSuccess = (payload) => ({ type: UPDATE_SUBJECT_SUCCESS, payload });
 const updateSubjectFailure = (payload) => ({ type: UPDATE_SUBJECT_FAILURE, payload });
 
-export const fetchUpdateGroup = (payload) => async (dispatch) => {
+export const fetchUpdateSubject = (payload) => async (dispatch) => {
   dispatch(updateSubjectRequest());
   try {
     const response = await axios.put(`/subjects/${payload.id}`, payload.value);
     dispatch(updateSubjectSuccess(response.data));
     dispatch(fetchSubjects());
   } catch (error) {
-    dispatch(updateSubjectFailure(error));
-    NotificationManager.error(error.response.data.message, 'Put error!', 5000);
+    if (error.response && error.response.data) {
+      dispatch(updateSubjectFailure(error.response));
+      NotificationManager.error(error.response.data, 'Edit error!', 5000);
+    } else {
+      dispatch(updateSubjectFailure(error));
+      NotificationManager.error(error.message, 'Edit error!', 5000);
+    }
   }
 };

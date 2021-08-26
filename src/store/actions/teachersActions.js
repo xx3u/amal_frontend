@@ -96,8 +96,13 @@ export const addTeacher = (teacher) => {
       dispatch(addTeacherSucces(response.data));
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
-      dispatch(addTeacherFailure(error));
-      NotificationManager.error(error.message, 'Post error!', 5000);
+      if (error.response && error.response.data) {
+        dispatch(addTeacherFailure(error.response));
+        NotificationManager.error(error.response.data, 'Post error!', 5000);
+      } else {
+        dispatch(addTeacherFailure(error));
+        NotificationManager.error(error.message, 'Post error!', 5000);
+      }
     }
   };
 };
@@ -122,8 +127,13 @@ export const editTeacher = (teacher, id) => {
       dispatch(editTeacherSuccess());
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
-      dispatch(editTeacherFailure(error));
-      NotificationManager.error(error.message, 'Put error!', 5000);
+      if (error.response && error.response.data) {
+        dispatch(editTeacherFailure(error.response));
+        NotificationManager.error(error.response.data, 'Edit error!', 5000);
+      } else {
+        dispatch(editTeacherFailure(error));
+        NotificationManager.error(error.message, 'Edit error!', 5000);
+      }
     }
   };
 };
@@ -147,8 +157,13 @@ export const getTeacherById = (id) => {
       const resp = await axios.get('/teachers/' + id);
       dispatch(getTeacherByIdSuccess(resp.data));
     } catch (error) {
-      dispatch(getTeacherByIdFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
+      if (error.response && error.response.data) {
+        dispatch(getTeacherByIdFailure(error.response.data));
+        NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
+      } else {
+        dispatch(getTeacherByIdFailure(error));
+        NotificationManager.error(error.message, 'Fetch error!', 5000);
+      }
     }
   };
 };

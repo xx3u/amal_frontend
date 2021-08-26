@@ -5,6 +5,15 @@ import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmi
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchStreams } from '../../../store/actions/streamsAction';
 import { fetchGroups } from '../../../store/actions/groupsAction';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  alert: {
+    width: '100%',
+    marginTop: '10px',
+  },
+}));
 
 const statuses = [
   {
@@ -36,7 +45,8 @@ const languages = [
   },
 ];
 
-const StudentForm = ({ title, submitData, selectedStudent, id }) => {
+const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
+  const classes = useStyles();
   const [student, setStudent] = useState({
     firstName: '',
     lastName: '',
@@ -77,6 +87,12 @@ const StudentForm = ({ title, submitData, selectedStudent, id }) => {
 
   return (
     <FormSubmission title={title} maxWidth='md' onSubmit={submitFormHandler}>
+      {error && (
+        <Alert severity='error' className={classes.alert}>
+          <AlertTitle>Error</AlertTitle>
+          {error.response ? error.response.data : error.message}
+        </Alert>
+      )}
       <Grid item xs={4}>
         <FormItem
           name='firstName'

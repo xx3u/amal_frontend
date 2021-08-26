@@ -8,6 +8,7 @@ const EditStudentForm = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const studentById = useSelector((state) => state.students.student);
+  const error = useSelector((state) => state.students.error);
 
   useEffect(() => {
     dispatch(getStudentById(id));
@@ -16,7 +17,15 @@ const EditStudentForm = () => {
   const editStudent = (id, student) => {
     dispatch(updateStudent(id, student));
   };
-  return <StudentForm title={'Редактировать ученика'} selectedStudent={studentById} id={id} submitData={editStudent} />;
+  return (
+    <StudentForm
+      title={'Редактировать ученика'}
+      selectedStudent={studentById}
+      id={id}
+      submitData={editStudent}
+      error={error}
+    />
+  );
 };
 
 export default EditStudentForm;
