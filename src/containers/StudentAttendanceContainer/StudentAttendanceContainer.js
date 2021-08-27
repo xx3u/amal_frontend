@@ -14,9 +14,9 @@ const StudentAttendanceContainer = () => {
   const lessons = useSelector((state) => state.lessons.lessons);
   const params = useSelector((state) => state.lessons.lessonsParams);
   const students = useSelector((state) => state.lessons.lessonsParams.selectedGroup?.Students || []);
-  const lesssonByTeacher = lessons.filter(({ teacherId }) => params?.teacherId === teacherId);
+  const lesssonsByTeacher = lessons.filter(({ teacherId }) => params?.teacherId === teacherId);
 
-  const lessonsByDate = lesssonByTeacher.reduce((acc, lesson) => {
+  const lessonsByDate = lesssonsByTeacher.reduce((acc, lesson) => {
     return { ...acc, [lesson.startTime]: lesson };
   }, {});
 
@@ -36,7 +36,7 @@ const StudentAttendanceContainer = () => {
     };
   };
 
-  const LessonColumns = lesssonByTeacher
+  const LessonColumns = lesssonsByTeacher
     .sort((a, b) => {
       return new Date(a.startTime) - new Date(b.startTime);
     })
