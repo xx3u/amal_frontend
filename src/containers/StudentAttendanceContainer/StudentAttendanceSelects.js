@@ -13,9 +13,11 @@ import { getTeachersfromLessons } from '../../store/selectors/attendanceSelector
 
 const StudentAttendanceSelects = () => {
   const dispatch = useDispatch();
+
   const groups = useSelector((state) => state.groups.groups);
-  const [selectedGroup, setSelectedGroup] = useState(null);
   const teachers = useSelector(getTeachersfromLessons, shallowEqual);
+
+  const [selectedGroup, setSelectedGroup] = useState(null);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [selectedDate, setSelectedDate] = useState(transformToUTC(new Date()));
   const [monthInterval, setMonthInterval] = useState({
