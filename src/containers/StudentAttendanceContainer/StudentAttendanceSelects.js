@@ -114,7 +114,7 @@ const StudentAttendanceSelects = () => {
             fullWidth
             value={selectedDate}
             onChange={(date) => setSelectedDate(transformToUTC(date))}
-            format='dd MMMM yyyy'
+            format=' MMM yyyy'
           />
         </Grid>
       </MuiPickersUtilsProvider>
