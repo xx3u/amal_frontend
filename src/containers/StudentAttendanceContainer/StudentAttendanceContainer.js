@@ -7,22 +7,20 @@ import SimpleTable from '../../components/UI/SimpleTable/SimpleTable';
 import { transformToUTC } from '../../helpers/helpers';
 import StudentAttendanceSelects from './StudentAttendanceSelects';
 import { addAttendance, removeAttendance } from '../../store/actions/lessonsAction';
+import { selectLessons, selectLessonsParams, selectStudents } from '../../store/selectors/attendanceSelectors';
 
 const StudentAttendanceContainer = () => {
   const dispatch = useDispatch();
 
-  const lessons = useSelector((state) => state.lessons.lessons);
-  const params = useSelector((state) => state.lessons.lessonsParams);
-  const students = useSelector((state) => state.lessons.lessonsParams.selectedGroup?.Students || []);
+  const lessons = useSelector(selectLessons);
+  const params = useSelector(selectLessonsParams);
+  const students = useSelector(selectStudents);
+
   const lesssonsByTeacher = lessons.filter(({ teacherId }) => params?.teacherId === teacherId);
 
   const lessonsByDate = lesssonsByTeacher.reduce((acc, lesson) => {
     return { ...acc, [lesson.startTime]: lesson };
   }, {});
-
-  const onSelectedGroupHandler = (selectedGroup) => {
-    setStudents(selectedGroup?.Students || []);
-  };
 
   const rows = students.map((student) => {
     return { id: student.id, studentName: `${student.lastName} ${student.firstName} `, ...lessonsByDate };
@@ -36,7 +34,7 @@ const StudentAttendanceContainer = () => {
     };
   };
 
-  const LessonColumns = lesssonsByTeacher
+  const lessonColumns = lesssonsByTeacher
     .sort((a, b) => {
       return new Date(a.startTime) - new Date(b.startTime);
     })
@@ -64,14 +62,13 @@ const StudentAttendanceContainer = () => {
       width: 100,
       align: 'left',
     },
-    ...LessonColumns,
+    ...lessonColumns,
   ];
 
   return (
     <>
       <Grid container item spacing={3}>
-        <StudentAttendanceSelects onSelectedGroupHandler={onSelectedGroupHandler} />
-
+        <StudentAttendanceSelects />
         <Grid item xs={12}>
           <SimpleTable rows={rows} columns={columns} />
         </Grid>

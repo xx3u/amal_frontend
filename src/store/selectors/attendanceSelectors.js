@@ -1,10 +1,12 @@
-const getLessons = (state) => {
-  return state.lessons.lessons;
-};
+export const selectLessons = (state) => state.lessons.lessons;
+
+export const selectLessonsParams = (state) => state.lessons.lessonsParams;
+
+export const selectStudents = (state) => state.lessons.lessonsParams.selectedGroup?.Students || [];
 
 export const getTeachersfromLessons = (state) => {
   return Object.values(
-    getLessons(state).reduce((acc, lesson) => {
+    selectLessons(state).reduce((acc, lesson) => {
       const teacherId = lesson.teacherId;
       return {
         ...acc,

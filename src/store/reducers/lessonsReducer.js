@@ -27,6 +27,7 @@ const initlessonsParams = {
   teacherId: '',
   startTime: '',
   endTime: '',
+  selectedGroup: {},
 };
 const initState = {
   lessons: [],

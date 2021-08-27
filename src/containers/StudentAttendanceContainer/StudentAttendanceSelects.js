@@ -45,6 +45,7 @@ const StudentAttendanceSelects = () => {
         startTime: '',
         endTime: '',
         teacherId: '',
+        selectedGroup: {},
       });
     };
   }, [selectedGroup, monthInterval, selectedTeacher, dispatch]);
