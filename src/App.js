@@ -123,7 +123,13 @@ function App() {
             exact
             component={studentAttendancePage}
           />
-          <Route isAllowed={user && isAdminRole} redirectTo={'/login'} path='/register' exact component={Register} />
+          <ProtectedRoute
+            isAllowed={user && isAdminRole}
+            redirectTo={'/login'}
+            path='/register'
+            exact
+            component={Register}
+          />
           <Route path='/login' exact component={Login} />
         </Switch>
       </Layout>
