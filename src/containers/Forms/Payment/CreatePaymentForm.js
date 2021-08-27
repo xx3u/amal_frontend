@@ -7,20 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchStudents } from '../../../store/actions/studentsAction';
 import { addNewPayment } from '../../../store/actions/paymentAction';
 import { format } from 'date-fns';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(() => ({
-  alert: {
-    width: '100%',
-    marginTop: '10px',
-  },
-}));
 
 const CreatePaymentForm = ({ isOpen, title }) => {
-  const classes = useStyles();
   const { students } = useSelector((state) => state.students);
-  const error = useSelector((state) => state.payments.error);
   const dispatch = useDispatch();
 
   const today = format(new Date(), 'yyyy-MM-dd');
@@ -75,12 +64,6 @@ const CreatePaymentForm = ({ isOpen, title }) => {
   return (
     <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title' maxWidth={'sm'} fullWidth={true}>
       <DialogContent>
-        {error && (
-          <Alert severity='error' className={classes.alert}>
-            <AlertTitle>Error</AlertTitle>
-            {error.response ? error.response.data : error.message}
-          </Alert>
-        )}
         <FormSubmission title={title} onSubmit={submitFormHandler}>
           <Grid item xs={12}>
             <Autocomplete

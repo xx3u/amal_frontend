@@ -4,7 +4,7 @@ import {
   FETCH_PAYMENTS_SUCCESS,
   FETCH_PAYMENTS_REQUEST,
   FETCH_PAYMENTS_FAILURE,
-  ADD_NEW_STUDENT_FAILURE,
+  ADD_NEW_PAYMENT_FAILURE,
   ADD_NEW_PAYMENT_REQUEST,
   ADD_NEW_PAYMENT_SUCCESS,
   GET_PAYMENT_BY_ID_REQUEST,
@@ -45,7 +45,7 @@ export const fetchPayments = () => async (dispatch) => {
 
 const addNewPaymentRequest = () => ({ type: ADD_NEW_PAYMENT_REQUEST });
 const addNewPaymentSuccess = (data) => ({ type: ADD_NEW_PAYMENT_SUCCESS, data });
-const addNewPaymentFailure = (error) => ({ type: ADD_NEW_STUDENT_FAILURE, error });
+const addNewPaymentFailure = (error) => ({ type: ADD_NEW_PAYMENT_FAILURE, error });
 
 export const addNewPayment = (newPayment) => async (dispatch) => {
   dispatch(addNewPaymentRequest());
