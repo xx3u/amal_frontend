@@ -31,7 +31,14 @@ const Login = () => {
   }, [dispatch]);
 
   return (
-    <UserForm onSubmit={submitFormHandler} title='Войти' button='Войти' buttonText='Войти' error={error}>
+    <UserForm
+      onSubmit={submitFormHandler}
+      title='Войти'
+      button='Войти'
+      buttonId='login'
+      buttonText='Войти'
+      error={error}
+    >
       <Grid item xs={12}>
         <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
       </Grid>
