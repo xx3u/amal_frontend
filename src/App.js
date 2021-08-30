@@ -2,6 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
+import { NotificationContainer } from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
@@ -30,6 +31,7 @@ function App() {
     <div className='App'>
       <CssBaseline />
       <Layout>
+        <NotificationContainer />
         <Switch>
           <ProtectedRoute
             isAllowed={user && isAdminRole}

@@ -16,6 +16,7 @@ import {
   SET_LESSON_PARAMS,
   SET_INIT_LESSONS,
 } from '../actionTypes';
+import { NotificationManager } from 'react-notifications';
 
 const fetchLessonsRequest = () => {
   return { type: FETCH_LESSONS_REQUEST };
@@ -37,6 +38,7 @@ export const fetchLessonsByGroupId = (groupId, startTime, endTime) => {
       dispatch(fetchLessonsSucces(response.data));
     } catch (error) {
       dispatch(fetchLessonsFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -60,7 +62,13 @@ export const addNewLesson = (lesson) => {
       await axios.post('/lessons', lesson);
       dispatch(addNewLessonSucces());
     } catch (error) {
-      dispatch(addNewLessonFailure(error));
+      if (error.response && error.response.data) {
+        dispatch(addNewLessonFailure(error.response));
+        NotificationManager.error(error.response.data, 'Post error!', 5000);
+      } else {
+        dispatch(addNewLessonFailure(error));
+        NotificationManager.error(error.message, 'Post error!', 5000);
+      }
     }
   };
 };
@@ -103,6 +111,7 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
     dispatch(createLessonsSuccess());
   } catch (error) {
     dispatch(createLessonsFailure(error));
+    NotificationManager.error(error.message, 'Post error!', 5000);
   }
 };
 
