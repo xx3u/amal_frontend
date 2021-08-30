@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
-import { addDays, getDay } from 'date-fns';
+import { addDays, getISODay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 import LessonCard from './LessonCard/LessonCard';
 import AddCard from './AddCard/AddCard';
@@ -154,7 +154,7 @@ const ScheduleTable = ({
       lessons.forEach((lesson) => {
         const lessonStartDate = new Date(lesson.startTime);
         const startTime = lessonStartDate.getUTCHours();
-        const lessonweekDay = getDay(lessonStartDate, { weekStartsOn: 1 });
+        const lessonweekDay = getISODay(lessonStartDate);
         const curLesson = getLesson(startTime);
         if (index + 1 === lessonweekDay) {
           setWeekLessons((prev) => {
@@ -186,7 +186,7 @@ const ScheduleTable = ({
         bussyLessons.forEach((lesson) => {
           const lessonStartDate = new Date(lesson.startTime);
           const startTime = lessonStartDate.getUTCHours();
-          const lessonweekDay = getDay(lessonStartDate, { weekStartsOn: 1 });
+          const lessonweekDay = getISODay(lessonStartDate);
           const curLesson = getLesson(startTime);
           if (index + 1 === lessonweekDay) {
             setWeekLessons((prev) => {
