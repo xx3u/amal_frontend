@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserForm = ({ title, onSubmit, children, buttonText, error }) => {
+const UserForm = ({ title, onSubmit, children, buttonId, buttonText, error }) => {
   const classes = useStyles();
 
   return (
@@ -56,7 +56,7 @@ const UserForm = ({ title, onSubmit, children, buttonText, error }) => {
           <Grid container spacing={2}>
             {children}
           </Grid>
-          <Button type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
+          <Button id={buttonId} type='submit' fullWidth variant='contained' color='primary' className={classes.submit}>
             {buttonText}
           </Button>
         </form>
