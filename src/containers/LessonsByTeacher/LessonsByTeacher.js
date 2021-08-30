@@ -23,7 +23,7 @@ const LessonsByTeacher = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const teachersLessons = useSelector((state) => state.teachers.teachersLessons);
-
+  const user = useSelector((state) => state.users.user);
   useEffect(() => {
     dispatch(fetchTeachers());
   }, [dispatch]);
@@ -101,7 +101,11 @@ const LessonsByTeacher = () => {
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>
-      <ScheduleTable deleteLessonHandler={deleteLessonHandler} lessonsParams={lesson} lessons={teachersLessons} />
+      <ScheduleTable
+        deleteLessonHandler={user.role === 'admin' && deleteLessonHandler}
+        lessonsParams={lesson}
+        lessons={teachersLessons}
+      />
     </>
   );
 };
