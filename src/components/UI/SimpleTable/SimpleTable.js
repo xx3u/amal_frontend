@@ -16,16 +16,24 @@ const SimpleTable = ({ rows, columns }) => {
         <TableHead>
           <TableRow>
             {columns.map((col) => {
-              return <TableCell key={col.field}>{col.headerName}</TableCell>;
+              return (
+                <TableCell align='left' key={col.field}>
+                  {col.headerName}
+                </TableCell>
+              );
             })}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows
             ? rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow hover key={row.id}>
                   {columns.map((col) => {
-                    return <TableCell key={`${row.id}${col.field}`}>{row[col.field]}</TableCell>;
+                    return (
+                      <TableCell align={col.align || 'center'} key={`${row.id}${col.field}`}>
+                        {col.renderCell ? col.renderCell(row[col.field], row) : row[col.field]?.toString()}
+                      </TableCell>
+                    );
                   })}
                 </TableRow>
               ))

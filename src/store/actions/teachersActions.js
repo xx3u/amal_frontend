@@ -24,7 +24,7 @@ import {
   SET_TEACHERS_BY_SUBJECT,
   SET_INIT_TEACHER_LESSONS,
 } from '../actionTypes';
-
+import { NotificationManager } from 'react-notifications';
 const fetchTeachersRequest = () => {
   return { type: FETCH_TEACHERS_REQUEST };
 };
@@ -45,6 +45,7 @@ export const fetchTeachers = () => {
       dispatch(fetchTeachersSuccess(response.data));
     } catch (error) {
       dispatch(fetchTeachersFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -70,6 +71,7 @@ export const deleteTeacher = (teacherId) => {
       dispatch(fetchTeachers());
     } catch (error) {
       dispatch(deleteTeacherFailure(error));
+      NotificationManager.error(error.message, 'Delete error!', 5000);
     }
   };
 };
@@ -94,7 +96,11 @@ export const addTeacher = (teacher) => {
       dispatch(addTeacherSucces(response.data));
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
-      dispatch(addTeacherFailure(error));
+      if (error.response && error.response.data) {
+        dispatch(addTeacherFailure(error.response));
+      } else {
+        dispatch(addTeacherFailure(error));
+      }
     }
   };
 };
@@ -119,7 +125,11 @@ export const editTeacher = (teacher, id) => {
       dispatch(editTeacherSuccess());
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
-      dispatch(editTeacherFailure(error));
+      if (error.response && error.response.data) {
+        dispatch(editTeacherFailure(error.response));
+      } else {
+        dispatch(editTeacherFailure(error));
+      }
     }
   };
 };
@@ -143,7 +153,13 @@ export const getTeacherById = (id) => {
       const resp = await axios.get('/teachers/' + id);
       dispatch(getTeacherByIdSuccess(resp.data));
     } catch (error) {
-      dispatch(getTeacherByIdFailure(error));
+      if (error.response && error.response.data) {
+        dispatch(getTeacherByIdFailure(error.response.data));
+        NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
+      } else {
+        dispatch(getTeacherByIdFailure(error));
+        NotificationManager.error(error.message, 'Fetch error!', 5000);
+      }
     }
   };
 };
@@ -163,6 +179,7 @@ export const getTeachersBySubject = (id) => {
       dispatch(getTeachersBySubjectSuccess(resp.data));
     } catch (error) {
       dispatch(getTeachersBySubjectFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -182,6 +199,7 @@ export const getTeachersLessons = (teacherId, startTime, endTime) => {
       dispatch(getTeachersLessonsSuccess(response.data));
     } catch (error) {
       dispatch(getTeachersLessonsFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };

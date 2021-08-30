@@ -42,7 +42,7 @@ export const loginUser = (userData) => {
       const user = response?.data;
       dispatch(loginUserSuccess(user));
       if (user && user.role === 'teacher') {
-        dispatch(push('/admin-app/teachers/lessons'));
+        dispatch(push('/admin-app/lessons/teachers'));
       } else {
         dispatch(push('/'));
       }

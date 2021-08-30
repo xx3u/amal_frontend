@@ -60,7 +60,11 @@ const Header = () => {
 
   const handleClose = async () => {
     await setAnchorEl(null);
-    setChecked(true);
+    if (window.location.toString().includes('lessons')) {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
   };
 
   const signOut = () => {
@@ -132,6 +136,15 @@ const Header = () => {
                     Расписание по Учителям
                   </MenuItem>
                 </Menu>
+                <Button
+                  component={NavLink}
+                  to='/admin-app/attendance'
+                  color='inherit'
+                  className={classes.btn}
+                  onClick={changeStyle}
+                >
+                  Журнал посещений
+                </Button>
               </>
             ) : (
               <Button component={NavLink} to='/admin-app/lessons/teachers' color='inherit' className={classes.btn}>
@@ -149,7 +162,13 @@ const Header = () => {
                   Выйти
                 </Button>
                 {isAdminRole ? (
-                  <Button component={NavLink} to='/register' color='inherit' className={classes.menuButton}>
+                  <Button
+                    component={NavLink}
+                    to='/register'
+                    color='inherit'
+                    className={classes.menuButton}
+                    onClick={changeStyle}
+                  >
                     Регистрация
                   </Button>
                 ) : null}

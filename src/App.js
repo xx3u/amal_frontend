@@ -2,6 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
+import { NotificationContainer } from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
@@ -19,6 +20,7 @@ import LessonsByTeacher from './containers/LessonsByTeacher/LessonsByTeacher';
 import Register from './containers/RegisterContainer/RegisterContainer';
 import Login from './containers/LoginContainer/LoginContainer';
 import Preloader from './components/UI/Preloader/Preloader';
+import studentAttendancePage from './pages/StudentAttendancePage/StudentAttendancePage';
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
   return isAllowed ? <Route {...props} /> : <Redirect to={redirectTo} />;
@@ -42,6 +44,7 @@ function App() {
       <Preloader isOpen={isOpen} />
       <CssBaseline />
       <Layout>
+        <NotificationContainer />
         <Switch>
           <ProtectedRoute
             isAllowed={user && isAdminRole}
@@ -126,6 +129,13 @@ function App() {
             path='/admin-app/teachers/add'
             exact
             component={CreateTeacherForm}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/attendance'
+            exact
+            component={studentAttendancePage}
           />
           <ProtectedRoute
             isAllowed={user && isAdminRole}

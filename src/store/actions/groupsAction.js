@@ -15,6 +15,7 @@ import {
   UPDATE_TEACHER_IN_LESSONS_SUCCESS,
 } from '../actionTypes';
 import { fetchStudents } from './studentsAction';
+import { NotificationManager } from 'react-notifications';
 
 export const fetchGroupsSuccess = (groups) => ({
   type: FETCH_GROUPS_SUCCESS,
@@ -35,9 +36,11 @@ export const fetchGroups = () => async (dispatch) => {
     dispatch(fetchGroupsSuccess(response.data));
   } catch (error) {
     if (error.response && error.response.data) {
-      dispatch(fetchGroupsFailure(error.response.data));
+      dispatch(fetchGroupsFailure(error.response));
+      NotificationManager.error(error.response.data, 'Fetch error!', 5000);
     } else {
       dispatch(fetchGroupsFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   }
 };
@@ -59,7 +62,11 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
     }
     dispatch(addNewGroupSuccess(response.data));
   } catch (error) {
-    dispatch(addNewGroupFailure(error));
+    if (error.response && error.response.data) {
+      dispatch(addNewGroupFailure(error.response));
+    } else {
+      dispatch(addNewGroupFailure(error));
+    }
   }
 };
 
@@ -74,7 +81,13 @@ export const fetchUpdateGroup = (payload) => async (dispatch) => {
     dispatch(updateGroupSuccess(response.data));
     dispatch(fetchGroups());
   } catch (error) {
-    dispatch(updateGroupFailure(error));
+    if (error.response && error.response.data) {
+      dispatch(updateGroupFailure(error.response));
+      NotificationManager.error(error.response.data, 'Edit error!', 5000);
+    } else {
+      dispatch(updateGroupFailure(error));
+      NotificationManager.error(error.message, 'Edit error!', 5000);
+    }
   }
 };
 

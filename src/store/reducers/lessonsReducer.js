@@ -13,6 +13,12 @@ import {
   CREATE_LESSONS_FAILURE,
   SET_LESSON_PARAMS,
   SET_INIT_LESSONS,
+  ADD_ATTENDANCE_REQUEST,
+  ADD_ATTENDANCE_SUCCESS,
+  ADD_ATTENDANCE_FAILURE,
+  REMOVE_ATTENDANCE_REQUEST,
+  REMOVE_ATTENDANCE_SUCCESS,
+  REMOVE_ATTENDANCE_FAILURE,
 } from '../actionTypes';
 
 const initlessonsParams = {
@@ -21,6 +27,7 @@ const initlessonsParams = {
   teacherId: '',
   startTime: '',
   endTime: '',
+  selectedGroup: {},
 };
 const initState = {
   lessons: [],
@@ -58,6 +65,18 @@ const reducer = (state = initState, action) => {
     case DELETE_LESSON_SUCCESS:
       return { ...state, loading: false };
     case DELETE_LESSON_FAILURE:
+      return { ...state, error: action.error, loading: false };
+    case ADD_ATTENDANCE_REQUEST:
+      return { ...state, loading: true };
+    case ADD_ATTENDANCE_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_ATTENDANCE_FAILURE:
+      return { ...state, error: action.error, loading: false };
+    case REMOVE_ATTENDANCE_REQUEST:
+      return { ...state, loading: true };
+    case REMOVE_ATTENDANCE_SUCCESS:
+      return { ...state, loading: false };
+    case REMOVE_ATTENDANCE_FAILURE:
       return { ...state, error: action.error, loading: false };
     default:
       return state;

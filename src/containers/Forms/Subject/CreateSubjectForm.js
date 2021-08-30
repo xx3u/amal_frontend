@@ -32,6 +32,7 @@ const CreateSubjectForm = ({ isOpen, title }) => {
 
   const submitFormHandler = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     dispatch(addNewSubject(subject));
     setOpen(false);
     setSubject({

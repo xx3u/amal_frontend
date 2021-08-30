@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
   },
   title: {
-    margin: 20,
+    marginTop: 20,
   },
 }));
 
@@ -23,6 +23,8 @@ const LessonsByTeacher = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const teachersLessons = useSelector((state) => state.teachers.teachersLessons);
+  const user = useSelector((state) => state.users.user);
+  const teacherId = user?.teacher && user.teacher.id;
 
   useEffect(() => {
     dispatch(fetchTeachers());
@@ -34,10 +36,9 @@ const LessonsByTeacher = () => {
   const [teacher, setTeacher] = useState(null);
 
   const [lesson, setLesson] = useState({
-    subjectId: '',
-    teacherId: '',
-    startTime: '',
-    endTime: '',
+    teacherId: user?.role === 'teacher' ? teacherId : '',
+    startTime: getWeekdates(new Date()).firstday,
+    endTime: getWeekdates(new Date()).lastday,
   });
 
   const deleteLessonHandler = async (lessonId) => {
@@ -72,26 +73,34 @@ const LessonsByTeacher = () => {
 
   return (
     <>
-      <Typography variant='h5' paragraph={true} className={classes.title}>
-        Расписание по Учителям
-      </Typography>
+      {user?.role === 'admin' ? (
+        <Typography variant='h5' paragraph={true} className={classes.title}>
+          Расписание по Учителям
+        </Typography>
+      ) : (
+        <Typography variant='h5' paragraph={true} className={classes.title}>
+          {user?.teacher && `${user.teacher.firstName} ${user.teacher.lastName}`}, ваше расписание:
+        </Typography>
+      )}
       <Grid container spacing={3} className={classes.container}>
-        <Grid item xs={3}>
-          <Autocomplete
-            id='teachers-lessons'
-            className={classes.autoComplTeacher}
-            options={teachers}
-            getOptionSelected={(option, value) => option.id === value.id}
-            getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
-            value={teacher}
-            onChange={(event, value) => autocompleteChangeHandler(value)}
-            noOptionsText={'выберите сначала предмета'}
-            style={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
-            )}
-          />
-        </Grid>
+        {user?.role === 'admin' ? (
+          <Grid item xs={3}>
+            <Autocomplete
+              id='teachers-lessons'
+              className={classes.autoComplTeacher}
+              options={teachers}
+              getOptionSelected={(option, value) => option.id === value.id}
+              getOptionLabel={(option) => `${option.firstName} ${option.lastName}` || ''}
+              onChange={(event, value) => autocompleteChangeHandler(value)}
+              value={teacher}
+              noOptionsText={'выберите сначала предмета'}
+              style={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
+              )}
+            />
+          </Grid>
+        ) : null}
         <Grid item xs={3}>
           <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ru}>
             <Box className={classes.dateBox}>
