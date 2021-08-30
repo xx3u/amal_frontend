@@ -1,8 +1,6 @@
-import DateFnsUtils from '@date-io/date-fns';
 import { Grid, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import { ru } from 'date-fns/locale';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import React, { useEffect, useState } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getWeekdates } from '../../helpers/helpers';
@@ -98,19 +96,19 @@ const LessonsSelectors = () => {
           renderInput={(params) => <TextField {...params} label='Группа' variant='outlined' placeholder='Выберите' />}
         />
       </Grid>
-      <MuiPickersUtilsProvider locale={ru} utils={DateFnsUtils}>
-        <Grid item xs={3}>
-          <KeyboardDatePicker
-            label='Дата'
-            variant='inline'
-            inputVariant='outlined'
-            fullWidth
-            value={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            format='dd MMM yyyy'
-          />
-        </Grid>
-      </MuiPickersUtilsProvider>
+
+      <Grid item xs={3}>
+        <KeyboardDatePicker
+          label='Дата'
+          variant='inline'
+          inputVariant='outlined'
+          fullWidth
+          value={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          format='dd MMM yyyy'
+        />
+      </Grid>
+
       <Grid item xs={3}>
         <Autocomplete
           id='subjects-lessons'
