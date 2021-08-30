@@ -15,6 +15,12 @@ import {
   CREATE_LESSONS_FAILURE,
   SET_LESSON_PARAMS,
   SET_INIT_LESSONS,
+  ADD_ATTENDANCE_REQUEST,
+  ADD_ATTENDANCE_SUCCESS,
+  ADD_ATTENDANCE_FAILURE,
+  REMOVE_ATTENDANCE_REQUEST,
+  REMOVE_ATTENDANCE_SUCCESS,
+  REMOVE_ATTENDANCE_FAILURE,
 } from '../actionTypes';
 import { NotificationManager } from 'react-notifications';
 
@@ -121,4 +127,45 @@ export const setLessonsParams = (payload) => {
 
 export const setInitLessons = () => {
   return { type: SET_INIT_LESSONS };
+};
+
+const addAttendanceRequest = () => ({ type: ADD_ATTENDANCE_REQUEST });
+const addAttendanceSuccess = (payload) => ({ type: ADD_ATTENDANCE_SUCCESS, payload });
+const addAttendanceFailure = (error) => ({
+  type: ADD_ATTENDANCE_FAILURE,
+  error,
+});
+
+export const addAttendance = (lessonId, studentId) => async (dispatch, getState) => {
+  const { lessons } = getState();
+  const { lessonsParams } = lessons;
+
+  try {
+    dispatch(addAttendanceRequest());
+    await axios.post(`/lessons/${lessonId}/add-student`, { studentId });
+    dispatch(addAttendanceSuccess());
+    dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
+  } catch (error) {
+    dispatch(addAttendanceFailure(error));
+  }
+};
+
+const removeAttendanceRequest = () => ({ type: REMOVE_ATTENDANCE_REQUEST });
+const removeAttendanceSuccess = (payload) => ({ type: REMOVE_ATTENDANCE_SUCCESS, payload });
+const removeAttendanceFailure = (error) => ({
+  type: REMOVE_ATTENDANCE_FAILURE,
+  error,
+});
+
+export const removeAttendance = (lessonId, studentId) => async (dispatch, getState) => {
+  const { lessons } = getState();
+  const { lessonsParams } = lessons;
+  try {
+    dispatch(removeAttendanceRequest());
+    await axios.delete(`/lessons/${lessonId}/remove-student`, { data: { studentId } });
+    dispatch(removeAttendanceSuccess());
+    dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
+  } catch (error) {
+    dispatch(removeAttendanceFailure(error));
+  }
 };

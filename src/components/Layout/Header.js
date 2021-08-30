@@ -136,6 +136,15 @@ const Header = () => {
                     Расписание по Учителям
                   </MenuItem>
                 </Menu>
+                <Button
+                  component={NavLink}
+                  to='/admin-app/attendance'
+                  color='inherit'
+                  className={classes.btn}
+                  onClick={changeStyle}
+                >
+                  Журнал посещений
+                </Button>
               </>
             ) : (
               <Button component={NavLink} to='/admin-app/lessons/teachers' color='inherit' className={classes.btn}>
