@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import DateFnsUtils from '@date-io/date-fns';
 import { Grid, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { ru } from 'date-fns/locale';
+import React, { useEffect, useState } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { getWeekdates } from '../../helpers/helpers';
 import { fetchGroups } from '../../store/actions/groupsAction';
+import { fetchLessonsByGroupId, setInitLessons, setLessonsParams } from '../../store/actions/lessonsAction';
 import { fetchSubjects } from '../../store/actions/subjectsAction';
 import {
   getTeachersBySubject,
@@ -13,8 +15,6 @@ import {
   setInitTeacherLesson,
   setTeachersBySubject,
 } from '../../store/actions/teachersActions';
-import { fetchLessonsByGroupId, setInitLessons, setLessonsParams } from '../../store/actions/lessonsAction';
-import { getWeekdates } from '../../helpers/helpers';
 
 const LessonsSelectors = () => {
   const dispatch = useDispatch();
