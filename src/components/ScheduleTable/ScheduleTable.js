@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
-import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
-import { addDays, getISODay } from 'date-fns';
+import { addDays, eachDayOfInterval, getISODay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 import LessonCard from './LessonCard/LessonCard';
 import AddCard from './AddCard/AddCard';
 import UpdateTeacher from '../../containers/Forms/Lesson/UpdateTeacher';
+import SimpleTable from '../UI/SimpleTable/SimpleTable';
 const ScheduleTable = ({
   lessonsParams,
   addLessonHandler,
@@ -17,7 +17,7 @@ const ScheduleTable = ({
 }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-
+  // console.log(eachDayOfInterval({ start: lessonsParams.startTime, end: lessonsParams.endTime }));
   const [open, setOpen] = useState(false);
   const [isOpenEditForm, setOpenEditForm] = useState(false);
   const [currentLessonId, setCurrentLessonId] = useState(null);
@@ -118,14 +118,14 @@ const ScheduleTable = ({
   };
 
   const columns = [
-    { id: 'slot', headerName: 'Время', width: 100 },
-    { id: 'mon', headerName: 'Пн', width: 50, renderCell },
-    { id: 'tue', headerName: 'Вт', width: 50, renderCell },
-    { id: 'wed', headerName: 'Ср', width: 50, renderCell },
-    { id: 'thu', headerName: 'Чт', width: 50, renderCell },
-    { id: 'fri', headerName: 'Пт', width: 50, renderCell },
-    { id: 'sat', headerName: 'Сб', width: 50, renderCell },
-    { id: 'sun', headerName: 'Вс', width: 50, renderCell },
+    { field: 'slot', headerName: 'Время', width: 100 },
+    { field: 'mon', headerName: 'Пн', width: 50, renderCell },
+    { field: 'tue', headerName: 'Вт', width: 50, renderCell },
+    { field: 'wed', headerName: 'Ср', width: 50, renderCell },
+    { field: 'thu', headerName: 'Чт', width: 50, renderCell },
+    { field: 'fri', headerName: 'Пт', width: 50, renderCell },
+    { field: 'sat', headerName: 'Сб', width: 50, renderCell },
+    { field: 'sun', headerName: 'Вс', width: 50, renderCell },
   ];
 
   const getLesson = (startTime) => {
@@ -219,7 +219,7 @@ const ScheduleTable = ({
         deleteButtonHandler={deleteButtonHandler}
         handleClose={closeDeleteModal}
       />
-      <TableWithCard columns={columns} rows={rows} />
+      <SimpleTable columns={columns} rows={rows} />
       <UpdateTeacher
         isOpen={isOpenEditForm}
         handleClose={closeEditFormHandler}
