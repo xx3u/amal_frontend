@@ -38,7 +38,6 @@ export const fetchLessonsByGroupId = (groupId, startTime, endTime) => {
       dispatch(fetchLessonsSucces(response.data));
     } catch (error) {
       dispatch(fetchLessonsFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };

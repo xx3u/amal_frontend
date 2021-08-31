@@ -37,10 +37,8 @@ export const fetchGroups = () => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(fetchGroupsFailure(error.response));
-      NotificationManager.error(error.response.data, 'Fetch error!', 5000);
     } else {
       dispatch(fetchGroupsFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   }
 };

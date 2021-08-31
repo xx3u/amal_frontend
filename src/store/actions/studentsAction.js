@@ -36,10 +36,8 @@ export const fetchStudents = () => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(fetchStudentsFailure(error.response.data));
-      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
     } else {
       dispatch(fetchStudentsFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   }
 };
@@ -52,10 +50,8 @@ export const getStudentsByParams = (firstName, lastName) => async (dispatch) => 
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(fetchStudentsFailure(error.response.data));
-      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
     } else {
       dispatch(fetchStudentsFailure(error));
-      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
     }
   }
 };

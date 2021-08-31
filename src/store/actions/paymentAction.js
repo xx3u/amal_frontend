@@ -39,7 +39,6 @@ export const fetchPayments = () => async (dispatch) => {
     dispatch(fetchPaymentsSuccess(response.data));
   } catch (error) {
     dispatch(fetchPaymentsFailure(error));
-    NotificationManager.error(error.message, 'Fetch error!', 5000);
   }
 };
 
@@ -76,10 +75,8 @@ export const getPaymentById = (id) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(getPaymentByIdFailure(error.response));
-      NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
     } else {
       dispatch(getPaymentByIdFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   }
 };
@@ -98,10 +95,10 @@ export const updatePayment = (id, payment) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(updatePaymentFailure(error.response));
-      NotificationManager.error(error.response.data, 'Put error!', 5000);
+      NotificationManager.error(error.response.data, 'Edit error!', 5000);
     } else {
       dispatch(updatePaymentFailure(error));
-      NotificationManager.error(error.message, 'Put error!', 5000);
+      NotificationManager.error(error.message, 'Edit error!', 5000);
     }
   }
 };
@@ -117,6 +114,5 @@ export const getPaymentsByStudentId = (id) => async (dispatch) => {
     dispatch(getPaymentsByStudentIdSuccess(response.data));
   } catch (error) {
     dispatch(getPaymentsByStudentIdFailure(error));
-    NotificationManager.error(error.message, 'Fetch error!', 5000);
   }
 };

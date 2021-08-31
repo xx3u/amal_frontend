@@ -31,10 +31,8 @@ export const fetchSubjects = () => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(fetchSubjectsFailure(error.response.data));
-      NotificationManager.error(error.response.data.message, 'Fetch error!', 5000);
     } else {
       dispatch(fetchSubjectsFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   }
 };
