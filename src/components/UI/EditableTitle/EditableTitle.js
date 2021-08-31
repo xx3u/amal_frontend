@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Grid, IconButton, TextField, Typography } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
@@ -16,6 +16,11 @@ const EditableTitle = ({
 }) => {
   const [editDisable, setEditEnable] = useState(true);
   const [textValue, setTextValue] = useState(value);
+  const prevTextValue = useRef(textValue);
+
+  useEffect(() => {
+    setTextValue(value);
+  }, [value]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -23,6 +28,7 @@ const EditableTitle = ({
     setEditEnable(!editDisable);
     if (!editDisable && value !== textValue) {
       onClickSave(textValue);
+      setTextValue(prevTextValue.current);
     }
   };
 
