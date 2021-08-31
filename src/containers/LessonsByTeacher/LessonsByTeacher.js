@@ -92,7 +92,6 @@ const LessonsByTeacher = () => {
               onChange={(event, value) => autocompleteChangeHandler(value)}
               value={teacher}
               noOptionsText={'выберите сначала предмета'}
-              style={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
               )}
