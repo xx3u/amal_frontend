@@ -110,7 +110,7 @@ export const updateStudent = (id, updatedStudent) => async (dispatch) => {
     dispatch(push('/admin-app/students'));
   } catch (error) {
     if (error.response && error.response.data) {
-      dispatch(updateStudentFailure(error));
+      dispatch(updateStudentFailure(error.response));
     } else {
       dispatch(updateStudentFailure(error));
     }
