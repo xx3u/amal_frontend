@@ -4,7 +4,7 @@ import {
   FETCH_PAYMENTS_SUCCESS,
   FETCH_PAYMENTS_REQUEST,
   FETCH_PAYMENTS_FAILURE,
-  ADD_NEW_STUDENT_FAILURE,
+  ADD_NEW_PAYMENT_FAILURE,
   ADD_NEW_PAYMENT_REQUEST,
   ADD_NEW_PAYMENT_SUCCESS,
   GET_PAYMENT_BY_ID_REQUEST,
@@ -18,6 +18,7 @@ import {
   GET_PAYMENTS_BY_STUDENT_ID_FAILURE,
 } from '../actionTypes';
 import { fetchStudents } from './studentsAction';
+import { NotificationManager } from 'react-notifications';
 
 const fetchPaymentsRequest = () => ({ type: FETCH_PAYMENTS_REQUEST });
 
@@ -38,12 +39,13 @@ export const fetchPayments = () => async (dispatch) => {
     dispatch(fetchPaymentsSuccess(response.data));
   } catch (error) {
     dispatch(fetchPaymentsFailure(error));
+    NotificationManager.error(error.message, 'Fetch error!', 5000);
   }
 };
 
 const addNewPaymentRequest = () => ({ type: ADD_NEW_PAYMENT_REQUEST });
 const addNewPaymentSuccess = (data) => ({ type: ADD_NEW_PAYMENT_SUCCESS, data });
-const addNewPaymentFailure = (error) => ({ type: ADD_NEW_STUDENT_FAILURE, error });
+const addNewPaymentFailure = (error) => ({ type: ADD_NEW_PAYMENT_FAILURE, error });
 
 export const addNewPayment = (newPayment) => async (dispatch) => {
   dispatch(addNewPaymentRequest());
@@ -52,7 +54,13 @@ export const addNewPayment = (newPayment) => async (dispatch) => {
     dispatch(addNewPaymentSuccess(response.data));
     dispatch(fetchStudents());
   } catch (error) {
-    dispatch(addNewPaymentFailure(error));
+    if (error.response && error.response.data) {
+      dispatch(addNewPaymentFailure(error.response));
+      NotificationManager.error(error.response.data, 'Post error!', 5000);
+    } else {
+      dispatch(addNewPaymentFailure(error));
+      NotificationManager.error(error.message, 'Post error!', 5000);
+    }
   }
 };
 
@@ -66,7 +74,13 @@ export const getPaymentById = (id) => async (dispatch) => {
     const response = await axios.get(`/payments/${id}`);
     dispatch(getPaymentByIdSuccess(response.data));
   } catch (error) {
-    dispatch(getPaymentByIdFailure(error));
+    if (error.response && error.response.data) {
+      dispatch(getPaymentByIdFailure(error.response));
+      NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
+    } else {
+      dispatch(getPaymentByIdFailure(error));
+      NotificationManager.error(error.message, 'Fetch error!', 5000);
+    }
   }
 };
 
@@ -82,7 +96,13 @@ export const updatePayment = (id, payment) => async (dispatch) => {
     dispatch(fetchStudents());
     dispatch(push('/admin-app/payments'));
   } catch (error) {
-    dispatch(updatePaymentFailure(error));
+    if (error.response && error.response.data) {
+      dispatch(updatePaymentFailure(error.response));
+      NotificationManager.error(error.response.data, 'Put error!', 5000);
+    } else {
+      dispatch(updatePaymentFailure(error));
+      NotificationManager.error(error.message, 'Put error!', 5000);
+    }
   }
 };
 
@@ -97,5 +117,6 @@ export const getPaymentsByStudentId = (id) => async (dispatch) => {
     dispatch(getPaymentsByStudentIdSuccess(response.data));
   } catch (error) {
     dispatch(getPaymentsByStudentIdFailure(error));
+    NotificationManager.error(error.message, 'Fetch error!', 5000);
   }
 };

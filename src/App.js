@@ -2,6 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router';
+import { NotificationContainer } from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import StudentsPage from './pages/StudentsPage/StudentsPage';
@@ -18,6 +19,8 @@ import LessonsPage from './pages/LessonsPage/LessonsPage';
 import LessonsByTeacher from './containers/LessonsByTeacher/LessonsByTeacher';
 import Register from './containers/RegisterContainer/RegisterContainer';
 import Login from './containers/LoginContainer/LoginContainer';
+import Preloader from './components/UI/Preloader/Preloader';
+import studentAttendancePage from './pages/StudentAttendancePage/StudentAttendancePage';
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
   return isAllowed ? <Route {...props} /> : <Redirect to={redirectTo} />;
@@ -25,11 +28,23 @@ const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
 
 function App() {
   const user = useSelector((state) => state.users.user);
+  const groupsLoading = useSelector((state) => state.groups.loading);
+  const lessonsLoading = useSelector((state) => state.lessons.loading);
+  const paymentsLoading = useSelector((state) => state.payments.loading);
+  const studentsLoading = useSelector((state) => state.students.loading);
+  const subjectsLoading = useSelector((state) => state.subjects.loading);
+  const teachersLoading = useSelector((state) => state.teachers.loading);
+
+  const isOpen =
+    groupsLoading || lessonsLoading || paymentsLoading || studentsLoading || subjectsLoading || teachersLoading;
+
   const isAdminRole = user && user.role === 'admin';
   return (
     <div className='App'>
+      <Preloader isOpen={isOpen} />
       <CssBaseline />
       <Layout>
+        <NotificationContainer />
         <Switch>
           <ProtectedRoute
             isAllowed={user && isAdminRole}
@@ -114,6 +129,13 @@ function App() {
             path='/admin-app/teachers/add'
             exact
             component={CreateTeacherForm}
+          />
+          <ProtectedRoute
+            isAllowed={user}
+            redirectTo={'/login'}
+            path='/admin-app/attendance'
+            exact
+            component={studentAttendancePage}
           />
           <ProtectedRoute
             isAllowed={user && isAdminRole}

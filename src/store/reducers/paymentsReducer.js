@@ -34,7 +34,7 @@ export default function paymentsReducer(state = initialState, action) {
     case ADD_NEW_PAYMENT_SUCCESS:
       return { ...state, loading: false };
     case ADD_NEW_PAYMENT_FAILURE:
-      return { ...state, loading: false, error: action.data };
+      return { ...state, loading: false, error: action.error };
     case GET_PAYMENT_BY_ID_REQUEST:
       return { ...state, loading: true };
     case GET_PAYMENT_BY_ID_SUCCESS:

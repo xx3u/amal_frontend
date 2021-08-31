@@ -1,10 +1,11 @@
 import React from 'react';
 import TeacherForm from './TeacherForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTeacher } from '../../../store/actions/teachersActions';
 
 const CreateTeacherForm = () => {
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.teachers.error);
   const teacher = {
     firstName: '',
     lastName: '',
@@ -20,7 +21,7 @@ const CreateTeacherForm = () => {
 
   return (
     <div className='CreateTeacherForm'>
-      <TeacherForm title='Добавить учителя' submitData={addTeacherHandler} selectedTeacher={teacher} />
+      <TeacherForm title='Добавить учителя' submitData={addTeacherHandler} selectedTeacher={teacher} error={error} />
     </div>
   );
 };

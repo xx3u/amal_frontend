@@ -1,5 +1,6 @@
 import { FETCH_STREAMS_REQUEST, FETCH_STREAMS_SUCCESS, FETCH_STREAMS_FAILURE } from '../actionTypes';
 import axios from '../../axiosApi';
+import { NotificationManager } from 'react-notifications';
 
 const fetchStreamsRequest = () => ({
   type: FETCH_STREAMS_REQUEST,
@@ -22,5 +23,6 @@ export const fetchStreams = () => async (dispatch) => {
     dispatch(fetchStreamsSuccess(response.data));
   } catch (error) {
     dispatch(fetchStreamsFailure(error));
+    NotificationManager.error(error.message, 'Fetch error!', 5000);
   }
 };

@@ -6,10 +6,21 @@ import { addNewGroup } from '../../../store/actions/groupsAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { fetchStudents } from '../../../store/actions/studentsAction';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  alert: {
+    width: '100%',
+    marginTop: '10px',
+  },
+}));
 
 const GroupForm = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const { students } = useSelector((state) => state.students);
+  const error = useSelector((state) => state.groups.error);
   const [group, setGroup] = useState({
     groupName: '',
   });
@@ -35,6 +46,12 @@ const GroupForm = () => {
 
   return (
     <FormSubmission title='Добавить группу' maxWidth='sm' onSubmit={submitFormHandler}>
+      {error && (
+        <Alert severity='error' className={classes.alert}>
+          <AlertTitle>Error</AlertTitle>
+          {error ? error.data : error.message}
+        </Alert>
+      )}
       <Grid item xs={12}>
         <FormItem
           name='name'
