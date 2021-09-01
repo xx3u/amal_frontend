@@ -17,7 +17,7 @@ const SimpleTable = ({ rows, columns }) => {
           <TableRow>
             {columns.map((col) => {
               return (
-                <TableCell align='left' key={col.field}>
+                <TableCell align={col.align || 'center'} key={col.field}>
                   {col.headerName}
                 </TableCell>
               );
