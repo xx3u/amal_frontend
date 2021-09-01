@@ -45,7 +45,6 @@ export const fetchTeachers = () => {
       dispatch(fetchTeachersSuccess(response.data));
     } catch (error) {
       dispatch(fetchTeachersFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -179,7 +178,6 @@ export const getTeachersBySubject = (id) => {
       dispatch(getTeachersBySubjectSuccess(resp.data));
     } catch (error) {
       dispatch(getTeachersBySubjectFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };
@@ -199,7 +197,6 @@ export const getTeachersLessons = (teacherId, startTime, endTime) => {
       dispatch(getTeachersLessonsSuccess(response.data));
     } catch (error) {
       dispatch(getTeachersLessonsFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
     }
   };
 };

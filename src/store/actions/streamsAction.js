@@ -23,6 +23,5 @@ export const fetchStreams = () => async (dispatch) => {
     dispatch(fetchStreamsSuccess(response.data));
   } catch (error) {
     dispatch(fetchStreamsFailure(error));
-    NotificationManager.error(error.message, 'Fetch error!', 5000);
   }
 };
