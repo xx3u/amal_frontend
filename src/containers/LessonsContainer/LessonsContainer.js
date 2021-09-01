@@ -7,7 +7,7 @@ import { addNewLesson, fetchLessonsByGroupId, deleteLesson } from '../../store/a
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 import CreateLessons from '../Forms/Lesson/CreateLessons';
 import InfoModal from '../../components/UI/InfoModal/InfoModal';
-import LessonsSelectors from './LessonsSelectors';
+import LessonsSelectors from './LessonsSelects';
 import { getTeachersLessons } from '../../store/actions/teachersActions';
 
 const useStyles = makeStyles(() => ({
