@@ -110,7 +110,11 @@ const LessonsByTeacher = () => {
           </MuiPickersUtilsProvider>
         </Grid>
       </Grid>
-      <ScheduleTable deleteLessonHandler={deleteLessonHandler} lessonsParams={lesson} lessons={teachersLessons} />
+      <ScheduleTable
+        deleteLessonHandler={user?.role === 'admin' && deleteLessonHandler}
+        lessonsParams={lesson}
+        lessons={teachersLessons}
+      />
     </>
   );
 };
