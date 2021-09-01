@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
-import { addDays, eachDayOfInterval, getISODay } from 'date-fns';
+import { addDays, getISODay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 import LessonCard from './LessonCard/LessonCard';
 import AddCard from './AddCard/AddCard';
@@ -17,7 +17,6 @@ const ScheduleTable = ({
 }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-  // console.log(eachDayOfInterval({ start: lessonsParams.startTime, end: lessonsParams.endTime }));
   const [open, setOpen] = useState(false);
   const [isOpenEditForm, setOpenEditForm] = useState(false);
   const [currentLessonId, setCurrentLessonId] = useState(null);
@@ -78,12 +77,14 @@ const ScheduleTable = ({
         const startTimeString = getTimeStringInDoubleFigures(time);
         const endTimeString = getTimeStringInDoubleFigures(time + 1);
         copyLessons[lesson]['slot'] = `${startTimeString} - ${endTimeString}`;
+        copyLessons[lesson]['id'] = `${startTimeString}`;
       }
       days.forEach((day, dayIndex) => {
         copyLessons[lesson][day] = {
           startTime: monday ? getDateWithTime(addDays(monday, dayIndex), time, 0) : null,
           endTime: monday ? getDateWithTime(addDays(monday, dayIndex), time + 1, 0) : null,
           teacherBussy: false,
+          id: `${time}${day}`,
         };
       });
     });
@@ -95,15 +96,15 @@ const ScheduleTable = ({
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
   const renderCell = (row) => {
-    return row.id ? (
+    return row.lessonId ? (
       <LessonCard
-        id={row.id || ''}
+        id={row.lessonId || ''}
         title={row.group || row.subject}
         subheader={row.teacher || row.subject}
-        onDeleteHandler={deleteLessonHandler && row.id && ((e) => openDeleteModal(e, row.id))}
+        onDeleteHandler={deleteLessonHandler && row.lessonId && ((e) => openDeleteModal(e, row.lessonId))}
         onEditHandler={
           updateTeacherHandler &&
-          row.id &&
+          row.lessonId &&
           ((e) => openEditFormHandler(e, row.teacherId, row.teacher, row.startTime, row.subjectId))
         }
       />
@@ -164,7 +165,7 @@ const ScheduleTable = ({
                 ...prev[curLesson],
                 [day]: {
                   ...prev[curLesson][day],
-                  id: lesson.id,
+                  lessonId: lesson.id,
                   subject: lesson.Subject.subjectName,
                   teacher: lesson.Teacher ? lesson.Teacher?.firstName + ' ' + lesson.Teacher?.lastName : null,
                   group: lesson.Group ? lesson.Group.groupName : null,
