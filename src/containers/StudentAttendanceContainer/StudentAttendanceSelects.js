@@ -25,6 +25,14 @@ const StudentAttendanceSelects = () => {
     end: null,
   });
 
+  const user = useSelector((state) => state.users.user);
+  const isTeacherRole = user?.role === 'teacher' ? true : false;
+
+  const teacherData = {
+    id: user.teacher.id,
+    fullName: `${user.teacher.lastName} ${user.teacher.firstName}`,
+  };
+
   useEffect(() => {
     dispatch(fetchGroups());
   }, [dispatch]);
@@ -67,7 +75,7 @@ const StudentAttendanceSelects = () => {
   }, [selectedGroup, monthInterval, dispatch]);
 
   useEffect(() => {
-    setSelectedTeacher(null);
+    setSelectedTeacher(isTeacherRole ? teacherData : null);
   }, [selectedGroup]);
 
   return (
@@ -89,22 +97,26 @@ const StudentAttendanceSelects = () => {
         />
       </Grid>
 
-      <Grid item xs={3}>
-        <Autocomplete
-          id='teacher-select'
-          value={selectedTeacher}
-          getOptionSelected={(options, value) => options.id === value.id}
-          onChange={(event, value) => {
-            setSelectedTeacher(value);
-          }}
-          options={teachers}
-          getOptionLabel={(option) => option?.fullName}
-          noOptionsText={'список пуст'}
-          renderInput={(params) => (
-            <TextField {...params} label='Выберите учителя' variant='outlined' placeholder='Выберите' />
-          )}
-        />
-      </Grid>
+      <>
+        {!isTeacherRole ? (
+          <Grid item xs={3}>
+            <Autocomplete
+              id='teacher-select'
+              value={selectedTeacher}
+              getOptionSelected={(options, value) => options.id === value.id}
+              onChange={(event, value) => {
+                setSelectedTeacher(value);
+              }}
+              options={teachers}
+              getOptionLabel={(option) => option?.fullName}
+              noOptionsText={'список пуст'}
+              renderInput={(params) => (
+                <TextField {...params} label='Выберите учителя' variant='outlined' placeholder='Выберите' />
+              )}
+            />
+          </Grid>
+        ) : null}
+      </>
 
       <MuiPickersUtilsProvider locale={ru} utils={DateFnsUtils}>
         <Grid item xs={3}>
