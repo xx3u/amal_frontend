@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getTimeStringInDoubleFigures } from '../../helpers/getTimeStringInDoubleFigures';
-import TableWithCard from './TableWithCard/TableWithCard';
 import { getDateWithTime } from '../../helpers/getDateWithTime';
-import { addDays, getDay } from 'date-fns';
+import { addDays, getISODay } from 'date-fns';
 import DeleteModal from '../UI/DeleteModal/DeleteModal';
 import LessonCard from './LessonCard/LessonCard';
 import AddCard from './AddCard/AddCard';
 import UpdateTeacher from '../../containers/Forms/Lesson/UpdateTeacher';
+import SimpleTable from '../UI/SimpleTable/SimpleTable';
 const ScheduleTable = ({
   lessonsParams,
   addLessonHandler,
@@ -17,7 +17,6 @@ const ScheduleTable = ({
 }) => {
   const times = [9, 10, 11, 12, 14, 15, 16, 17];
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-
   const [open, setOpen] = useState(false);
   const [isOpenEditForm, setOpenEditForm] = useState(false);
   const [currentLessonId, setCurrentLessonId] = useState(null);
@@ -78,12 +77,14 @@ const ScheduleTable = ({
         const startTimeString = getTimeStringInDoubleFigures(time);
         const endTimeString = getTimeStringInDoubleFigures(time + 1);
         copyLessons[lesson]['slot'] = `${startTimeString} - ${endTimeString}`;
+        copyLessons[lesson]['id'] = `${startTimeString}`;
       }
       days.forEach((day, dayIndex) => {
         copyLessons[lesson][day] = {
           startTime: monday ? getDateWithTime(addDays(monday, dayIndex), time, 0) : null,
           endTime: monday ? getDateWithTime(addDays(monday, dayIndex), time + 1, 0) : null,
           teacherBussy: false,
+          id: `${time}${day}`,
         };
       });
     });
@@ -95,15 +96,15 @@ const ScheduleTable = ({
   const [weekLessons, setWeekLessons] = useState(initWeekLessons);
 
   const renderCell = (row) => {
-    return row.id ? (
+    return row.lessonId ? (
       <LessonCard
-        id={row.id || ''}
+        id={row.lessonId || ''}
         title={row.group || row.subject}
         subheader={row.teacher || row.subject}
-        onDeleteHandler={deleteLessonHandler && row.id && ((e) => openDeleteModal(e, row.id))}
+        onDeleteHandler={deleteLessonHandler && row.lessonId && ((e) => openDeleteModal(e, row.lessonId))}
         onEditHandler={
           updateTeacherHandler &&
-          row.id &&
+          row.lessonId &&
           ((e) => openEditFormHandler(e, row.teacherId, row.teacher, row.startTime, row.subjectId))
         }
       />
@@ -118,14 +119,14 @@ const ScheduleTable = ({
   };
 
   const columns = [
-    { id: 'slot', headerName: 'Время', width: 100 },
-    { id: 'mon', headerName: 'Пн', width: 50, renderCell },
-    { id: 'tue', headerName: 'Вт', width: 50, renderCell },
-    { id: 'wed', headerName: 'Ср', width: 50, renderCell },
-    { id: 'thu', headerName: 'Чт', width: 50, renderCell },
-    { id: 'fri', headerName: 'Пт', width: 50, renderCell },
-    { id: 'sat', headerName: 'Сб', width: 50, renderCell },
-    { id: 'sun', headerName: 'Вс', width: 50, renderCell },
+    { field: 'slot', headerName: 'Время', width: 100 },
+    { field: 'mon', headerName: 'Пн', width: 50, renderCell },
+    { field: 'tue', headerName: 'Вт', width: 50, renderCell },
+    { field: 'wed', headerName: 'Ср', width: 50, renderCell },
+    { field: 'thu', headerName: 'Чт', width: 50, renderCell },
+    { field: 'fri', headerName: 'Пт', width: 50, renderCell },
+    { field: 'sat', headerName: 'Сб', width: 50, renderCell },
+    { field: 'sun', headerName: 'Вс', width: 50, renderCell },
   ];
 
   const getLesson = (startTime) => {
@@ -154,7 +155,7 @@ const ScheduleTable = ({
       lessons.forEach((lesson) => {
         const lessonStartDate = new Date(lesson.startTime);
         const startTime = lessonStartDate.getUTCHours();
-        const lessonweekDay = getDay(lessonStartDate, { weekStartsOn: 1 });
+        const lessonweekDay = getISODay(lessonStartDate);
         const curLesson = getLesson(startTime);
         if (index + 1 === lessonweekDay) {
           setWeekLessons((prev) => {
@@ -164,7 +165,7 @@ const ScheduleTable = ({
                 ...prev[curLesson],
                 [day]: {
                   ...prev[curLesson][day],
-                  id: lesson.id,
+                  lessonId: lesson.id,
                   subject: lesson.Subject.subjectName,
                   teacher: lesson.Teacher ? lesson.Teacher?.firstName + ' ' + lesson.Teacher?.lastName : null,
                   group: lesson.Group ? lesson.Group.groupName : null,
@@ -186,7 +187,7 @@ const ScheduleTable = ({
         bussyLessons.forEach((lesson) => {
           const lessonStartDate = new Date(lesson.startTime);
           const startTime = lessonStartDate.getUTCHours();
-          const lessonweekDay = getDay(lessonStartDate, { weekStartsOn: 1 });
+          const lessonweekDay = getISODay(lessonStartDate);
           const curLesson = getLesson(startTime);
           if (index + 1 === lessonweekDay) {
             setWeekLessons((prev) => {
@@ -219,7 +220,7 @@ const ScheduleTable = ({
         deleteButtonHandler={deleteButtonHandler}
         handleClose={closeDeleteModal}
       />
-      <TableWithCard columns={columns} rows={rows} />
+      <SimpleTable columns={columns} rows={rows} />
       <UpdateTeacher
         isOpen={isOpenEditForm}
         handleClose={closeEditFormHandler}

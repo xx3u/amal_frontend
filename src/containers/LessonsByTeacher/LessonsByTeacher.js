@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box, Grid, TextField, Typography, makeStyles } from '@material-ui/core';
+import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import DateFnsUtils from '@date-io/date-fns';
-import { ru } from 'date-fns/locale';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import { fetchTeachers, getTeachersLessons, setInitTeacherLesson } from '../../store/actions/teachersActions';
 import { deleteLesson } from '../../store/actions/lessonsAction';
 import { getWeekdates } from '../../helpers/helpers';
@@ -94,7 +92,6 @@ const LessonsByTeacher = () => {
               onChange={(event, value) => autocompleteChangeHandler(value)}
               value={teacher}
               noOptionsText={'выберите сначала предмета'}
-              style={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
               )}
@@ -102,16 +99,19 @@ const LessonsByTeacher = () => {
           </Grid>
         ) : null}
         <Grid item xs={3}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ru}>
-            <Box className={classes.dateBox}>
-              <Typography className={classes.dateText}>Дата</Typography>
-              <KeyboardDatePicker value={selectedDate} onChange={(date) => setSelectedDate(date)} format='yyyy/MM/dd' />
-            </Box>
-          </MuiPickersUtilsProvider>
+          <KeyboardDatePicker
+            label='Дата'
+            variant='inline'
+            inputVariant='outlined'
+            fullWidth
+            value={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            format='dd MMM yyyy'
+          />
         </Grid>
       </Grid>
       <ScheduleTable
-        deleteLessonHandler={user?.role === 'admin' && deleteLessonHandler}
+        deleteLessonHandler={user.role === 'admin' && deleteLessonHandler}
         lessonsParams={lesson}
         lessons={teachersLessons}
       />
