@@ -8,7 +8,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Grid, TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import { fetchTeachers } from '../../store/actions/teachersActions';
-import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -102,7 +101,7 @@ const Register = () => {
             renderInput={(params) => <TextField {...params} label='Роль' variant='outlined' placeholder='Выберите' />}
           />
         </Grid>
-        <Fade in={checked}>
+        {checked ? (
           <Grid item>
             <Autocomplete
               id='teachers'
@@ -117,7 +116,7 @@ const Register = () => {
               )}
             />
           </Grid>
-        </Fade>
+        ) : null}
       </Grid>
     </UserForm>
   );
