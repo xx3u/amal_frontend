@@ -1,0 +1,42 @@
+name: start_API
+
+  push:
+    branches: [ feature_git_action_test ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: test
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env: 
+      DATABASE_URL: postgres://postgres:postgres@0.0.0.0:5432/test
+      JWT_SECRET_KEY: '@=xc6j2F4-9^#_2VNG4fLwU:qshTFt8F'
+      PORT: 8080
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: xx3u/amal_backend
+          ref: 'feature_postgres_github'
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+      - run: npm install
+      - run: npm run migrate
+      - run: npm run lint
+      - run: npm test
