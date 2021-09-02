@@ -1,6 +1,6 @@
 name: start_API
-
-push:
+on:
+  push:
     branches: [ feature_git_action_test ]
 
 jobs:
