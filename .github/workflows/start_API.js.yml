@@ -1,7 +1,7 @@
 name: start_API
 on:
   push:
-    branches: [ feature_git_action_test ]
+    branches: [ feature_git_actions_test ]
 jobs:
   build:
     Explore-GitHub-Actions:
