@@ -27,16 +27,11 @@ const StudentAttendanceSelects = () => {
 
   const user = useSelector((state) => state.users.user);
   const isTeacherRole = user?.role === 'teacher' ? true : false;
-  console.log('isTeacherRole', isTeacherRole);
-  console.log('user', user);
 
   const teacherData = {
     id: user.teacher.id,
     fullName: `${user.teacher.lastName} ${user.teacher.firstName}`,
   };
-
-  console.log('selectedTeacher', selectedTeacher);
-  console.log('teachers', teachers);
 
   useEffect(() => {
     dispatch(fetchGroups());
