@@ -49,7 +49,11 @@ const UserForm = ({ title, onSubmit, children, buttonId, buttonText, error }) =>
         {error?.response && (
           <Alert severity='error' className={classes.alert}>
             <AlertTitle>Error</AlertTitle>
-            {error.response.data.details ? error.response.data.details[0].message : error.response.data.error}
+            {error.response.data.details
+              ? error.response.data.details[0].message
+              : error.response.data.error
+              ? error.response.data.error
+              : error.response.data}
           </Alert>
         )}
         <form className={classes.form} onSubmit={onSubmit}>
