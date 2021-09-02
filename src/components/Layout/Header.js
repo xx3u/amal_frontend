@@ -77,7 +77,7 @@ const Header = () => {
         <Grid container justifyContent='space-between' direction='row'>
           <Grid item>
             <Typography variant='h6' className={classes.logo}>
-              AMAL LOGO
+              AMAL EDU
             </Typography>
           </Grid>
           <Box flexGrow={1} display={user ? 'block' : 'none'}>
