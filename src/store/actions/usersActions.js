@@ -1,5 +1,6 @@
 import axios from '../../axiosApi';
 import { push } from 'connected-react-router';
+import { NotificationManager } from 'react-notifications';
 import {
   CREATE_USER_FAILURE,
   CREATE_USER_SUCCESS,
@@ -22,6 +23,7 @@ export const createUser = (userData) => {
       await axios.post('/users/register', userData);
       dispatch(createUserSuccess());
       dispatch(push('/'));
+      NotificationManager.success('Success message', 'Успешно зарегистрирован');
     } catch (error) {
       dispatch(createUserFailure(error));
     }
