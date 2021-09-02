@@ -17,7 +17,7 @@ jobs:
 #          run: |
 #                 ls ${{ github.workspace }}
 #        - run: echo "🍏 This job's status is ${{ job.status }}."
-  run_server:
+  upApi:
 
     runs-on: ubuntu-latest
 
@@ -26,7 +26,7 @@ jobs:
         image: postgres
         env:
           POSTGRES_DB: test
-          POSTGRES_PASSWORD: postgrestab multi дшту
+          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
         ports:
           - 5432:5432
