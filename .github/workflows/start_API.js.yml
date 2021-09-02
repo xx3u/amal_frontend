@@ -42,7 +42,7 @@ jobs:
 
     steps:
       - name: Checkout api
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
         with:
           repository: xx3u/amal_backend
           ref: develop
