@@ -29,8 +29,8 @@ const StudentAttendanceSelects = () => {
   const isTeacherRole = user?.role === 'teacher' ? true : false;
 
   const teacherData = {
-    id: user.teacher.id,
-    fullName: `${user.teacher.lastName} ${user.teacher.firstName}`,
+    id: user.teacher?.id,
+    fullName: `${user.teacher?.lastName} ${user.teacher?.firstName}`,
   };
 
   useEffect(() => {
