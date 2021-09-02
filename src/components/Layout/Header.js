@@ -147,9 +147,20 @@ const Header = () => {
                 </Button>
               </>
             ) : (
-              <Button component={NavLink} to='/admin-app/lessons/teachers' color='inherit' className={classes.btn}>
-                Расписание
-              </Button>
+              <>
+                <Button component={NavLink} to='/admin-app/lessons/teachers' color='inherit' className={classes.btn}>
+                  Расписание
+                </Button>
+                <Button
+                  component={NavLink}
+                  to='/admin-app/attendance'
+                  color='inherit'
+                  className={classes.btn}
+                  onClick={changeStyle}
+                >
+                  Журнал посещений
+                </Button>
+              </>
             )}
           </Box>
           <Box>
