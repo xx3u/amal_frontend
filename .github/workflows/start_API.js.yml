@@ -27,6 +27,8 @@ jobs:
           ref: develop
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
+      - name: Run test
+        run: npm run test
 
   upFront:
     needs: upApi
