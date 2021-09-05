@@ -46,23 +46,27 @@ jobs:
         with:
           repository: xx3u/amal_backend
           ref: develop
-      - name: Use Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-      - run: npm ci
-      - run: npm run migrate
-      - run: npm run dev &
+      - name: Start containers
+        run: docker-compose -f "docker-compose.yml" up -d --build
+      # - name: Use Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16.x'
+      # - name: Install dependencies   
+      #   run: npm ci
+      #   run: npm run migrate
+      #   run: npm run dev &
 
       - name: Checkout frontEnd
         uses: actions/checkout@v2
-      - run: npm ci 
-      - run: npm start &
+      - name: Install dependencies   
+        run: npm ci 
+        run: npm start &
 
-      - name: Checkout test
-        uses: actions/checkout@v2
-        with:
-          repository: BauyrjanSeidahmet/amal_tests
-          ref: test_login
-      - run: npm ci 
-      - run: npm start  
+      # - name: Checkout test
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: BauyrjanSeidahmet/amal_tests
+      #     ref: test_login
+      # - run: npm ci 
+      # - run: npm start  
