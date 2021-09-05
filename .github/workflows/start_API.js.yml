@@ -1,45 +1,24 @@
 name: start_API
 on:
   push:
-    branches: [ feature_git_actions_test ]
+    branches: [feature_git_actions_test]
 jobs:
-#     Explore-GitHub-Actions:
-#       runs-on: ubuntu-latest
-#       steps:
-#        - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-#        - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-#        - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-#        - name: Check out repository code
-#          uses: actions/checkout@v2
-#        - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-#        - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-#        - name: List files in the repository
-#          run: |
-#                 ls ${{ github.workspace }}
-#        - run: echo "🍏 This job's status is ${{ job.status }}."
+  #     Explore-GitHub-Actions:
+  #       runs-on: ubuntu-latest
+  #       steps:
+  #        - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+  #        - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+  #        - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+  #        - name: Check out repository code
+  #          uses: actions/checkout@v2
+  #        - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+  #        - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+  #        - name: List files in the repository
+  #          run: |
+  #                 ls ${{ github.workspace }}
+  #        - run: echo "🍏 This job's status is ${{ job.status }}."
   upApi:
-
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_DB: test
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    env: 
-      DATABASE_URL: postgres://postgres:postgres@0.0.0.0:5432/test
-      JWT_SECRET_KEY: '@=xc6j2F4-9^#_2VNG4fLwU:qshTFt8F'
-      PORT: 8080
-
     steps:
       - name: Checkout api
         uses: actions/checkout@v2
@@ -52,21 +31,26 @@ jobs:
       #   uses: actions/setup-node@v2
       #   with:
       #     node-version: '16.x'
-      # - name: Install dependencies   
+      # - name: Install dependencies
       #   run: npm ci
       #   run: npm run migrate
       #   run: npm run dev &
-
-      - name: Checkout frontEnd
-        uses: actions/checkout@v2
-      - name: Install dependencies   
-        run: npm ci 
-        run: npm start &
 
       # - name: Checkout test
       #   uses: actions/checkout@v2
       #   with:
       #     repository: BauyrjanSeidahmet/amal_tests
       #     ref: test_login
-      # - run: npm ci 
-      # - run: npm start  
+      # - run: npm ci
+      # - run: npm start
+  upFront:
+    needs: upApi
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frontEnd
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm ci
+      - name: start app
+        run: npm start &
