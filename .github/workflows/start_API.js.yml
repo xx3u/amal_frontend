@@ -28,7 +28,7 @@ jobs:
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
       - name: Run test
-        run: docker exec amal_frontend_backend_1 bash -c "npm run migrate && npm run seed && npm run test"
+        run: docker exec -d amal_frontend_backend_1 bash -c "npm run migrate && npm run seed && npm run test"
 
   upFront:
     needs: upApi
