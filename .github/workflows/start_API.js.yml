@@ -54,3 +54,16 @@ jobs:
         run: npm ci
       - name: start app
         run: npm start &
+
+
+  runTest:
+
+    needs: [upApi, upFront ]
+
+      - name: Checkout test
+        uses: actions/checkout@v2
+        with:
+          repository: BauyrjanSeidahmet/amal_tests
+          ref: test_login
+      - run: npm ci
+      - run: npm start
