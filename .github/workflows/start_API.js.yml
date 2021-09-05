@@ -55,11 +55,11 @@ jobs:
       - name: start app
         run: npm start &
 
-
   runTest:
+    needs: [upApi, upFront]
 
-    needs: [upApi, upFront ]
-
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout test
         uses: actions/checkout@v2
         with:
