@@ -27,22 +27,7 @@ jobs:
           ref: develop
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
-      # - name: Use Node.js
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '16.x'
-      # - name: Install dependencies
-      #   run: npm ci
-      #   run: npm run migrate
-      #   run: npm run dev &
 
-      # - name: Checkout test
-      #   uses: actions/checkout@v2
-      #   with:
-      #     repository: BauyrjanSeidahmet/amal_tests
-      #     ref: test_login
-      # - run: npm ci
-      # - run: npm start
   upFront:
     needs: upApi
 
@@ -53,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: start app
-        run: npm start
+        run: npm start&
 
   runTest:
     needs: [upApi, upFront]
@@ -67,7 +52,8 @@ jobs:
           ref: test_login
       - name: Install Chrome
         uses: browser-actions/setup-chrome@latest
-        # run: chrome --version
+      - name: check Chrome
+        run: chrome --version
 
       - name: Install dependencies
         run: npm ci
