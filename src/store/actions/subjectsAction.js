@@ -45,7 +45,6 @@ export const addNewSubject = (newSubj) => async (dispatch) => {
   dispatch(addNewSubjectRequest());
   try {
     await axios.post('/subjects', newSubj).then((response) => dispatch(addNewSubjectSuccess(response.data)));
-    dispatch(push('/'));
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewSubjectFailure(error.response));
