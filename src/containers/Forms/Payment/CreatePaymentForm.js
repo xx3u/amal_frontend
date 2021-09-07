@@ -105,7 +105,6 @@ const CreatePaymentForm = ({ isOpen, title }) => {
               type='text'
               value={payment.comment}
               onChange={inputChangeHandler}
-              required
             />
           </Grid>
         </FormSubmission>
