@@ -96,7 +96,6 @@ const EditPaymentForm = ({ isOpen, paymentId }) => {
               type='text'
               value={payment.comment || ''}
               onChange={inputChangeHandler}
-              required
             />
           </Grid>
         </FormSubmission>
