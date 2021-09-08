@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem, Box } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions/usersActions';
 
@@ -13,24 +13,27 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     flexGrow: 1,
     '&.active': {
-      background: 'rgba(0,0,0,0.2)',
-      border: '1px solid white',
+      boxShadow: '  0 0 8px rgba(255,255,255,0.8) ',
     },
   },
   logo: {
     flexGrow: 1,
     marginRight: theme.spacing(3),
+    textDecoration: 'none',
+    color: 'inherit',
+    '&.visited': {
+      color: 'inherit',
+    },
   },
   btn: {
     marginRight: 10,
     '&.active': {
-      background: 'rgba(0,0,0,0.2)',
-      border: '1px solid white',
+      boxShadow: '  0 0 8px rgba(255,255,255,0.8) ',
     },
   },
   checked: {
-    background: 'rgba(0,0,0,0.2)',
-    border: '1px solid white',
+    boxShadow: '  0 0 8px rgba(255,255,255,0.8) ',
+    marginRight: 10,
   },
 }));
 
@@ -76,7 +79,7 @@ const Header = () => {
       <Toolbar>
         <Grid container justifyContent='space-between' direction='row'>
           <Grid item>
-            <Typography variant='h6' className={classes.logo}>
+            <Typography variant='h6' className={classes.logo} component={Link} to={'/'}>
               AMAL EDU
             </Typography>
           </Grid>
@@ -124,7 +127,7 @@ const Header = () => {
                   aria-haspopup='true'
                   onClick={handleClick}
                   color='inherit'
-                  className={checked ? classes.checked : classes.btn}
+                  className={(checked && classes.checked) || classes.btn}
                 >
                   Расписание
                 </Button>
