@@ -19,29 +19,28 @@ const StudentsContainer = () => {
   const classes = useStyles();
 
   const headCells = [
-    { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
-    { id: 'firstName', numeric: false, disablePadding: true, label: 'Имя' },
-    { id: 'lastName', numeric: false, disablePadding: true, label: 'Фамилия' },
+    { id: 'firstName', numeric: false, disablePadding: false, label: 'Имя' },
+    { id: 'lastName', numeric: false, disablePadding: false, label: 'Фамилия' },
     {
       id: 'language',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Язык обучения',
     },
     {
       id: 'streamName',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Направление',
     },
     {
       id: 'parentsContacts',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Контакты родителей',
     },
-    { id: 'groupName', numeric: false, disablePadding: true, label: 'Группа' },
-    { id: 'grade', numeric: true, disablePadding: true, label: 'Класс' },
+    { id: 'groupName', numeric: false, disablePadding: false, label: 'Группа' },
+    { id: 'grade', numeric: true, disablePadding: false, label: 'Класс' },
     {
       id: 'paymentStatus',
       numeric: false,
@@ -54,7 +53,7 @@ const StudentsContainer = () => {
     {
       id: 'editBtn',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: '',
       renderCell: function editBtn(row) {
         return (
@@ -67,7 +66,7 @@ const StudentsContainer = () => {
     {
       id: 'detailBtn',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: '',
       renderCell: function detailBtn(row) {
         return (
