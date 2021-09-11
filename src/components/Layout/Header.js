@@ -176,9 +176,6 @@ const Header = () => {
                 <Button color='inherit' className={classes.greeting}>
                   Hello, {user.username}
                 </Button>
-                <Button color='inherit' onClick={signOut} className={classes.menuButton}>
-                  Выйти
-                </Button>
                 {isAdminRole ? (
                   <Button
                     component={NavLink}
@@ -190,6 +187,9 @@ const Header = () => {
                     Добавить пользователя
                   </Button>
                 ) : null}
+                <Button color='inherit' onClick={signOut} className={classes.menuButton}>
+                  Выйти
+                </Button>
               </>
             )}
           </Box>
