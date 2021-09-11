@@ -187,7 +187,7 @@ const Header = () => {
                     className={classes.menuButton}
                     onClick={changeStyle}
                   >
-                    Регистрация
+                    Добавить пользователя
                   </Button>
                 ) : null}
               </>
