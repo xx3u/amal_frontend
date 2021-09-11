@@ -5,6 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions/usersActions';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -35,9 +36,12 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '  0 0 8px rgba(255,255,255,0.8) ',
     marginRight: 10,
   },
-
   buttonsArea: {
     marginRight: 'auto',
+  },
+  icon: {
+    verticalAlign: 'middle',
+    marginRight: 2,
   },
 }));
 
@@ -153,7 +157,6 @@ const Header = () => {
                   >
                     Журнал посещений
                   </Button>
-
                   <Button
                     component={NavLink}
                     to='/register'
@@ -187,12 +190,11 @@ const Header = () => {
               {user && (
                 <>
                   <Grid item>
-                    <AccountCircleIcon />
+                    <AccountCircleIcon className={classes.icon} />
                   </Grid>
                   <Grid item>
                     <Typography variant='button'>{user.username}</Typography>
                   </Grid>
-
                   <Grid item>
                     <Button color='inherit' onClick={signOut} className={classes.menuButton}>
                       Выйти
