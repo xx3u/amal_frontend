@@ -9,9 +9,9 @@ import Search from '../../components/Students/Search/Search';
 import EditIcon from '@material-ui/icons/Edit';
 import StatusIconText from '../../components/UI/StatusIconText/StatusIconText';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   StudentsContainer: {
-    marginTop: 20,
+    marginTop: theme.spacing(4),
   },
 }));
 
