@@ -55,10 +55,10 @@ export const addNewPayment = (newPayment) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewPaymentFailure(error.response));
-      NotificationManager.error(error.response.data, 'Post error!', 5000);
+      NotificationManager.error(error.response.data, 'Ошибка отправки данных!', 5000);
     } else {
       dispatch(addNewPaymentFailure(error));
-      NotificationManager.error(error.message, 'Post error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
     }
   }
 };
@@ -95,10 +95,10 @@ export const updatePayment = (id, payment) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(updatePaymentFailure(error.response));
-      NotificationManager.error(error.response.data, 'Edit error!', 5000);
+      NotificationManager.error(error.response.data, 'Ошибка редактирования!', 5000);
     } else {
       dispatch(updatePaymentFailure(error));
-      NotificationManager.error(error.message, 'Edit error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка редактирования!', 5000);
     }
   }
 };
