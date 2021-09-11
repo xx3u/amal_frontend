@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: 'middle',
     marginRight: 2,
   },
+  username: {
+    marginRight: 10,
+  },
 }));
 
 const Header = () => {
@@ -192,7 +195,7 @@ const Header = () => {
                   <Grid item>
                     <AccountCircleIcon className={classes.icon} />
                   </Grid>
-                  <Grid item>
+                  <Grid item className={classes.username}>
                     <Typography variant='button'>{user.username}</Typography>
                   </Grid>
                   <Grid item>
