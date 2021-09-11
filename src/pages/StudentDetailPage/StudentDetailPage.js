@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
   },
   holder: {
-    margin: theme.spacing(4),
+    padding: theme.spacing(4),
   },
 }));
 

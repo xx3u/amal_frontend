@@ -70,7 +70,7 @@ export const deleteTeacher = (teacherId) => {
       dispatch(fetchTeachers());
     } catch (error) {
       dispatch(deleteTeacherFailure(error));
-      NotificationManager.error(error.message, 'Delete error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка удаления!', 5000);
     }
   };
 };
@@ -154,10 +154,10 @@ export const getTeacherById = (id) => {
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch(getTeacherByIdFailure(error.response.data));
-        NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
+        NotificationManager.error(error.response.data.error, 'Ошибка получения данных!', 5000);
       } else {
         dispatch(getTeacherByIdFailure(error));
-        NotificationManager.error(error.message, 'Fetch error!', 5000);
+        NotificationManager.error(error.message, 'Ошибка получения данных!', 5000);
       }
     }
   };

@@ -81,10 +81,10 @@ export const fetchUpdateGroup = (payload) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(updateGroupFailure(error.response));
-      NotificationManager.error(error.response.data, 'Edit error!', 5000);
+      NotificationManager.error(error.response.data, 'Ошибка редактирования!', 5000);
     } else {
       dispatch(updateGroupFailure(error));
-      NotificationManager.error(error.message, 'Edit error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка редактирования!', 5000);
     }
   }
 };

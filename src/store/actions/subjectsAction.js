@@ -48,10 +48,10 @@ export const addNewSubject = (newSubj) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewSubjectFailure(error.response));
-      NotificationManager.error(error.response.data, 'Post error!', 5000);
+      NotificationManager.error(error.response.data, 'Ошибка отправки данных!', 5000);
     } else {
       dispatch(addNewSubjectFailure(error));
-      NotificationManager.error(error.message, 'Post error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
     }
   }
 };
@@ -69,10 +69,10 @@ export const fetchUpdateSubject = (payload) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(updateSubjectFailure(error.response));
-      NotificationManager.error(error.response.data, 'Edit error!', 5000);
+      NotificationManager.error(error.response.data, 'Ошибка редактирования!', 5000);
     } else {
       dispatch(updateSubjectFailure(error));
-      NotificationManager.error(error.message, 'Edit error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка редактирования!', 5000);
     }
   }
 };

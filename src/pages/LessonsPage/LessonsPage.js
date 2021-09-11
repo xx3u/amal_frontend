@@ -3,9 +3,9 @@ import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LessonsContainer from '../../containers/LessonsContainer/LessonsContainer';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   title: {
-    margin: 20,
+    marginTop: theme.spacing(4),
   },
 }));
 
