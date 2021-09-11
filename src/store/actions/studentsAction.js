@@ -85,10 +85,10 @@ export const getStudentById = (id) => async (dispatch) => {
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(getStudentByIdFailure(error.response.data));
-      NotificationManager.error(error.response.data.error, 'Fetch error!', 5000);
+      NotificationManager.error(error.response.data.error, 'Ошибка получения данных!', 5000);
     } else {
       dispatch(getStudentByIdFailure(error));
-      NotificationManager.error(error.message, 'Fetch error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка получения данных!', 5000);
     }
   }
 };
