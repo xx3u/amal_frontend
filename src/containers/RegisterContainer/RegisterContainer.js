@@ -44,7 +44,6 @@ const Register = () => {
   const roles = [
     { id: 1, sendingValue: 'admin', showingValue: 'Админ' },
     { id: 2, sendingValue: 'teacher', showingValue: 'Учитель' },
-    { id: 3, sendingValue: 'student', showingValue: 'Ученик' },
   ];
 
   const inputChangeHandler = (e) => {
