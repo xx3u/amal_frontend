@@ -4,7 +4,7 @@ import {
   FETCH_STREAMS_FAILURE,
   ADD_NEW_STREAM_FAILURE,
   ADD_NEW_STREAM_SUCCESS,
-  ADD_NEW_STREAM_REQUEST,
+  FETCH_NEW_STREAM_REQUEST,
 } from '../actionTypes';
 import axios from '../../axiosApi';
 import { NotificationManager } from 'react-notifications';
@@ -33,12 +33,12 @@ export const fetchStreams = () => async (dispatch) => {
   }
 };
 
-const addNewStreamRequest = () => ({ type: ADD_NEW_STREAM_REQUEST });
+const fetchNewStreamRequest = () => ({ type: FETCH_NEW_STREAM_REQUEST });
 const addNewStreamSuccess = (data) => ({ type: ADD_NEW_STREAM_SUCCESS, data });
 const addNewStreamFailure = (error) => ({ type: ADD_NEW_STREAM_FAILURE, error });
 
 export const addNewStream = (newStr) => async (dispatch) => {
-  dispatch(addNewStreamRequest());
+  dispatch(fetchNewStreamRequest());
   try {
     await axios.post('/streams', newStr).then((response) => dispatch(addNewStreamSuccess(response.data)));
     NotificationManager.success('Направление успешно добавлено', 'Успех!');
