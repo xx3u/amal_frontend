@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '  0 0 8px rgba(255,255,255,0.8) ',
     marginRight: 10,
   },
-  greeting: {
+  account: {
     pointerEvents: 'none',
     marginRight: theme.spacing(2),
   },
@@ -179,7 +179,7 @@ const Header = () => {
           <Box>
             {user && (
               <>
-                <Button color='inherit' className={classes.greeting}>
+                <Button color='inherit' className={classes.account}>
                   <img src={userImage} alt='account' className={classes.userIcon} />
                   <Typography>{user.username}</Typography>
                 </Button>
