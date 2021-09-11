@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '  0 0 8px rgba(255,255,255,0.8) ',
     marginRight: 10,
   },
+  greeting: {
+    pointerEvents: 'none',
+    marginRight: theme.spacing(2),
+  }
 }));
 
 const Header = () => {
@@ -169,7 +173,7 @@ const Header = () => {
           <Box>
             {user && (
               <>
-                <Button color='inherit' className={classes.menuButton}>
+                <Button color='inherit' className={classes.greeting}>
                   Hello, {user.username}
                 </Button>
                 <Button color='inherit' onClick={signOut} className={classes.menuButton}>
