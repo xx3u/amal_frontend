@@ -41,6 +41,7 @@ export const addNewStream = (newStr) => async (dispatch) => {
   dispatch(addNewStreamRequest());
   try {
     await axios.post('/streams', newStr).then((response) => dispatch(addNewStreamSuccess(response.data)));
+    NotificationManager.success('Направление успешно добавлено', 'Success');
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewStreamFailure(error.response));
