@@ -4,7 +4,6 @@ import {
   ADD_NEW_STREAM_REQUEST,
   ADD_NEW_STREAM_SUCCESS,
   ADD_NEW_STREAM_FAILURE,
-  UPDATE_STREAM_REQUEST,
   UPDATE_STREAM_SUCCESS,
   UPDATE_STREAM_FAILURE,
 } from '../actionTypes';
@@ -30,12 +29,10 @@ export default function streamsReducer(state = initialState, action) {
     }
     case ADD_NEW_STREAM_FAILURE:
       return { ...state, error: action.error, loading: false };
-    case UPDATE_STREAM_REQUEST:
-      return { ...state, loading: true };
     case UPDATE_STREAM_SUCCESS:
       return { ...state, loading: false, error: null };
     case UPDATE_STREAM_FAILURE:
-      return { ...state, error: action.error };
+      return { ...state, error: action.error, loading: false };
     default:
       return state;
   }

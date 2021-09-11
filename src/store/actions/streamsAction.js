@@ -41,14 +41,14 @@ export const addNewStream = (newStr) => async (dispatch) => {
   dispatch(addNewStreamRequest());
   try {
     await axios.post('/streams', newStr).then((response) => dispatch(addNewStreamSuccess(response.data)));
-    NotificationManager.success('Направление успешно добавлено', 'Success');
+    NotificationManager.success('Направление успешно добавлено', 'Успех!');
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewStreamFailure(error.response));
-      NotificationManager.error(error.response.data, 'Post error!', 5000);
+      NotificationManager.error(error.response.data, 'Ошибка отправки данных!', 5000);
     } else {
       dispatch(addNewStreamFailure(error));
-      NotificationManager.error(error.message, 'Post error!', 5000);
+      NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
     }
   }
 };
