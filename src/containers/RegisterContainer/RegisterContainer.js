@@ -103,7 +103,9 @@ const Register = () => {
             onChange={(event, value) => setState((state) => ({ ...state, role: value?.sendingValue }))}
             noOptionsText={'список пуст'}
             style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label='Роль' variant='outlined' placeholder='Выберите' />}
+            renderInput={(params) => (
+              <TextField {...params} label='Выберите роль' variant='outlined' placeholder='Выберите' />
+            )}
           />
         </Grid>
         {checked ? (
@@ -117,7 +119,7 @@ const Register = () => {
               noOptionsText={'список пуст'}
               style={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
+                <TextField {...params} label='Выберите учителя' variant='outlined' placeholder='Выберите' />
               )}
             />
           </Grid>
