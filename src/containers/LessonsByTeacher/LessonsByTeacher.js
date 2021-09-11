@@ -8,12 +8,12 @@ import { deleteLesson } from '../../store/actions/lessonsAction';
 import { getWeekdates } from '../../helpers/helpers';
 import ScheduleTable from '../../components/ScheduleTable/ScheduleTable';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     marginBottom: 20,
   },
   title: {
-    marginTop: 20,
+    marginTop: theme.spacing(4),
   },
 }));
 

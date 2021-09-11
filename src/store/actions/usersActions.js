@@ -23,7 +23,7 @@ export const createUser = (userData) => {
       await axios.post('/users/register', userData);
       dispatch(createUserSuccess());
       dispatch(push('/'));
-      NotificationManager.success('Success message', 'Успешно зарегистрирован');
+      NotificationManager.success('', 'Успешно зарегистрирован!');
     } catch (error) {
       dispatch(createUserFailure(error));
     }

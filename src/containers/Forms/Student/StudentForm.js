@@ -97,8 +97,13 @@ const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
     <FormSubmission title={title} maxWidth='md' onSubmit={submitFormHandler}>
       {error && (
         <Alert severity='error' className={classes.alert}>
+<<<<<<< HEAD
           <AlertTitle>Error</AlertTitle>
           {error.response ? error.response.data : error.message}
+=======
+          <AlertTitle>Ошибка</AlertTitle>
+          {error ? error.data : error.message}
+>>>>>>> 45f5d734e221957c114607dd1b38b31f6d365900
         </Alert>
       )}
       <Grid item xs={4}>

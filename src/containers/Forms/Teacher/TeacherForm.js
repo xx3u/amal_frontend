@@ -62,7 +62,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
     <FormSubmission title={title} maxWidth='md' onSubmit={submitFormHandler}>
       {error && (
         <Alert severity='error' className={classes.alert}>
-          <AlertTitle>Error</AlertTitle>
+          <AlertTitle>Ошибка</AlertTitle>
           {error ? error.data : error.message}
         </Alert>
       )}

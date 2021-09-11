@@ -69,10 +69,10 @@ export const addNewLesson = (lesson) => {
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch(addNewLessonFailure(error.response));
-        NotificationManager.error(error.response.data, 'Post error!', 5000);
+        NotificationManager.error(error.response.data, 'Ошибка отправки данных!', 5000);
       } else {
         dispatch(addNewLessonFailure(error));
-        NotificationManager.error(error.message, 'Post error!', 5000);
+        NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
       }
     }
   };
@@ -116,7 +116,7 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
     dispatch(createLessonsSuccess());
   } catch (error) {
     dispatch(createLessonsFailure(error));
-    NotificationManager.error(error.message, 'Post error!', 5000);
+    NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
   }
 };
 

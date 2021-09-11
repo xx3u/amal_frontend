@@ -76,14 +76,20 @@ const Register = () => {
     >
       <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
         <Grid item xs={12} className={classes.formItem}>
-          <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
+          <FormItem
+            name='username'
+            value={state.username}
+            onChange={inputChangeHandler}
+            label='Придумайте логин'
+            type='text'
+          />
         </Grid>
         <Grid item xs={12} className={classes.formItem}>
           <FormItem
             name='password'
             value={state.password}
             onChange={inputChangeHandler}
-            label='Password'
+            label='Придумайте пароль'
             type='password'
           />
         </Grid>
@@ -97,7 +103,9 @@ const Register = () => {
             onChange={(event, value) => setState((state) => ({ ...state, role: value?.sendingValue }))}
             noOptionsText={'список пуст'}
             style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label='Роль' variant='outlined' placeholder='Выберите' />}
+            renderInput={(params) => (
+              <TextField {...params} label='Выберите роль' variant='outlined' placeholder='Выберите' />
+            )}
           />
         </Grid>
         {checked ? (
@@ -111,7 +119,7 @@ const Register = () => {
               noOptionsText={'список пуст'}
               style={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} label='Учитель' variant='outlined' placeholder='Выберите' />
+                <TextField {...params} label='Выберите учителя' variant='outlined' placeholder='Выберите' />
               )}
             />
           </Grid>
