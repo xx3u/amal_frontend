@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   greeting: {
     pointerEvents: 'none',
     marginRight: theme.spacing(2),
-  }
+  },
 }));
 
 const Header = () => {
