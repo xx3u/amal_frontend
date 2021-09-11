@@ -70,9 +70,9 @@ const Register = () => {
   return (
     <UserForm
       onSubmit={submitFormHandler}
-      title='Регистрация'
+      title='Добавление нового пользователя'
       buttonId='register'
-      buttonText='Зарегистрироваться'
+      buttonText='Зарегистрировать'
       error={error}
     >
       <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
