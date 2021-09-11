@@ -76,14 +76,20 @@ const Register = () => {
     >
       <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
         <Grid item xs={12} className={classes.formItem}>
-          <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
+          <FormItem
+            name='username'
+            value={state.username}
+            onChange={inputChangeHandler}
+            label='Придумайте логин'
+            type='text'
+          />
         </Grid>
         <Grid item xs={12} className={classes.formItem}>
           <FormItem
             name='password'
             value={state.password}
             onChange={inputChangeHandler}
-            label='Password'
+            label='Придумайте пароль'
             type='password'
           />
         </Grid>
