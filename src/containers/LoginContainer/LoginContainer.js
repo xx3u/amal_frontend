@@ -40,16 +40,10 @@ const Login = () => {
       error={error}
     >
       <Grid item xs={12}>
-        <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
+        <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Логин' type='text' />
       </Grid>
       <Grid item xs={12}>
-        <FormItem
-          name='password'
-          value={state.password}
-          onChange={inputChangeHandler}
-          label='Password'
-          type='password'
-        />
+        <FormItem name='password' value={state.password} onChange={inputChangeHandler} label='Пароль' type='password' />
       </Grid>
     </UserForm>
   );
