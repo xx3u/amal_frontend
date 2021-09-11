@@ -72,10 +72,10 @@ const Register = () => {
       onSubmit={submitFormHandler}
       title='Добавление нового пользователя'
       buttonId='register'
-      buttonText='Зарегистрировать'
+      buttonText='Добавить'
       error={error}
     >
-      <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
+      <Grid container justifyContent='center' alignItems='center' align='center'>
         <Grid item xs={12} className={classes.formItem}>
           <FormItem name='username' value={state.username} onChange={inputChangeHandler} label='Username' type='text' />
         </Grid>
