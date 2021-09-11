@@ -103,12 +103,14 @@ export const updateStudent = (id, updatedStudent) => async (dispatch) => {
     await axios
       .put(`/students/${id}`, updatedStudent)
       .then((response) => dispatch(updateStudentSuccess(response.data)));
+
     dispatch(push('/admin-app/students'));
   } catch (error) {
     if (error.response && error.response.data) {
-      dispatch(updateStudentFailure(error.response));
+      dispatch(updateStudentFailure(error.response.data));
     } else {
       dispatch(updateStudentFailure(error));
+      NotificationManager.error(error, 'Ошибка отправки запроса!', 5000);
     }
   }
 };
