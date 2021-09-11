@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Typography, Button, Grid, Menu, MenuItem, Box } from '
 import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions/usersActions';
+import userImage from '../../assets/images/user.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
   greeting: {
     pointerEvents: 'none',
     marginRight: theme.spacing(2),
+  },
+  userIcon: {
+    width: '20px',
+    height: '20px',
+    marginRight: '5px',
   },
 }));
 
@@ -174,7 +180,8 @@ const Header = () => {
             {user && (
               <>
                 <Button color='inherit' className={classes.greeting}>
-                  Hello, {user.username}
+                  <img src={userImage} alt='account' className={classes.userIcon} />
+                  <Typography>{user.username}</Typography>
                 </Button>
                 {isAdminRole ? (
                   <Button
