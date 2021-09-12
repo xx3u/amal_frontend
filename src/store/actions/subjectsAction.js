@@ -44,6 +44,7 @@ export const addNewSubject = (newSubj) => async (dispatch) => {
   dispatch(addNewSubjectRequest());
   try {
     await axios.post('/subjects', newSubj).then((response) => dispatch(addNewSubjectSuccess(response.data)));
+    NotificationManager.success('Предмет успешно добавлен', 'Успех!');
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewSubjectFailure(error.response));
@@ -63,6 +64,7 @@ export const fetchUpdateSubject = (payload) => async (dispatch) => {
   try {
     const response = await axios.put(`/subjects/${payload.id}`, payload.value);
     dispatch(updateSubjectSuccess(response.data));
+    NotificationManager.success('Предмет успешно обновлен', 'Успех!');
     dispatch(fetchSubjects());
   } catch (error) {
     if (error.response && error.response.data) {
