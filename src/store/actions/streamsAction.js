@@ -7,6 +7,7 @@ import {
   FETCH_NEW_STREAM_REQUEST,
 } from '../actionTypes';
 import axios from '../../axiosApi';
+import { NotificationManager } from 'react-notifications';
 
 const fetchStreamsRequest = () => ({
   type: FETCH_STREAMS_REQUEST,
