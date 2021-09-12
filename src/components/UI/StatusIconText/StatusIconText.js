@@ -9,6 +9,9 @@ const useStyles = makeStyles(() => ({
     verticalAlign: 'middle',
     marginLeft: 10,
   },
+  status: {
+    marginRight: 10,
+  },
 }));
 
 const StatusIconText = ({ status }) => {
@@ -17,9 +20,9 @@ const StatusIconText = ({ status }) => {
   return (
     <Grid container justifyContent='space-between'>
       <Grid item xs={6}>
-        <Typography>{status ? 'Оплачено' : 'Не оплачено'}</Typography>
+        <Typography className={classes.status}>{status ? 'Оплачено' : 'Не оплачено'}</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         {status ? (
           <CheckCircleOutlineIcon className={classes.iconStatus} style={{ color: green[500] }} />
         ) : (
