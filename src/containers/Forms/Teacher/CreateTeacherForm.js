@@ -6,14 +6,6 @@ import { addTeacher } from '../../../store/actions/teachersActions';
 const CreateTeacherForm = () => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.teachers.error);
-  const teacher = {
-    firstName: '',
-    lastName: '',
-    subjectId: '',
-    language: '',
-    telephone: '',
-    email: '',
-  };
 
   const addTeacherHandler = (teacher) => {
     dispatch(addTeacher(teacher));
@@ -21,7 +13,7 @@ const CreateTeacherForm = () => {
 
   return (
     <div className='CreateTeacherForm'>
-      <TeacherForm title='Добавить учителя' submitData={addTeacherHandler} selectedTeacher={teacher} error={error} />
+      <TeacherForm title='Добавить учителя' submitData={addTeacherHandler} error={error} />
     </div>
   );
 };

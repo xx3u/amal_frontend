@@ -19,7 +19,14 @@ const useStyles = makeStyles(() => ({
 const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [teacher, setTeacher] = useState(selectedTeacher);
+  const [teacher, setTeacher] = useState({
+    firstName: '',
+    lastName: '',
+    subjectId: '',
+    language: '',
+    telephone: '',
+    email: '',
+  });
   const subjects = useSelector((state) => state.subjects.subjects);
 
   useEffect(() => {
@@ -32,7 +39,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
   };
 
   useEffect(() => {
-    setTeacher(selectedTeacher);
+    selectedTeacher && setTeacher(selectedTeacher);
   }, [selectedTeacher]);
 
   const languages = [
@@ -69,7 +76,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
       <Grid item xs={6}>
         <FormItem
           name='firstName'
-          value={teacher.firstName || ''}
+          value={teacher.firstName}
           onChange={inputChangeHandler}
           label='Имя'
           type='text'
@@ -79,7 +86,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
       <Grid item xs={6}>
         <FormItem
           name='lastName'
-          value={teacher.lastName || ''}
+          value={teacher.lastName}
           onChange={inputChangeHandler}
           label='Фамилия'
           type='text'
@@ -90,7 +97,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
       <Grid item xs={6}>
         <FormItem
           name='language'
-          value={teacher.language || ''}
+          value={teacher.language}
           onChange={inputChangeHandler}
           label='Язык преподования'
           type='text'
@@ -108,7 +115,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
         <Grid item xs={11}>
           <FormItem
             name='subjectId'
-            value={teacher.subjectId || ''}
+            value={teacher.subjectId}
             onChange={inputChangeHandler}
             label='Предмет'
             type='text'
@@ -133,7 +140,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
       <Grid item xs={6}>
         <FormItem
           name='telephone'
-          value={teacher.telephone || ''}
+          value={teacher.telephone}
           onChange={inputChangeHandler}
           label='Телефон'
           type='text'
@@ -141,7 +148,7 @@ const TeacherForm = ({ title, submitData, selectedTeacher, id, error }) => {
         />
       </Grid>
       <Grid item xs={6}>
-        <FormItem name='email' value={teacher.email || ''} onChange={inputChangeHandler} label='Email' type='text' />
+        <FormItem name='email' value={teacher.email} onChange={inputChangeHandler} label='Email' type='text' />
       </Grid>
       <Grid container>
         <CreateSubjectForm isOpen={isOpen} title='Добавить предмет' />
