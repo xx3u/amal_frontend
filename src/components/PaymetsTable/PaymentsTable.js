@@ -18,22 +18,16 @@ const PaymentsTable = ({ paymentsData }) => {
 
   const headCells = [
     {
-      id: 'id',
-      numeric: true,
-      disablePadding: true,
-      label: 'ID',
-    },
-    {
       id: 'student',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'ФИО',
     },
 
     {
       id: 'date',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Дата платежа',
       renderCell: function date(row) {
         return format(new Date(row.date), 'MM/dd/yyyy');
@@ -42,25 +36,25 @@ const PaymentsTable = ({ paymentsData }) => {
     {
       id: 'amount',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Сумма платежа',
     },
     {
       id: 'status',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Статус',
     },
     {
       id: 'comment',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Комментарий',
     },
     {
       id: 'editBtn',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: '',
       renderCell: function editBtn(row) {
         return (
@@ -73,7 +67,7 @@ const PaymentsTable = ({ paymentsData }) => {
     {
       id: 'detailBtn',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: '',
       renderCell: function detailBtn(row) {
         return (

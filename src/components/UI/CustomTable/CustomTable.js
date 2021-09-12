@@ -5,14 +5,12 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TablePagination,
   TableRow,
+  TablePagination,
   Paper,
-  Checkbox,
   makeStyles,
 } from '@material-ui/core';
 import EnhancedTableHead from './EnhancedTableHead';
-import EnhancedTableToolbar from './EnhancedTableToolbar';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -64,19 +62,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable({ headCells, rows, tableTitle, numberOfRows }) {
+export default function EnhancedTable({ headCells, rows, numberOfRows }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const dense = false;
   const [rowsPerPage, setRowsPerPage] = React.useState(numberOfRows);
+  const dense = false;
   const columns = [];
   headCells.forEach((cell) => {
     columns.push(cell.id);
   });
-  columns.shift();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -119,14 +116,13 @@ export default function EnhancedTable({ headCells, rows, tableTitle, numberOfRow
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+  const isSelected = (name) => selected.indexOf(name) !== -1;
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} tableTitle={tableTitle} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -147,28 +143,20 @@ export default function EnhancedTable({ headCells, rows, tableTitle, numberOfRow
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
+                .map((row) => {
                   const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
                   return (
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row.id)}
-                      role='checkbox'
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding='checkbox'>
-                        <Checkbox checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
-                      </TableCell>
-                      <TableCell component='th' id={labelId} scope='row' padding='none' align='left'>
-                        {row.id}
-                      </TableCell>
                       {columns.map((column, index) => (
                         <TableCell key={column}>
-                          {(headCells[index + 1].renderCell && headCells[index + 1].renderCell(row)) || row[column]}
+                          {(headCells[index].renderCell && headCells[index].renderCell(row)) || row[column]}
                         </TableCell>
                       ))}
                     </TableRow>

@@ -1,17 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel } from '@material-ui/core';
+import { TableHead, TableRow, TableCell, TableSortLabel } from '@material-ui/core';
 
-export default function EnhancedTableHead({
-  classes,
-  onSelectAllClick,
-  order,
-  orderBy,
-  numSelected,
-  rowCount,
-  onRequestSort,
-  headCells,
-}) {
+export default function EnhancedTableHead({ classes, order, orderBy, onRequestSort, headCells }) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -19,14 +10,6 @@ export default function EnhancedTableHead({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding='checkbox'>
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
