@@ -170,7 +170,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
           required
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={4}>
         <FormItem
           name='streamId'
           value={student.streamId}
@@ -187,7 +187,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
           ))}
         </FormItem>
       </Grid>
-      <Grid item xs={1}>
+      <Grid item xs={2}>
         <Tooltip title='Добавить направление'>
           <IconButton onClick={openStreamForm}>
             <AddBoxIcon color='inherit' fontSize='large' />
