@@ -69,12 +69,12 @@ const Register = () => {
   return (
     <UserForm
       onSubmit={submitFormHandler}
-      title='Регистрация'
+      title='Добавление нового пользователя'
       buttonId='register'
-      buttonText='Зарегистрироваться'
+      buttonText='Добавить'
       error={error}
     >
-      <Grid container display='flex' justifyContent='center' alignItems='center' align='center' bgcolor='success.main'>
+      <Grid container justifyContent='center' alignItems='center' align='center'>
         <Grid item xs={12} className={classes.formItem}>
           <FormItem
             name='username'
