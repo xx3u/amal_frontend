@@ -14,32 +14,31 @@ const TeachersContainer = () => {
   });
 
   const headCells = [
-    { id: 'id', numeric: true, disablePadding: true, label: 'ID' },
-    { id: 'firstName', numeric: false, disablePadding: true, label: 'Имя' },
-    { id: 'lastName', numeric: false, disablePadding: true, label: 'Фамилия' },
+    { id: 'firstName', numeric: false, disablePadding: false, label: 'Имя' },
+    { id: 'lastName', numeric: false, disablePadding: false, label: 'Фамилия' },
     {
       id: 'language',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Язык обучения',
     },
-    { id: 'subjectName', numeric: false, disablePadding: true, label: 'Предмет' },
+    { id: 'subjectName', numeric: false, disablePadding: false, label: 'Предмет' },
     {
       id: 'telephone',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Телефон',
     },
     {
       id: 'email',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'Эл. почта',
     },
     {
       id: 'editBtn',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: '',
       renderCell: function editBtn(row) {
         return (
@@ -52,7 +51,7 @@ const TeachersContainer = () => {
     {
       id: 'deleteBtn',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: '',
       renderCell: function deleteBtn(row) {
         return (
