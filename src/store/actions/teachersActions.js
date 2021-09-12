@@ -93,6 +93,7 @@ export const addTeacher = (teacher) => {
       dispatch(addTeacherRequest());
       const response = await axios.post('/teachers', teacher);
       dispatch(addTeacherSucces(response.data));
+      NotificationManager.success('Информация успешно добавлена', 'Успех!');
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
       if (error.response && error.response.data) {
@@ -122,6 +123,7 @@ export const editTeacher = (teacher, id) => {
       dispatch(editTeacherRequest());
       await axios.put(`/teachers/${id}`, teacher);
       dispatch(editTeacherSuccess());
+      NotificationManager.success('Информация успешно отредактирована', 'Успех!');
       dispatch(push('/admin-app/teachers'));
     } catch (error) {
       if (error.response && error.response.data) {
