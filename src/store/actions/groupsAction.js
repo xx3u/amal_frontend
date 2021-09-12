@@ -59,6 +59,7 @@ export const addNewGroup = (newGroup, students) => async (dispatch) => {
       dispatch(fetchGroups());
     }
     dispatch(addNewGroupSuccess(response.data));
+    NotificationManager.success('Группа успешно добавлена', 'Успех!');
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewGroupFailure(error.response));
@@ -77,6 +78,7 @@ export const fetchUpdateGroup = (payload) => async (dispatch) => {
   try {
     const response = await axios.put(`/groups/${payload.id}`, payload.value);
     dispatch(updateGroupSuccess(response.data));
+    NotificationManager.success('Группа успешно отредактирована', 'Успех!');
     dispatch(fetchGroups());
   } catch (error) {
     if (error.response && error.response.data) {
@@ -105,6 +107,7 @@ export const fetchUpdateTeacherInLessons = (groupId, data) => {
       dispatch(updateTeacherInLessonsRequest());
       await axios.put(`/groups/${groupId}/lessons/edit`, data);
       dispatch(updateTeacherInLessonsSuccess());
+      NotificationManager.success('Группа успешно отредактирована', 'Успех!');
     } catch (error) {
       if (error.response) {
         dispatch(updateTeacherInLessonsFailure(error.response.data));

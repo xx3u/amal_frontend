@@ -51,6 +51,7 @@ export const addNewPayment = (newPayment) => async (dispatch) => {
   try {
     const response = await axios.post('/payments', newPayment);
     dispatch(addNewPaymentSuccess(response.data));
+    NotificationManager.success('Информация успешно добавлена', 'Успех!');
     dispatch(fetchStudents());
   } catch (error) {
     if (error.response && error.response.data) {
@@ -90,6 +91,7 @@ export const updatePayment = (id, payment) => async (dispatch) => {
   try {
     const response = await axios.put(`/payments/${id}`, payment);
     dispatch(updatePaymentSuccess(response.data));
+    NotificationManager.success('Информация успешно обновлена', 'Успех!');
     dispatch(fetchStudents());
     dispatch(push('/admin-app/payments'));
   } catch (error) {

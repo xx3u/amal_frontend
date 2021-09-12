@@ -64,6 +64,7 @@ export const addNewStudent = (newStudent) => async (dispatch) => {
   dispatch(addNewStudentRequest());
   try {
     await axios.post('/students', newStudent).then((response) => dispatch(addNewStudentSuccess(response.data)));
+    NotificationManager.success('Информация успешно добавлена', 'Успех!');
     dispatch(push('/admin-app/students'));
   } catch (error) {
     if (error.response && error.response.data) {
@@ -103,7 +104,7 @@ export const updateStudent = (id, updatedStudent) => async (dispatch) => {
     await axios
       .put(`/students/${id}`, updatedStudent)
       .then((response) => dispatch(updateStudentSuccess(response.data)));
-
+    NotificationManager.success('Информация успешно отредактирована', 'Успех!');
     dispatch(push('/admin-app/students'));
   } catch (error) {
     if (error.response && error.response.data) {

@@ -6,7 +6,6 @@ import {
   FETCH_SUBJECTS_REQUEST,
   FETCH_SUBJECTS_SUCCESS,
   UPDATE_SUBJECT_FAILURE,
-  UPDATE_SUBJECT_REQUEST,
   UPDATE_SUBJECT_SUCCESS,
 } from '../actionTypes';
 
@@ -37,8 +36,6 @@ const reducer = (state = initialState, action) => {
     }
     case ADD_NEW_SUBJECT_FAILURE:
       return { ...state, error: action.error, loading: false };
-    case UPDATE_SUBJECT_REQUEST:
-      return { ...state, loading: true };
     case UPDATE_SUBJECT_SUCCESS:
       return { ...state, loading: false, error: null };
     case UPDATE_SUBJECT_FAILURE:

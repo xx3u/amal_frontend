@@ -7,7 +7,6 @@ import {
   FETCH_SUBJECTS_REQUEST,
   FETCH_SUBJECTS_SUCCESS,
   UPDATE_SUBJECT_FAILURE,
-  UPDATE_SUBJECT_REQUEST,
   UPDATE_SUBJECT_SUCCESS,
 } from '../actionTypes';
 import { NotificationManager } from 'react-notifications';
@@ -45,6 +44,7 @@ export const addNewSubject = (newSubj) => async (dispatch) => {
   dispatch(addNewSubjectRequest());
   try {
     await axios.post('/subjects', newSubj).then((response) => dispatch(addNewSubjectSuccess(response.data)));
+    NotificationManager.success('Предмет успешно добавлен', 'Успех!');
   } catch (error) {
     if (error.response && error.response.data) {
       dispatch(addNewSubjectFailure(error.response));
@@ -56,15 +56,15 @@ export const addNewSubject = (newSubj) => async (dispatch) => {
   }
 };
 
-const updateSubjectRequest = () => ({ type: UPDATE_SUBJECT_REQUEST });
 const updateSubjectSuccess = (payload) => ({ type: UPDATE_SUBJECT_SUCCESS, payload });
 const updateSubjectFailure = (payload) => ({ type: UPDATE_SUBJECT_FAILURE, payload });
 
 export const fetchUpdateSubject = (payload) => async (dispatch) => {
-  dispatch(updateSubjectRequest());
+  dispatch(addNewSubjectRequest());
   try {
     const response = await axios.put(`/subjects/${payload.id}`, payload.value);
     dispatch(updateSubjectSuccess(response.data));
+    NotificationManager.success('Предмет успешно обновлен', 'Успех!');
     dispatch(fetchSubjects());
   } catch (error) {
     if (error.response && error.response.data) {

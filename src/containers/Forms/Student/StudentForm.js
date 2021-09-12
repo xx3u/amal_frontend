@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, MenuItem } from '@material-ui/core';
+import { Grid, MenuItem, IconButton, Tooltip } from '@material-ui/core';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import FormItem from '../../../components/UI/Form/FormItem/FormItem';
 import FormSubmission from '../../../components/UI/Form/FormSubmission/FormSubmission';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,6 +8,7 @@ import { fetchStreams } from '../../../store/actions/streamsAction';
 import { fetchGroups } from '../../../store/actions/groupsAction';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
+import CreateStreamForm from '../Stream/CreateStreamForm';
 
 const useStyles = makeStyles(() => ({
   alert: {
@@ -83,6 +85,12 @@ const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
   const submitFormHandler = (e) => {
     e.preventDefault();
     id ? submitData(id, student) : submitData(student);
+  };
+
+  const [isOpen, setIsOpen] = useState({ status: false });
+
+  const openStreamForm = () => {
+    setIsOpen({ status: true });
   };
 
   return (
@@ -162,7 +170,7 @@ const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
           required
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4}>
         <FormItem
           name='streamId'
           value={student.streamId}
@@ -178,6 +186,13 @@ const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
             </MenuItem>
           ))}
         </FormItem>
+      </Grid>
+      <Grid item xs={2}>
+        <Tooltip title='Добавить направление'>
+          <IconButton onClick={openStreamForm}>
+            <AddBoxIcon color='inherit' fontSize='large' />
+          </IconButton>
+        </Tooltip>
       </Grid>
       <Grid item xs={3}>
         <FormItem
@@ -226,6 +241,9 @@ const StudentForm = ({ title, submitData, selectedStudent, id, error }) => {
       </Grid>
       <Grid item xs={6}>
         <FormItem name='email' value={student.email} onChange={inputChangeHandler} label='Email' type='text' />
+      </Grid>
+      <Grid container>
+        <CreateStreamForm isOpen={isOpen} title='Добавить направление' />
       </Grid>
     </FormSubmission>
   );

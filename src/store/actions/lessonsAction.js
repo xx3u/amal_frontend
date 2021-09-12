@@ -66,6 +66,7 @@ export const addNewLesson = (lesson) => {
       dispatch(addNewLessonRequest());
       await axios.post('/lessons', lesson);
       dispatch(addNewLessonSucces());
+      NotificationManager.success('Урок успешно добавлен', 'Успех!');
     } catch (error) {
       if (error.response && error.response.data) {
         dispatch(addNewLessonFailure(error.response));
@@ -114,6 +115,7 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
     dispatch(createLessonsRequest());
     await axios.post(`/groups/${groupId}/lessons/add`, createDateRange);
     dispatch(createLessonsSuccess());
+    NotificationManager.success('Расписание успешно создано', 'Успех!');
   } catch (error) {
     dispatch(createLessonsFailure(error));
     NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
@@ -143,6 +145,7 @@ export const addAttendance = (lessonId, studentId) => async (dispatch, getState)
     dispatch(addAttendanceRequest());
     await axios.post(`/lessons/${lessonId}/add-student`, { studentId });
     dispatch(addAttendanceSuccess());
+    NotificationManager.success('Журнал успешно обновлен', 'Успех!');
     dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
   } catch (error) {
     dispatch(addAttendanceFailure(error));
@@ -163,6 +166,7 @@ export const removeAttendance = (lessonId, studentId) => async (dispatch, getSta
     dispatch(removeAttendanceRequest());
     await axios.delete(`/lessons/${lessonId}/remove-student`, { data: { studentId } });
     dispatch(removeAttendanceSuccess());
+    NotificationManager.success('Журнал успешно обновлен', 'Успех!');
     dispatch(fetchLessonsByGroupId(lessonsParams.groupId, lessonsParams.startTime, lessonsParams.endTime));
   } catch (error) {
     dispatch(removeAttendanceFailure(error));
