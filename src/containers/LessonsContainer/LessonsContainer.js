@@ -116,7 +116,7 @@ const LessonsContainer = () => {
       />
       <InfoModal
         open={!!updateTeacherError}
-        title='Error'
+        title='Ошибка'
         content={updateTeacherError ? updateTeacherError.error : ''}
         handleClose={closeInfoModalHandler}
       />
