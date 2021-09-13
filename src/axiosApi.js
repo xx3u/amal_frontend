@@ -25,7 +25,7 @@ instance.interceptors.response.use(
     return res;
   },
   (error) => {
-    if (error.response.data === 'Unauthorized') {
+    if (error.response.status === 401) {
       const user = store.getState().users.user;
       const userData = {
         username: user.username,
