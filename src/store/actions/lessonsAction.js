@@ -64,9 +64,11 @@ export const addNewLesson = (lesson) => {
   return async (dispatch) => {
     try {
       dispatch(addNewLessonRequest());
+      lesson = {...lesson, startTime: '2021-09-13T09:00:00.000Z'};
       await axios.post('/lessons', lesson);
       dispatch(addNewLessonSucces());
     } catch (error) {
+      console.log('error', error.response.data);
       if (error.response && error.response.data) {
         dispatch(addNewLessonFailure(error.response));
         NotificationManager.error(error.response.data, 'Ошибка отправки данных!', 5000);
@@ -116,7 +118,7 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
     dispatch(createLessonsSuccess());
   } catch (error) {
     dispatch(createLessonsFailure(error));
-    NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
+    NotificationManager.error(error.response.data.error, 'Ошибка отправки данных!', 5000);
   }
 };
 
