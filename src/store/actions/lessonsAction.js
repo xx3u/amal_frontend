@@ -118,7 +118,7 @@ export const createLessons = (groupId, createDateRange) => async (dispatch) => {
     NotificationManager.success('Расписание успешно создано', 'Успех!');
   } catch (error) {
     dispatch(createLessonsFailure(error));
-    NotificationManager.error(error.message, 'Ошибка отправки данных!', 5000);
+    NotificationManager.error(error.response.data.error, 'Ошибка отправки данных!', 5000);
   }
 };
 
