@@ -64,11 +64,9 @@ export const addNewLesson = (lesson) => {
   return async (dispatch) => {
     try {
       dispatch(addNewLessonRequest());
-      lesson = {...lesson, startTime: '2021-09-13T09:00:00.000Z'};
       await axios.post('/lessons', lesson);
       dispatch(addNewLessonSucces());
     } catch (error) {
-      console.log('error', error.response.data);
       if (error.response && error.response.data) {
         dispatch(addNewLessonFailure(error.response));
         NotificationManager.error(error.response.data, 'Ошибка отправки данных!', 5000);
