@@ -4,6 +4,7 @@ import { makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+    height: '100%',
   },
 });
 
