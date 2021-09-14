@@ -8,12 +8,11 @@ const EditTeacherForm = () => {
   const dispatch = useDispatch();
   const teacher = useSelector((state) => state.teachers.teacher);
   const error = useSelector((state) => state.teachers.error);
-  const params = useParams();
-  const paramsId = params.id;
+  const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getTeacherById(paramsId));
-  }, [dispatch, paramsId]);
+    dispatch(getTeacherById(id));
+  }, [dispatch, id]);
 
   const updateTeacherHandler = (teacherForUpdate, id) => {
     dispatch(editTeacher(teacherForUpdate, id));
@@ -24,7 +23,7 @@ const EditTeacherForm = () => {
       title='Редактировать учителя'
       submitData={updateTeacherHandler}
       selectedTeacher={teacher}
-      id={paramsId}
+      id={id}
       error={error}
     />
   );
