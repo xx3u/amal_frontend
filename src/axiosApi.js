@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logoutUser } from './store/actions/usersActions';
+import { refreshToken } from './store/actions/usersActions';
 import config from './config';
 import store from './store/configureStore';
 
@@ -25,8 +25,13 @@ instance.interceptors.response.use(
     return res;
   },
   (error) => {
-    if (error.response.data === 'Unauthorized') {
-      store.dispatch(logoutUser());
+    if (error.response.status === 401) {
+      const user = store.getState().users.user;
+      const userData = {
+        username: user.username,
+        refreshToken: user.refreshToken,
+      };
+      store.dispatch(refreshToken(userData));
     }
     return Promise.reject(error);
   }

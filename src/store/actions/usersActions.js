@@ -8,6 +8,8 @@ import {
   LOGIN_USER_SUCCESS,
   LOGOUT_USER_FAILURE,
   LOGOUT_USER_SUCCESS,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILURE,
 } from '../actionTypes';
 
 const createUserSuccess = () => {
@@ -68,6 +70,26 @@ export const logoutUser = () => {
       dispatch(push('/login'));
     } catch (error) {
       dispatch(logoutUserFailure(error));
+    }
+  };
+};
+
+const refreshTokenSuccess = (token) => {
+  return { type: REFRESH_TOKEN_SUCCESS, token };
+};
+const refreshTokenFailure = (error) => {
+  return { type: REFRESH_TOKEN_FAILURE, error };
+};
+
+export const refreshToken = (userData) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post('/users/token', userData);
+      const user = response?.data;
+      const token = user.token;
+      dispatch(refreshTokenSuccess(token));
+    } catch (error) {
+      dispatch(refreshTokenFailure(error));
     }
   };
 };
