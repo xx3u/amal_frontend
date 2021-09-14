@@ -136,6 +136,7 @@ function App() {
             component={Register}
           />
           <Route path='/login' exact component={Login} />
+          <Redirect to='/' />
         </Switch>
       </Layout>
     </div>
